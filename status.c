@@ -250,7 +250,7 @@ static const char *status_format_str(char *buf, size_t buflen, size_t col, int c
       if (!optional)
       {
         snprintf(fmt, sizeof(fmt), "%%%sd", prec);
-        snprintf(buf, buflen, fmt, m ? m->vcount : 0);
+        snprintf(buf, buflen, fmt, mv ? mv->vcount : 0);
       }
       else if (!mview_has_limit(mv))
       {

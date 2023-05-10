@@ -80,6 +80,7 @@
 #include "index/lib.h"
 #include "format_flags.h"
 #include "muttlib.h"
+#include "mview.h"
 
 /**
  * struct SidebarData - Data passed to sidebar_format_str()
@@ -366,6 +367,7 @@ static const char *sidebar_format_str(char *buf, size_t buflen, size_t col, int 
   if (!m)
     return src;
 
+  struct MailboxView *mv_cur = shared->mailbox_view;
   struct Mailbox *m_cur = shared->mailbox;
 
   bool c = m_cur && mutt_str_equal(m_cur->realpath, m->realpath);
@@ -427,9 +429,9 @@ static const char *sidebar_format_str(char *buf, size_t buflen, size_t col, int 
       if (!optional)
       {
         snprintf(fmt, sizeof(fmt), "%%%sd", prec);
-        snprintf(buf, buflen, fmt, c ? m_cur->vcount : m->msg_count);
+        snprintf(buf, buflen, fmt, c ? mv_cur->vcount : m->msg_count);
       }
-      else if ((c && (m_cur->vcount == m->msg_count)) || !c)
+      else if ((c && (mv_cur->vcount == m->msg_count)) || !c)
       {
         optional = false;
       }

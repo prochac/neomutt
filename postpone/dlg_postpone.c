@@ -103,11 +103,11 @@ static const struct Mapping PostponedHelp[] = {
 static void post_make_entry(struct Menu *menu, char *buf, size_t buflen, int line)
 {
   struct MailboxView *mv = menu->mdata;
-  struct Mailbox *m = mv->mailbox;
 
   const char *const c_index_format = cs_subset_string(NeoMutt->sub, "index_format");
-  mutt_make_string(buf, buflen, menu->win->state.cols, NONULL(c_index_format), m, -1,
-                   m->emails[line], MUTT_FORMAT_INDEX | MUTT_FORMAT_ARROWCURSOR, NULL);
+  mutt_make_string(buf, buflen, menu->win->state.cols, NONULL(c_index_format),
+                   mv->mailbox, -1, mv->mailbox->emails[line],
+                   MUTT_FORMAT_INDEX | MUTT_FORMAT_ARROWCURSOR, NULL);
 }
 
 /**
@@ -177,14 +177,14 @@ static const struct AttrColor *post_color(struct Menu *menu, int line)
   if (!m)
     return NULL;
 
-  struct Email *e = mutt_get_virt_email(m, line);
+  struct Email *e = mutt_get_virt_email(mv, line);
   if (!e)
     return NULL;
 
   if (e->attr_color)
     return e->attr_color;
 
-  mutt_set_header_color(m, e);
+  mutt_set_header_color(mv, e);
   return e->attr_color;
 }
 
