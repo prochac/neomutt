@@ -1,0 +1,254 @@
+/**
+ * @file
+ * Test code for XXX
+ *
+ * @authors
+ * Copyright (C) 2023-2024 Tóth János <gomba007@gmail.com>
+ *
+ * @copyright
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#define TEST_NO_MAIN
+#include "config.h"
+#include "acutest.h"
+#include <stddef.h>
+#include "mutt/lib.h"
+#include "expando/lib.h"
+#include "common.h" // IWYU pragma: keep
+
+struct NullData
+{
+  int n;
+};
+
+void test_expando_padding_render(void)
+{
+  struct ExpandoParseError error = { 0 };
+
+  {
+    const char *input = "text1%|-text2";
+    struct ExpandoNode *root = NULL;
+
+    const struct ExpandoDefinition defs[] = {
+      { NULL, NULL, 0, 0, 0, 0, NULL },
+    };
+
+    expando_tree_parse(&root, &input, defs, &error);
+
+    TEST_CHECK(error.position == NULL);
+    check_text_node(get_nth_node(&root, 0), "text1");
+    check_pad_node(get_nth_node(&root, 1), "-", EPT_FILL_EOL);
+    check_text_node(get_nth_node(&root, 2), "text2");
+
+    const struct Expando expando = {
+      .string = input,
+      .tree = root,
+    };
+
+    const struct ExpandoRenderData render[] = {
+      { -1, -1, NULL },
+    };
+
+    struct NullData data = { 0 };
+
+    const char *expected = "text1---";
+    struct Buffer *buf = buf_pool_get();
+    expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, 8, buf);
+
+    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+
+    expando_tree_free(&root);
+    buf_pool_release(&buf);
+  }
+
+  {
+    const char *input = "text1%|-text2";
+    struct ExpandoNode *root = NULL;
+
+    const struct ExpandoDefinition defs[] = {
+      { NULL, NULL, 0, 0, 0, 0, NULL },
+    };
+
+    expando_tree_parse(&root, &input, defs, &error);
+
+    TEST_CHECK(error.position == NULL);
+    check_text_node(get_nth_node(&root, 0), "text1");
+    check_pad_node(get_nth_node(&root, 1), "-", EPT_FILL_EOL);
+    check_text_node(get_nth_node(&root, 2), "text2");
+
+    const struct Expando expando = {
+      .string = input,
+      .tree = root,
+    };
+
+    const struct ExpandoRenderData render[] = {
+      { -1, -1, NULL },
+    };
+
+    struct NullData data = { 0 };
+
+    const char *expected = "text1--------";
+    struct Buffer *buf = buf_pool_get();
+    expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, 13, buf);
+
+    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+
+    expando_tree_free(&root);
+    buf_pool_release(&buf);
+  }
+
+  {
+    const char *input = "text1%>-text2";
+    struct ExpandoNode *root = NULL;
+
+    const struct ExpandoDefinition defs[] = {
+      { NULL, NULL, 0, 0, 0, 0, NULL },
+    };
+
+    expando_tree_parse(&root, &input, defs, &error);
+
+    TEST_CHECK(error.position == NULL);
+    check_text_node(get_nth_node(&root, 0), "text1");
+    check_pad_node(get_nth_node(&root, 1), "-", EPT_HARD_FILL);
+    check_text_node(get_nth_node(&root, 2), "text2");
+
+    const struct Expando expando = {
+      .string = input,
+      .tree = root,
+    };
+
+    const struct ExpandoRenderData render[] = {
+      { -1, -1, NULL },
+    };
+
+    struct NullData data = { 0 };
+
+    const char *expected = "text1tex";
+    struct Buffer *buf = buf_pool_get();
+    expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, 8, buf);
+    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+
+    expando_tree_free(&root);
+    buf_pool_release(&buf);
+  }
+
+  {
+    const char *input = "text1%>-text2";
+    struct ExpandoNode *root = NULL;
+
+    const struct ExpandoDefinition defs[] = {
+      { NULL, NULL, 0, 0, 0, 0, NULL },
+    };
+
+    expando_tree_parse(&root, &input, defs, &error);
+
+    TEST_CHECK(error.position == NULL);
+    check_text_node(get_nth_node(&root, 0), "text1");
+    check_pad_node(get_nth_node(&root, 1), "-", EPT_HARD_FILL);
+    check_text_node(get_nth_node(&root, 2), "text2");
+
+    const struct Expando expando = {
+      .string = input,
+      .tree = root,
+    };
+
+    const struct ExpandoRenderData render[] = {
+      { -1, -1, NULL },
+    };
+
+    struct NullData data = { 0 };
+
+    const char *expected = "text1---text2";
+    struct Buffer *buf = buf_pool_get();
+    expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, 13, buf);
+
+    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+
+    expando_tree_free(&root);
+    buf_pool_release(&buf);
+  }
+
+  {
+    const char *input = "text1%*-text2";
+    struct ExpandoNode *root = NULL;
+
+    const struct ExpandoDefinition defs[] = {
+      { NULL, NULL, 0, 0, 0, 0, NULL },
+    };
+
+    expando_tree_parse(&root, &input, defs, &error);
+
+    TEST_CHECK(error.position == NULL);
+    check_text_node(get_nth_node(&root, 0), "text1");
+    check_pad_node(get_nth_node(&root, 1), "-", EPT_SOFT_FILL);
+    check_text_node(get_nth_node(&root, 2), "text2");
+
+    const struct Expando expando = {
+      .string = input,
+      .tree = root,
+    };
+
+    const struct ExpandoRenderData render[] = {
+      { -1, -1, NULL },
+    };
+
+    struct NullData data = { 0 };
+
+    const char *expected = "textext2";
+    struct Buffer *buf = buf_pool_get();
+    expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, 8, buf);
+
+    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+
+    expando_tree_free(&root);
+    buf_pool_release(&buf);
+  }
+
+  {
+    const char *input = "text1%*-text2";
+    struct ExpandoNode *root = NULL;
+
+    const struct ExpandoDefinition defs[] = {
+      { NULL, NULL, 0, 0, 0, 0, NULL },
+    };
+
+    expando_tree_parse(&root, &input, defs, &error);
+
+    TEST_CHECK(error.position == NULL);
+    check_text_node(get_nth_node(&root, 0), "text1");
+    check_pad_node(get_nth_node(&root, 1), "-", EPT_SOFT_FILL);
+    check_text_node(get_nth_node(&root, 2), "text2");
+
+    const struct Expando expando = {
+      .string = input,
+      .tree = root,
+    };
+
+    const struct ExpandoRenderData render[] = {
+      { -1, -1, NULL },
+    };
+
+    struct NullData data = { 0 };
+
+    const char *expected = "text1---text2";
+    struct Buffer *buf = buf_pool_get();
+    expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, 13, buf);
+
+    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+
+    expando_tree_free(&root);
+    buf_pool_release(&buf);
+  }
+}
