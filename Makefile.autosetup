@@ -422,6 +422,21 @@ $(PWD)/envelope:
 	$(MKDIR_P) $(PWD)/envelope
 
 ###############################################################################
+# libexpando
+LIBEXPANDO=	libexpando.a
+LIBEXPANDOOBJS=	expando/config_type.o expando/expando.o \
+		expando/format_callbacks.o expando/helpers.o expando/node.o \
+		expando/parser.o expando/validation.o
+CLEANFILES+=	$(LIBEXPANDO) $(LIBEXPANDOOBJS)
+ALLOBJS+=	$(LIBEXPANDOOBJS)
+
+$(LIBEXPANDO): $(PWD)/expando $(LIBEXPANDOOBJS)
+	$(AR) cr $@ $(LIBEXPANDOOBJS)
+	$(RANLIB) $@
+$(PWD)/expando:
+	$(MKDIR_P) $(PWD)/expando
+
+###############################################################################
 # libgui
 LIBGUI=		libgui.a
 LIBGUIOBJS=	gui/curs_lib.o gui/dialog.o gui/functions.o gui/global.o \
@@ -891,7 +906,7 @@ MUTTLIBS+=	$(LIBINDEX) $(LIBPAGER) $(LIBINDEX) $(LIBPAGER) $(LIBAUTOCRYPT) $(LIB
 		$(LIBHELPBAR) $(LIBMBOX) $(LIBMH) $(LIBNOTMUCH) $(LIBMAILDIR) $(LIBEDITOR) $(LIBCOMPLETE) $(LIBNNTP) \
 		$(LIBNCRYPT) $(LIBIMAP) $(LIBCONN) $(LIBHCACHE) \
 		$(LIBCOMPRESS) $(LIBSIDEBAR) $(LIBBCACHE) $(LIBHISTORY) \
-		$(LIBCORE) $(LIBPARSE) $(LIBCONFIG) $(LIBEMAIL) $(LIBADDRESS) \
+		$(LIBCORE) $(LIBPARSE) $(LIBEXPANDO) $(LIBCONFIG) $(LIBEMAIL) $(LIBADDRESS) \
 		$(LIBDEBUG) $(LIBMUTT)
 
 # neomutt
