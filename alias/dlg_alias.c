@@ -90,10 +90,12 @@
 #include "send/lib.h"
 #include "alias.h"
 #include "format_flags.h"
-#include "functions.h"
+#include "functions.h" // <-- alias/functions.c
 #include "gui.h"
 #include "mutt_logging.h"
 #include "muttlib.h"
+
+extern const struct MenuFuncOp OpAlias[];
 
 /// Help Bar for the Alias dialog (address book)
 static const struct Mapping AliasHelp[] = {
@@ -357,7 +359,10 @@ static bool dlg_alias(struct Buffer *buf, struct AliasMenuData *mdata)
     menu_tagging_dispatcher(menu->win, op);
     window_redraw(NULL);
 
-    op = km_dokey(MENU_ALIAS, GETCH_NO_FLAGS);
+    void *hsmap[] = { &Keymaps[MENU_ALIAS], &Keymaps[MENU_GENERIC], 0 };
+    const void *hsfuncs[] = { OpAlias, 0 };
+    op = km_dokey2(hsmap, hsfuncs, GETCH_NO_FLAGS);
+    // op = km_dokey(MENU_ALIAS, GETCH_NO_FLAGS);
     mutt_debug(LL_DEBUG1, "Got op %s (%d)\n", opcodes_get_name(op), op);
     if (op < 0)
       continue;
