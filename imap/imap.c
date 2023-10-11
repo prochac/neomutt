@@ -1090,6 +1090,7 @@ enum MxStatus imap_check_mailbox(struct Mailbox *m, bool force)
 
   if (force)
     m->last_checked = 0; // force a check on the next mx_mbox_check() call
+
   return check;
 }
 
