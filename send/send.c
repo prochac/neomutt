@@ -40,6 +40,7 @@
  */
 
 #include "config.h"
+#include <assert.h>
 #include <errno.h>
 #include <locale.h>
 #include <stdbool.h>
@@ -65,13 +66,11 @@
 #include "imap/lib.h"
 #include "ncrypt/lib.h"
 #include "pager/lib.h"
-#include "parse/lib.h"
 #include "pattern/lib.h"
 #include "postpone/lib.h"
 #include "question/lib.h"
 #include "body.h"
 #include "copy.h"
-#include "format_flags.h"
 #include "globals.h"
 #include "handler.h"
 #include "hdrline.h"
@@ -672,6 +671,87 @@ void mutt_make_attribution_intro(struct Email *e, FILE *fp_out, struct ConfigSub
 void mutt_make_attribution_trailer(struct Email *e, FILE *fp_out, struct ConfigSubset *sub)
 {
   format_attribution(cs_subset_string(sub, "attribution_trailer"), e, fp_out, sub);
+}
+
+/**
+ * greeting_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void greeting_n(const struct ExpandoNode *node, void *data,
+                MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct Email *e = data;
+  const struct Address *to = TAILQ_FIRST(&e->env->to);
+
+  const char *s = mutt_get_name(to);
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * greeting_u - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void greeting_u(const struct ExpandoNode *node, void *data,
+                MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct Email *e = data;
+  const struct Address *to = TAILQ_FIRST(&e->env->to);
+
+  char tmp[128] = { 0 };
+  char *p = NULL;
+
+  if (to)
+  {
+    mutt_str_copy(tmp, mutt_addr_for_display(to), sizeof(tmp));
+    if ((p = strpbrk(tmp, "%@")))
+    {
+      *p = '\0';
+    }
+  }
+  else
+  {
+    tmp[0] = '\0';
+  }
+
+  buf_strcpy(buf, tmp);
+}
+
+/**
+ * greeting_v - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void greeting_v(const struct ExpandoNode *node, void *data,
+                MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct Email *e = data;
+  const struct Address *to = TAILQ_FIRST(&e->env->to);
+  const struct Address *cc = TAILQ_FIRST(&e->env->cc);
+
+  char tmp[128] = { 0 };
+  char *p = NULL;
+
+  if (to)
+  {
+    const char *s = mutt_get_name(to);
+    mutt_str_copy(tmp, NONULL(s), sizeof(tmp));
+  }
+  else if (cc)
+  {
+    const char *s = mutt_get_name(cc);
+    mutt_str_copy(tmp, NONULL(s), sizeof(tmp));
+  }
+  else
+  {
+    tmp[0] = '\0';
+  }
+
+  if ((p = strpbrk(tmp, " %@")))
+    *p = '\0';
+
+  buf_strcpy(buf, tmp);
 }
 
 /**

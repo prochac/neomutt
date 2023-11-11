@@ -37,9 +37,9 @@
  */
 
 #include "config.h"
+#include <assert.h>
 #include <errno.h>
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -52,7 +52,6 @@
 #include "expando/lib.h"
 #include "globals.h"
 #include "hook.h"
-#include "muttlib.h"
 #include "mx.h"
 #include "protos.h"
 
@@ -244,6 +243,38 @@ static void compress_info_free(struct Mailbox *m)
   unlock_realpath(m);
 
   FREE(&m->compress_info);
+}
+
+/**
+ * compress_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void compress_f(const struct ExpandoNode *node, void *data,
+                MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct Mailbox *m = data;
+
+  struct Buffer *quoted = buf_pool_get();
+  buf_quote_filename(quoted, m->realpath, false);
+  buf_printf(buf, "%s", buf_string(quoted));
+  buf_pool_release(&quoted);
+}
+
+/**
+ * compress_t - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void compress_t(const struct ExpandoNode *node, void *data,
+                MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct Mailbox *m = data;
+
+  struct Buffer *quoted = buf_pool_get();
+  buf_quote_filename(quoted, mailbox_path(m), false);
+  buf_printf(buf, "%s", buf_string(quoted));
+  buf_pool_release(&quoted);
 }
 
 /**

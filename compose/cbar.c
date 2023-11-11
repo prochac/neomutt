@@ -60,9 +60,7 @@
  */
 
 #include "config.h"
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdio.h>
+#include <assert.h>
 #include "private.h"
 #include "mutt/lib.h"
 #include "config/lib.h"
@@ -76,7 +74,6 @@
 #include "menu/lib.h"
 #include "attach_data.h"
 #include "cbar_data.h"
-#include "format_flags.h"
 #include "globals.h"
 #include "muttlib.h"
 #include "shared_data.h"
@@ -91,6 +88,60 @@ static int num_attachments(const struct ComposeAttachData *adata)
   if (!adata || !adata->menu)
     return 0;
   return adata->menu->max;
+}
+
+/**
+ * compose_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void compose_a(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct ComposeSharedData *shared = data;
+
+  const int num = num_attachments(shared->adata);
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * compose_h - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void compose_h(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const char *s = ShortHostname;
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * compose_l - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void compose_l(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct ComposeSharedData *shared = data;
+
+  char tmp[128] = { 0 };
+
+  mutt_str_pretty_size(tmp, sizeof(tmp), cum_attachs_size(shared->sub, shared->adata));
+  buf_strcpy(buf, tmp);
+}
+
+/**
+ * compose_v - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void compose_v(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const char *s = mutt_make_version();
+  buf_strcpy(buf, NONULL(s));
 }
 
 /**

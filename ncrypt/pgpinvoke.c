@@ -31,9 +31,9 @@
  */
 
 #include "config.h"
+#include <assert.h>
 #include <fcntl.h>
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <unistd.h>
 #include "mutt/lib.h"
@@ -44,15 +44,83 @@
 #include "pgpinvoke.h"
 #include "lib.h"
 #include "expando/lib.h"
-#include "format_flags.h"
 #include "globals.h"
 #include "mutt_logging.h"
-#include "muttlib.h"
 #include "pgpkey.h"
 #include "protos.h"
 #ifdef CRYPT_BACKEND_CLASSIC_PGP
 #include "pgp.h"
 #endif
+
+/**
+ * pgp_command_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_command_a(const struct ExpandoNode *node, void *data,
+                   MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct PgpCommandContext *cctx = data;
+
+  const char *s = cctx->signas;
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * pgp_command_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_command_f(const struct ExpandoNode *node, void *data,
+                   MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct PgpCommandContext *cctx = data;
+
+  const char *s = cctx->fname;
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * pgp_command_p - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_command_p(const struct ExpandoNode *node, void *data,
+                   MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct PgpCommandContext *cctx = data;
+
+  const char *s = cctx->need_passphrase ? "PGPPASSFD=0" : "";
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * pgp_command_r - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_command_r(const struct ExpandoNode *node, void *data,
+                   MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct PgpCommandContext *cctx = data;
+
+  const char *s = NONULL(cctx->ids);
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * pgp_command_s - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_command_s(const struct ExpandoNode *node, void *data,
+                   MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct PgpCommandContext *cctx = data;
+
+  const char *s = cctx->sig_fname;
+  buf_strcpy(buf, NONULL(s));
+}
 
 /**
  * mutt_pgp_command - Prepare a PGP Command

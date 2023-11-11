@@ -42,7 +42,6 @@
 #define MUTT_NNTP_LIB_H
 
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
 #include "core/lib.h"
 #include "expando/lib.h"
@@ -99,5 +98,22 @@ void nntp_clear_cache(struct NntpAccountData *adata);
 int nntp_compare_order(const struct Email *a, const struct Email *b, bool reverse);
 enum MailboxType nntp_path_probe(const char *path, const struct stat *st);
 int nntp_complete(struct Buffer *buf);
+
+void group_index_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags, int max_width, struct Buffer *buf);
+void group_index_C(const struct ExpandoNode *node, void *data, MuttFormatFlags flags, int max_width, struct Buffer *buf);
+void group_index_d(const struct ExpandoNode *node, void *data, MuttFormatFlags flags, int max_width, struct Buffer *buf);
+void group_index_f(const struct ExpandoNode *node, void *data, MuttFormatFlags flags, int max_width, struct Buffer *buf);
+void group_index_M(const struct ExpandoNode *node, void *data, MuttFormatFlags flags, int max_width, struct Buffer *buf);
+void group_index_N(const struct ExpandoNode *node, void *data, MuttFormatFlags flags, int max_width, struct Buffer *buf);
+void group_index_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags, int max_width, struct Buffer *buf);
+void group_index_p(const struct ExpandoNode *node, void *data, MuttFormatFlags flags, int max_width, struct Buffer *buf);
+void group_index_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags, int max_width, struct Buffer *buf);
+
+void nntp_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags, int max_width, struct Buffer *buf);
+void nntp_P(const struct ExpandoNode *node, void *data, MuttFormatFlags flags, int max_width, struct Buffer *buf);
+void nntp_p(const struct ExpandoNode *node, void *data, MuttFormatFlags flags, int max_width, struct Buffer *buf);
+void nntp_S(const struct ExpandoNode *node, void *data, MuttFormatFlags flags, int max_width, struct Buffer *buf);
+void nntp_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags, int max_width, struct Buffer *buf);
+void nntp_u(const struct ExpandoNode *node, void *data, MuttFormatFlags flags, int max_width, struct Buffer *buf);
 
 #endif /* MUTT_NNTP_LIB_H */

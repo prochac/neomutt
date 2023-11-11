@@ -68,10 +68,9 @@
  */
 
 #include "config.h"
-#include <ctype.h>
+#include <assert.h>
 #include <locale.h>
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
 #include "private.h"
 #include "mutt/lib.h"
@@ -83,9 +82,7 @@
 #include "expando/lib.h"
 #include "key/lib.h"
 #include "menu/lib.h"
-#include "format_flags.h"
 #include "mutt_logging.h"
-#include "muttlib.h"
 #include "pgp.h"
 #include "pgp_functions.h"
 #include "pgpkey.h"
@@ -249,6 +246,330 @@ static char pgp_flags(KeyFlags flags)
     return 'c';
 
   return ' ';
+}
+
+/**
+ * pgp_entry_pgp_date - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_pgp_date(const struct ExpandoNode *node, void *data,
+                        MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PGP
+  const struct PgpEntry *entry = data;
+  const struct PgpUid *uid = entry->uid;
+  const struct PgpKeyInfo *key = uid->parent;
+
+  char tmp[128] = { 0 };
+  char datestr[128] = { 0 };
+
+  int len = node->end - node->start;
+  const char *start = node->start;
+  bool use_c_locale = false;
+  if (*start == '!')
+  {
+    use_c_locale = true;
+    start++;
+    len--;
+  }
+
+  assert(len < sizeof(datestr));
+  mutt_strn_copy(datestr, start, len, sizeof(datestr));
+
+  if (use_c_locale)
+  {
+    mutt_date_localtime_format_locale(tmp, sizeof(tmp), datestr, key->gen_time,
+                                      NeoMutt->time_c_locale);
+  }
+  else
+  {
+    mutt_date_localtime_format(tmp, sizeof(tmp), datestr, key->gen_time);
+  }
+
+  buf_strcpy(buf, tmp);
+#else  /* HAVE_PGP */
+  buf_reset(buf);
+#endif /* HAVE_PGP */
+}
+
+/**
+ * pgp_entry_pgp_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_pgp_n(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PGP
+
+  const struct PgpEntry *entry = data;
+
+  const int num = entry->num;
+  buf_printf(buf, "%d", num);
+#else  /* HAVE_PGP */
+  buf_reset(buf);
+#endif /* HAVE_PGP */
+}
+
+/**
+ * pgp_entry_pgp_t - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_pgp_t(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PGP
+
+  const struct PgpEntry *entry = data;
+  const struct PgpUid *uid = entry->uid;
+
+  buf_printf(buf, "%c", TrustFlags[uid->trust & 0x03]);
+#else  /* HAVE_PGP */
+  buf_reset(buf);
+#endif /* HAVE_PGP */
+}
+
+/**
+ * pgp_entry_pgp_u - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_pgp_u(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PGP
+
+  const struct PgpEntry *entry = data;
+  const struct PgpUid *uid = entry->uid;
+
+  const char *s = uid->addr;
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_PGP */
+  buf_reset(buf);
+#endif /* HAVE_PGP */
+}
+
+/**
+ * pgp_entry_pgp_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_pgp_a(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PGP
+
+  const struct PgpEntry *entry = data;
+  const struct PgpUid *uid = entry->uid;
+  const struct PgpKeyInfo *key = uid->parent;
+
+  const char *s = key->algorithm;
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_PGP */
+  buf_reset(buf);
+#endif /* HAVE_PGP */
+}
+
+/**
+ * pgp_entry_pgp_A - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_pgp_A(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PGP
+
+  const struct PgpEntry *entry = data;
+  const struct PgpUid *uid = entry->uid;
+  struct PgpKeyInfo *key = uid->parent;
+  struct PgpKeyInfo *pkey = pgp_principal_key(key);
+
+  const char *s = pkey->algorithm;
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_PGP */
+  buf_reset(buf);
+#endif /* HAVE_PGP */
+}
+
+/**
+ * pgp_entry_pgp_c - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_pgp_c(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PGP
+
+  const struct PgpEntry *entry = data;
+  const struct PgpUid *uid = entry->uid;
+  const struct PgpKeyInfo *key = uid->parent;
+
+  const KeyFlags kflags = key->flags | uid->flags;
+
+  const char *s = pgp_key_abilities(kflags);
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_PGP */
+  buf_reset(buf);
+#endif /* HAVE_PGP */
+}
+
+/**
+ * pgp_entry_pgp_C - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_pgp_C(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PGP
+
+  const struct PgpEntry *entry = data;
+  const struct PgpUid *uid = entry->uid;
+  struct PgpKeyInfo *key = uid->parent;
+  struct PgpKeyInfo *pkey = pgp_principal_key(key);
+
+  const KeyFlags kflags = (pkey->flags & KEYFLAG_RESTRICTIONS) | uid->flags;
+
+  const char *s = pgp_key_abilities(kflags);
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_PGP */
+  buf_reset(buf);
+#endif /* HAVE_PGP */
+}
+
+/**
+ * pgp_entry_pgp_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_pgp_f(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PGP
+
+  const struct PgpEntry *entry = data;
+  const struct PgpUid *uid = entry->uid;
+  const struct PgpKeyInfo *key = uid->parent;
+
+  const KeyFlags kflags = key->flags | uid->flags;
+
+  buf_printf(buf, "%c", pgp_flags(kflags));
+#else  /* HAVE_PGP */
+  buf_reset(buf);
+#endif /* HAVE_PGP */
+}
+
+/**
+ * pgp_entry_pgp_F - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_pgp_F(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PGP
+
+  const struct PgpEntry *entry = data;
+  const struct PgpUid *uid = entry->uid;
+  struct PgpKeyInfo *key = uid->parent;
+  struct PgpKeyInfo *pkey = pgp_principal_key(key);
+
+  const KeyFlags kflags = (pkey->flags & KEYFLAG_RESTRICTIONS) | uid->flags;
+
+  buf_printf(buf, "%c", pgp_flags(kflags));
+#else  /* HAVE_PGP */
+  buf_reset(buf);
+#endif /* HAVE_PGP */
+}
+
+/**
+ * pgp_entry_pgp_k - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_pgp_k(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PGP
+
+  const struct PgpEntry *entry = data;
+  const struct PgpUid *uid = entry->uid;
+  struct PgpKeyInfo *key = uid->parent;
+
+  const char *s = pgp_this_keyid(key);
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_PGP */
+  buf_reset(buf);
+#endif /* HAVE_PGP */
+}
+
+/**
+ * pgp_entry_pgp_K - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_pgp_K(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PGP
+
+  const struct PgpEntry *entry = data;
+  const struct PgpUid *uid = entry->uid;
+  struct PgpKeyInfo *key = uid->parent;
+  struct PgpKeyInfo *pkey = pgp_principal_key(key);
+
+  const char *s = pgp_this_keyid(pkey);
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_PGP */
+  buf_reset(buf);
+#endif /* HAVE_PGP */
+}
+
+/**
+ * pgp_entry_pgp_l - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_pgp_l(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PGP
+
+  const struct PgpEntry *entry = data;
+  const struct PgpUid *uid = entry->uid;
+  const struct PgpKeyInfo *key = uid->parent;
+
+  const int num = key->keylen;
+  buf_printf(buf, "%d", num);
+#else  /* HAVE_PGP */
+  buf_reset(buf);
+#endif /* HAVE_PGP */
+}
+
+/**
+ * pgp_entry_pgp_L - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_pgp_L(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PGP
+
+  const struct PgpEntry *entry = data;
+  const struct PgpUid *uid = entry->uid;
+  struct PgpKeyInfo *key = uid->parent;
+  struct PgpKeyInfo *pkey = pgp_principal_key(key);
+
+  const int num = pkey->keylen;
+  buf_printf(buf, "%d", num);
+#else  /* HAVE_PGP */
+  buf_reset(buf);
+#endif /* HAVE_PGP */
 }
 
 /**

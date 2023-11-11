@@ -57,8 +57,8 @@
  */
 
 #include "config.h"
+#include <assert.h>
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
 #include "mutt/lib.h"
 #include "config/lib.h"
@@ -70,7 +70,6 @@
 #include "menu/lib.h"
 #include "functions.h"
 #include "mutt_logging.h"
-#include "muttlib.h"
 
 /// Help Bar for the History Selection dialog
 static const struct Mapping HistoryHelp[] = {
@@ -82,6 +81,34 @@ static const struct Mapping HistoryHelp[] = {
   { NULL, 0 },
   // clang-format on
 };
+
+/**
+ * history_C - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void history_C(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct HistoryEntry *entry = data;
+
+  const int num = entry->num + 1;
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * history_s - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void history_s(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct HistoryEntry *entry = data;
+
+  const char *s = entry->history;
+  buf_strcpy(buf, NONULL(s));
+}
 
 /**
  * history_make_entry - Format a History Item for the Menu - Implements Menu::make_entry() - @ingroup menu_make_entry

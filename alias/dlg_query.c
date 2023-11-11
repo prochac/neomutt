@@ -70,8 +70,8 @@
  */
 
 #include "config.h"
+#include <assert.h>
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
@@ -91,12 +91,10 @@
 #include "pattern/lib.h"
 #include "send/lib.h"
 #include "alias.h"
-#include "format_flags.h"
 #include "functions.h"
 #include "globals.h"
 #include "gui.h"
 #include "mutt_logging.h"
-#include "muttlib.h"
 
 /// Help Bar for the Address Query dialog
 static const struct Mapping QueryHelp[] = {
@@ -138,6 +136,106 @@ bool alias_to_addrlist(struct AddressList *al, struct Alias *alias)
   }
 
   return true;
+}
+
+/**
+ * query_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void query_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+             int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AliasView *av = data;
+  const struct Alias *alias = av->alias;
+
+  char tmp[256] = { 0 };
+
+  struct Buffer *tmpbuf = buf_pool_get();
+  tmp[0] = '<';
+  mutt_addrlist_write(&alias->addr, tmpbuf, true);
+  mutt_str_copy(tmp + 1, buf_string(tmpbuf), sizeof(tmp) - 1);
+  buf_pool_release(&tmpbuf);
+  const size_t len = mutt_str_len(tmp);
+  if (len < (sizeof(tmp) - 1))
+  {
+    tmp[len] = '>';
+    tmp[len + 1] = '\0';
+  }
+
+  buf_strcpy(buf, tmp);
+}
+
+/**
+ * query_c - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void query_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+             int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AliasView *av = data;
+
+  const int num = av->num + 1;
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * query_e - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void query_e(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+             int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AliasView *av = data;
+  const struct Alias *alias = av->alias;
+
+  const char *s = alias->comment;
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * query_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void query_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+             int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AliasView *av = data;
+  const struct Alias *alias = av->alias;
+
+  const char *s = alias->name;
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * query_t - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void query_t(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+             int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AliasView *av = data;
+
+  // NOTE(g0mb4): use $flag_chars?
+  const char *s = av->is_tagged ? "*" : " ";
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * query_Y - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void query_Y(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+             int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AliasView *av = data;
+
+  alias_tags_to_buffer(&av->alias->tags, buf);
 }
 
 /**

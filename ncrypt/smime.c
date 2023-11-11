@@ -32,9 +32,9 @@
  */
 
 #include "config.h"
+#include <assert.h>
 #include <limits.h>
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -57,7 +57,6 @@
 #include "copy.h"
 #include "crypt.h"
 #include "cryptglue.h"
-#include "format_flags.h"
 #include "globals.h"
 #include "handler.h"
 #include "mutt_logging.h"
@@ -195,6 +194,179 @@ bool smime_class_valid_passphrase(void)
 /*
  *     The OpenSSL interface
  */
+
+/**
+ * smime_command_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void smime_command_a(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_SMIME
+
+  const struct SmimeCommandContext *cctx = data;
+
+  const char *s = cctx->cryptalg;
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_SMIME */
+  buf_reset(buf);
+#endif /* HAVE_SMIME */
+}
+
+/**
+ * smime_command_c - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void smime_command_c(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_SMIME
+
+  const struct SmimeCommandContext *cctx = data;
+
+  const char *s = cctx->certificates;
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_SMIME */
+  buf_reset(buf);
+#endif /* HAVE_SMIME */
+}
+
+/**
+ * smime_command_C - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void smime_command_C(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_SMIME
+
+  const char *const c_smime_ca_location = cs_subset_path(NeoMutt->sub, "smime_ca_location");
+
+  struct Buffer *path = buf_pool_get();
+  struct Buffer *buf1 = buf_pool_get();
+  struct Buffer *buf2 = buf_pool_get();
+  struct stat st = { 0 };
+
+  buf_strcpy(path, c_smime_ca_location);
+  buf_expand_path(path);
+  buf_quote_filename(buf1, buf_string(path), true);
+
+  if ((stat(buf_string(path), &st) != 0) || !S_ISDIR(st.st_mode))
+  {
+    buf_printf(buf2, "-CAfile %s", buf_string(buf1));
+  }
+  else
+  {
+    buf_printf(buf2, "-CApath %s", buf_string(buf1));
+  }
+
+  buf_copy(buf, buf2);
+
+  buf_pool_release(&path);
+  buf_pool_release(&buf1);
+  buf_pool_release(&buf2);
+#else  /* HAVE_SMIME */
+  buf_reset(buf);
+#endif /* HAVE_SMIME */
+}
+
+/**
+ * smime_command_d - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void smime_command_d(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_SMIME
+
+  const struct SmimeCommandContext *cctx = data;
+
+  const char *s = NONULL(cctx->digestalg);
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_SMIME */
+  buf_reset(buf);
+#endif /* HAVE_SMIME */
+}
+
+/**
+ * smime_command_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void smime_command_f(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_SMIME
+
+  const struct SmimeCommandContext *cctx = data;
+
+  const char *s = cctx->fname;
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_SMIME */
+  buf_reset(buf);
+#endif /* HAVE_SMIME */
+}
+
+/**
+ * smime_command_i - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void smime_command_i(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_SMIME
+
+  const struct SmimeCommandContext *cctx = data;
+
+  const char *s = cctx->intermediates;
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_SMIME */
+  buf_reset(buf);
+#endif /* HAVE_SMIME */
+}
+
+/**
+ * smime_command_k - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void smime_command_k(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_SMIME
+
+  const struct SmimeCommandContext *cctx = data;
+
+  const char *s = cctx->key;
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_SMIME */
+  buf_reset(buf);
+#endif /* HAVE_SMIME */
+}
+
+/**
+ * smime_command_s - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void smime_command_s(const struct ExpandoNode *node, void *data,
+                     MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_SMIME
+
+  const struct SmimeCommandContext *cctx = data;
+
+  const char *s = cctx->sig_fname;
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_SMIME */
+  buf_reset(buf);
+#endif /* HAVE_SMIME */
+}
 
 /**
  * smime_command - Format an SMIME command string

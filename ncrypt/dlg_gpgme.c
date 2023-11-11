@@ -69,11 +69,10 @@
  */
 
 #include "config.h"
-#include <ctype.h>
+#include <assert.h>
 #include <gpgme.h>
 #include <locale.h>
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <time.h>
 #include "private.h"
@@ -87,10 +86,8 @@
 #include "key/lib.h"
 #include "menu/lib.h"
 #include "crypt_gpgme.h"
-#include "format_flags.h"
 #include "gpgme_functions.h"
 #include "mutt_logging.h"
-#include "muttlib.h"
 #include "sort.h"
 
 /// Help Bar for the GPGME key selection dialog
@@ -270,18 +267,369 @@ static char *crypt_key_abilities(KeyFlags flags)
  *
  * The returned character describes the most important flag.
  */
-static char crypt_flags(KeyFlags flags)
+static char *crypt_flags(KeyFlags flags)
 {
   if (flags & KEYFLAG_REVOKED)
-    return 'R';
+    return "R";
   if (flags & KEYFLAG_EXPIRED)
-    return 'X';
+    return "X";
   if (flags & KEYFLAG_DISABLED)
-    return 'd';
+    return "d";
   if (flags & KEYFLAG_CRITICAL)
-    return 'c';
+    return "c";
 
-  return ' ';
+  return " ";
+}
+
+/**
+ * pgp_entry_gpgme_date - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_date(const struct ExpandoNode *node, void *data,
+                          MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_TEXT);
+
+#ifdef HAVE_PKG_GPGME
+  const struct CryptEntry *entry = data;
+  const struct CryptKeyInfo *key = entry->key;
+
+  char tmp[128] = { 0 };
+  char datestr[128] = { 0 };
+
+  int len = node->end - node->start;
+  const char *start = node->start;
+  bool use_c_locale = false;
+  if (*start == '!')
+  {
+    use_c_locale = true;
+    start++;
+    len--;
+  }
+
+  assert(len < sizeof(datestr));
+  mutt_strn_copy(datestr, start, len, sizeof(datestr));
+
+  struct tm tm = { 0 };
+  if (key->kobj->subkeys && (key->kobj->subkeys->timestamp > 0))
+  {
+    tm = mutt_date_localtime(key->kobj->subkeys->timestamp);
+  }
+  else
+  {
+    tm = mutt_date_localtime(0); // Default to 1970-01-01
+  }
+
+  if (use_c_locale)
+  {
+    strftime_l(tmp, sizeof(tmp), datestr, &tm, NeoMutt->time_c_locale);
+  }
+  else
+  {
+    strftime(tmp, sizeof(tmp), datestr, &tm);
+  }
+
+  buf_strcpy(buf, tmp);
+#else  /* HAVE_PKG_GPGME */
+  buf_reset(buf);
+#endif /* HAVE_PKG_GPGME */
+}
+
+/**
+ * pgp_entry_gpgme_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_n(const struct ExpandoNode *node, void *data,
+                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PKG_GPGME
+
+  const struct CryptEntry *entry = data;
+
+  const int num = entry->num;
+  buf_printf(buf, "%d", num);
+#else  /* HAVE_PKG_GPGME */
+  buf_reset(buf);
+#endif /* HAVE_PKG_GPGME */
+}
+
+/**
+ * pgp_entry_gpgme_p - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_p(const struct ExpandoNode *node, void *data,
+                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PKG_GPGME
+
+  const struct CryptEntry *entry = data;
+  const struct CryptKeyInfo *key = entry->key;
+
+  const char *s = gpgme_get_protocol_name(key->kobj->protocol);
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_PKG_GPGME */
+  buf_reset(buf);
+#endif /* HAVE_PKG_GPGME */
+}
+
+/**
+ * pgp_entry_gpgme_t - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_t(const struct ExpandoNode *node, void *data,
+                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PKG_GPGME
+
+  const struct CryptEntry *entry = data;
+  const struct CryptKeyInfo *key = entry->key;
+
+  const char *s = "";
+  if ((key->flags & KEYFLAG_ISX509))
+  {
+    s = "x";
+  }
+  else
+  {
+    switch (key->validity)
+    {
+      case GPGME_VALIDITY_FULL:
+        s = "f";
+        break;
+      case GPGME_VALIDITY_MARGINAL:
+        s = "m";
+        break;
+      case GPGME_VALIDITY_NEVER:
+        s = "n";
+        break;
+      case GPGME_VALIDITY_ULTIMATE:
+        s = "u";
+        break;
+      case GPGME_VALIDITY_UNDEFINED:
+        s = "q";
+        break;
+      case GPGME_VALIDITY_UNKNOWN:
+      default:
+        s = "?";
+        break;
+    }
+  }
+
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_PKG_GPGME */
+  buf_reset(buf);
+#endif /* HAVE_PKG_GPGME */
+}
+
+/**
+ * pgp_entry_gpgme_u - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_u(const struct ExpandoNode *node, void *data,
+                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PKG_GPGME
+
+  const struct CryptEntry *entry = data;
+  const struct CryptKeyInfo *key = entry->key;
+
+  const char *s = key->uid;
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_PKG_GPGME */
+  buf_reset(buf);
+#endif /* HAVE_PKG_GPGME */
+}
+
+/**
+ * pgp_entry_gpgme_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_a(const struct ExpandoNode *node, void *data,
+                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PKG_GPGME
+
+  const struct CryptEntry *entry = data;
+  const struct CryptKeyInfo *key = entry->key;
+
+  const char *s = NULL;
+  if (key->kobj->subkeys)
+    s = gpgme_pubkey_algo_name(key->kobj->subkeys->pubkey_algo);
+  else
+    s = "?";
+
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_PKG_GPGME */
+  buf_reset(buf);
+#endif /* HAVE_PKG_GPGME */
+}
+
+/**
+ * pgp_entry_gpgme_A - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_A(const struct ExpandoNode *node, void *data,
+                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  /* only used in ncrypt/dlg_pgp.c */
+  buf_reset(buf);
+}
+
+/**
+ * pgp_entry_gpgme_c - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_c(const struct ExpandoNode *node, void *data,
+                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PKG_GPGME
+
+  const struct CryptEntry *entry = data;
+  const struct CryptKeyInfo *key = entry->key;
+
+  const char *s = crypt_key_abilities(key->flags);
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_PKG_GPGME */
+  buf_reset(buf);
+#endif /* HAVE_PKG_GPGME */
+}
+
+/**
+ * pgp_entry_gpgme_C - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_C(const struct ExpandoNode *node, void *data,
+                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  /* only used in ncrypt/dlg_pgp.c */
+  buf_reset(buf);
+}
+
+/**
+ * pgp_entry_gpgme_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_f(const struct ExpandoNode *node, void *data,
+                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PKG_GPGME
+
+  const struct CryptEntry *entry = data;
+  const struct CryptKeyInfo *key = entry->key;
+
+  const char *s = crypt_flags(key->flags);
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_PKG_GPGME */
+  buf_reset(buf);
+#endif /* HAVE_PKG_GPGME */
+}
+
+/**
+ * pgp_entry_gpgme_F - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_F(const struct ExpandoNode *node, void *data,
+                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  /* only used in ncrypt/dlg_pgp.c */
+  buf_reset(buf);
+}
+
+/**
+ * pgp_entry_gpgme_i - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_i(const struct ExpandoNode *node, void *data,
+                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PKG_GPGME
+
+  const struct CryptEntry *entry = data;
+  struct CryptKeyInfo *key = entry->key;
+
+  /* fixme: we need a way to distinguish between main and subkeys.
+   * Store the idx in entry? */
+  const char *s = crypt_fpr_or_lkeyid(key);
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_PKG_GPGME */
+  buf_reset(buf);
+#endif /* HAVE_PKG_GPGME */
+}
+
+/**
+ * pgp_entry_gpgme_I - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_I(const struct ExpandoNode *node, void *data,
+                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  /* only used in ncrypt/dlg_pgp.c */
+  buf_reset(buf);
+}
+
+/**
+ * pgp_entry_gpgme_k - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_k(const struct ExpandoNode *node, void *data,
+                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PKG_GPGME
+
+  const struct CryptEntry *entry = data;
+  struct CryptKeyInfo *key = entry->key;
+
+  /* fixme: we need a way to distinguish between main and subkeys.
+   * Store the idx in entry? */
+  const char *s = crypt_keyid(key);
+  buf_strcpy(buf, NONULL(s));
+#else  /* HAVE_PKG_GPGME */
+  buf_reset(buf);
+#endif /* HAVE_PKG_GPGME */
+}
+
+/**
+ * pgp_entry_gpgme_K - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_K(const struct ExpandoNode *node, void *data,
+                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  /* only used in ncrypt/dlg_pgp.c */
+  buf_reset(buf);
+}
+
+/**
+ * pgp_entry_gpgme_l - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_l(const struct ExpandoNode *node, void *data,
+                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PKG_GPGME
+
+  const struct CryptEntry *entry = data;
+  const struct CryptKeyInfo *key = entry->key;
+
+  const unsigned long val = key->kobj->subkeys ? key->kobj->subkeys->length : 0;
+  buf_printf(buf, "%lu", val);
+#else  /* HAVE_PKG_GPGME */
+  buf_reset(buf);
+#endif /* HAVE_PKG_GPGME */
+}
+
+/**
+ * pgp_entry_gpgme_L - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_L(const struct ExpandoNode *node, void *data,
+                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  /* only used in ncrypt/dlg_pgp.c */
+  buf_reset(buf);
 }
 
 /**

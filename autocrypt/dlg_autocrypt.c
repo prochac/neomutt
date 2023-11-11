@@ -67,8 +67,8 @@
  */
 
 #include "config.h"
+#include <assert.h>
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
 #include "private.h"
 #include "mutt/lib.h"
@@ -82,7 +82,6 @@
 #include "menu/lib.h"
 #include "functions.h"
 #include "mutt_logging.h"
-#include "muttlib.h"
 
 /// Help Bar for the Autocrypt Account selection dialog
 static const struct Mapping AutocryptHelp[] = {
@@ -110,6 +109,104 @@ static const struct Mapping AutocryptHelp[] = {
   { NULL, 0 }
   // clang-format on
 };
+
+/**
+ * autocrypt_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void autocrypt_a(const struct ExpandoNode *node, void *data,
+                 MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AccountEntry *entry = data;
+
+  buf_copy(buf, entry->addr->mailbox);
+}
+
+/**
+ * autocrypt_k - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void autocrypt_k(const struct ExpandoNode *node, void *data,
+                 MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AccountEntry *entry = data;
+
+  const char *s = entry->account->keyid;
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * autocrypt_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void autocrypt_n(const struct ExpandoNode *node, void *data,
+                 MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AccountEntry *entry = data;
+
+  const int num = entry->num;
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * autocrypt_p - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void autocrypt_p(const struct ExpandoNode *node, void *data,
+                 MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AccountEntry *entry = data;
+
+  char tmp[128] = { 0 };
+
+  if (entry->account->prefer_encrypt)
+  {
+    /* L10N: Autocrypt Account menu.
+           flag that an account has prefer-encrypt set */
+    mutt_str_copy(tmp, _("prefer encrypt"), sizeof(tmp));
+  }
+  else
+  {
+    /* L10N: Autocrypt Account menu.
+           flag that an account has prefer-encrypt unset;
+           thus encryption will need to be manually enabled.  */
+    mutt_str_copy(tmp, _("manual encrypt"), sizeof(tmp));
+  }
+
+  buf_strcpy(buf, tmp);
+}
+
+/**
+ * autocrypt_s - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void autocrypt_s(const struct ExpandoNode *node, void *data,
+                 MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AccountEntry *entry = data;
+
+  char tmp[128] = { 0 };
+
+  if (entry->account->enabled)
+  {
+    /* L10N: Autocrypt Account menu.
+           flag that an account is enabled/active */
+    mutt_str_copy(tmp, _("active"), sizeof(tmp));
+  }
+  else
+  {
+    /* L10N: Autocrypt Account menu.
+           flag that an account is disabled/inactive */
+    mutt_str_copy(tmp, _("inactive"), sizeof(tmp));
+  }
+
+  buf_strcpy(buf, tmp);
+}
 
 /**
  * autocrypt_make_entry - Format an Autocrypt Account for the Menu - Implements Menu::make_entry() - @ingroup menu_make_entry

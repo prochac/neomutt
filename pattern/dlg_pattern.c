@@ -69,9 +69,8 @@
 
 #include "config.h"
 #include <stddef.h>
+#include <assert.h>
 #include <stdbool.h>
-#include <stdint.h>
-#include <stdio.h>
 #include "private.h"
 #include "mutt/lib.h"
 #include "config/lib.h"
@@ -83,7 +82,6 @@
 #include "menu/lib.h"
 #include "functions.h"
 #include "mutt_logging.h"
-#include "muttlib.h"
 
 /// Help Bar for the Pattern selection dialog
 static const struct Mapping PatternHelp[] = {
@@ -94,6 +92,48 @@ static const struct Mapping PatternHelp[] = {
   { NULL, 0 },
   // clang-format on
 };
+
+/**
+ * pattern_d - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pattern_d(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct PatternEntry *entry = data;
+
+  const char *s = entry->desc;
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * pattern_e - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pattern_e(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct PatternEntry *entry = data;
+
+  const char *s = entry->expr;
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * pattern_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pattern_n(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct PatternEntry *entry = data;
+
+  const int num = entry->num;
+  buf_printf(buf, "%d", num);
+}
 
 /**
  * make_pattern_entry - Create a Pattern for the Menu - Implements Menu::make_entry() - @ingroup menu_make_entry

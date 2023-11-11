@@ -46,17 +46,13 @@
 
 #include "config.h"
 #include <stddef.h>
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdio.h>
+#include <assert.h>
 #include "mutt/lib.h"
 #include "config/lib.h"
 #include "core/lib.h"
 #include "gui/lib.h"
 #include "expando/lib.h"
 #include "menu/lib.h"
-#include "format_flags.h"
-#include "muttlib.h"
 #include "remailer.h"
 
 /**
@@ -66,7 +62,7 @@
  *
  * @note The string is a static buffer
  */
-static const char *mix_format_caps(struct Remailer *r)
+static const char *mix_format_caps(const struct Remailer *r)
 {
   // NOTE(g0mb4): use $to_chars?
   static char capbuf[10];
@@ -107,6 +103,62 @@ static const char *mix_format_caps(struct Remailer *r)
   *t = '\0';
 
   return capbuf;
+}
+
+/**
+ * mix_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void mix_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+           int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct Remailer *remailer = data;
+
+  const char *s = remailer->addr;
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * mix_c - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void mix_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+           int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct Remailer *remailer = data;
+
+  const char *s = mix_format_caps(remailer);
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * mix_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void mix_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+           int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct Remailer *remailer = data;
+
+  const int num = remailer->num;
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * mix_s - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void mix_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+           int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct Remailer *remailer = data;
+
+  const char *s = remailer->shortname;
+  buf_strcpy(buf, NONULL(s));
 }
 
 /**

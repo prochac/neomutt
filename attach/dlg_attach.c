@@ -68,8 +68,8 @@
  */
 
 #include "config.h"
+#include <assert.h>
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
 #include "mutt/lib.h"
 #include "config/lib.h"
@@ -81,7 +81,6 @@
 #include "menu/lib.h"
 #include "attach.h"
 #include "attachments.h"
-#include "format_flags.h"
 #include "functions.h"
 #include "hdrline.h"
 #include "hook.h"
@@ -90,6 +89,9 @@
 #include "mview.h"
 #include "private_data.h"
 #include "recvattach.h"
+
+void attach_F(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf);
 
 /// Help Bar for the Attachment selection dialog
 static const struct Mapping AttachmentHelp[] = {
@@ -125,6 +127,324 @@ static int attach_config_observer(struct NotifyCallback *nc)
   mutt_debug(LL_DEBUG5, "config done, request WA_RECALC, MENU_REDRAW_FULL\n");
 
   return 0;
+}
+
+/**
+ * attach_c - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  // NOTE(g0mb4): use $to_chars?
+  const char *s = ((aptr->body->type != TYPE_TEXT) || aptr->body->noconv) ? "n" : "c";
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * attach_C - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_C(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  char tmp[128] = { 0 };
+
+  if (mutt_is_text_part(aptr->body) && mutt_body_get_charset(aptr->body, tmp, sizeof(tmp)))
+  {
+    buf_strcpy(buf, tmp);
+  }
+  else
+  {
+    const char *s = "";
+    buf_strcpy(buf, NONULL(s));
+  }
+}
+
+/**
+ * attach_d - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_d(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  const char *const c_message_format = cs_subset_string(NeoMutt->sub, "message_format");
+  if (aptr->body->description)
+  {
+    const char *s = aptr->body->description;
+    buf_strcpy(buf, NONULL(s));
+    return;
+  }
+
+  if (mutt_is_message_type(aptr->body->type, aptr->body->subtype) &&
+      c_message_format && aptr->body->email)
+  {
+    mutt_make_string(buf, max_width, c_message_format, NULL, -1, aptr->body->email,
+                     MUTT_FORMAT_FORCESUBJ | MUTT_FORMAT_ARROWCURSOR, NULL);
+
+    return;
+  }
+
+  if (!aptr->body->d_filename && !aptr->body->filename)
+  {
+    const char *s = "<no description>";
+    buf_strcpy(buf, NONULL(s));
+    return;
+  }
+
+  attach_F(node, data, flags, max_width, buf);
+}
+
+/**
+ * attach_D - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_D(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  // NOTE(g0mb4): use $to_chars?
+  const char *s = aptr->body->deleted ? "D" : " ";
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * attach_e - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_e(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  const char *s = ENCODING(aptr->body->encoding);
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * attach_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_f(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  if (aptr->body->filename && (*aptr->body->filename == '/'))
+  {
+    struct Buffer *path = buf_pool_get();
+
+    buf_strcpy(path, aptr->body->filename);
+    buf_pretty_mailbox(path);
+    buf_copy(buf, path);
+    buf_pool_release(&path);
+  }
+  else
+  {
+    const char *s = aptr->body->filename;
+    buf_strcpy(buf, NONULL(s));
+  }
+}
+
+/**
+ * attach_F - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_F(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  if (aptr->body->d_filename)
+  {
+    const char *s = aptr->body->d_filename;
+    buf_strcpy(buf, NONULL(s));
+    return;
+  }
+
+  attach_f(node, data, flags, max_width, buf);
+}
+
+/**
+ * attach_I - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_I(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  // NOTE(g0mb4): use $to_chars?
+  static const char dispchar[] = { 'I', 'A', 'F', '-' };
+  char ch;
+
+  if (aptr->body->disposition < sizeof(dispchar))
+  {
+    ch = dispchar[aptr->body->disposition];
+  }
+  else
+  {
+    mutt_debug(LL_DEBUG1, "ERROR: invalid content-disposition %d\n", aptr->body->disposition);
+    ch = '!';
+  }
+
+  buf_printf(buf, "%c", ch);
+}
+
+/**
+ * attach_m - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_m(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  const char *s = TYPE(aptr->body);
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * attach_M - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_M(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  const char *s = aptr->body->subtype;
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * attach_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  const int num = aptr->num + 1;
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * attach_Q - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_Q(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  // NOTE(g0mb4): use $to_chars?
+  const char *s = aptr->body->attach_qualifies ? "Q" : " ";
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * attach_s - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  char tmp[128] = { 0 };
+
+  size_t l = 0;
+  if (aptr->body->filename && (flags & MUTT_FORMAT_STAT_FILE))
+  {
+    l = mutt_file_get_size(aptr->body->filename);
+  }
+  else
+  {
+    l = aptr->body->length;
+  }
+
+  mutt_str_pretty_size(tmp, sizeof(tmp), l);
+  buf_strcpy(buf, tmp);
+}
+
+/**
+ * attach_t - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_t(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  // NOTE(g0mb4): use $to_chars?
+  const char *s = aptr->body->tagged ? "*" : " ";
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * attach_T - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_T(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  const char *s = NONULL(aptr->tree);
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * attach_u - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_u(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  // NOTE(g0mb4): use $to_chars?
+  const char *s = aptr->body->unlink ? "-" : " ";
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * attach_X - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_X(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+              int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AttachPtr *aptr = data;
+
+  const int num = aptr->body->attach_count + aptr->body->attach_qualifies;
+  buf_printf(buf, "%d", num);
 }
 
 /**

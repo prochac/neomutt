@@ -75,8 +75,8 @@
  */
 
 #include "config.h"
+#include <assert.h>
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
 #include "mutt/lib.h"
 #include "address/lib.h"
@@ -94,7 +94,6 @@
 #include "functions.h"
 #include "gui.h"
 #include "mutt_logging.h"
-#include "muttlib.h"
 
 /// Help Bar for the Alias dialog (address book)
 static const struct Mapping AliasHelp[] = {
@@ -109,6 +108,107 @@ static const struct Mapping AliasHelp[] = {
   { NULL, 0 },
   // clang-format on
 };
+
+/**
+ * alias_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void alias_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+             int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AliasView *av = data;
+  const struct Alias *alias = av->alias;
+
+  const char *s = alias->name;
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * alias_c - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void alias_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+             int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AliasView *av = data;
+  const struct Alias *alias = av->alias;
+
+  const char *s = alias->comment;
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * alias_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void alias_f(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+             int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AliasView *av = data;
+
+  // NOTE(g0mb4): use $flag_chars?
+  const char *s = av->is_deleted ? "D" : " ";
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * alias_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void alias_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+             int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AliasView *av = data;
+
+  const int num = av->num + 1;
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * alias_r - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void alias_r(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+             int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AliasView *av = data;
+  const struct Alias *alias = av->alias;
+
+  mutt_addrlist_write(&alias->addr, buf, true);
+}
+
+/**
+ * alias_t - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void alias_t(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+             int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AliasView *av = data;
+
+  // NOTE(g0mb4): use $flag_chars?
+  const char *s = av->is_tagged ? "*" : " ";
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * alias_Y - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void alias_Y(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
+             int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct AliasView *av = data;
+
+  alias_tags_to_buffer(&av->alias->tags, buf);
+}
 
 /**
  * alias_make_entry - Format an Alias for the Menu - Implements Menu::make_entry() - @ingroup menu_make_entry

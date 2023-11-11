@@ -67,8 +67,8 @@
  */
 
 #include "config.h"
+#include <assert.h>
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include "private.h"
@@ -80,8 +80,6 @@
 #include "color/lib.h"
 #include "expando/lib.h"
 #include "index/lib.h"
-#include "format_flags.h"
-#include "muttlib.h"
 
 /**
  * struct SidebarData - Data passed to sidebar_format_str()
@@ -326,6 +324,289 @@ static int calc_path_depth(const char *mbox, const char *delims, const char **la
 
   *last_part = mbox;
   return depth;
+}
+
+/**
+ * sidebar_bang - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void sidebar_bang(const struct ExpandoNode *node, void *data,
+                  MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct SidebarData *sdata = data;
+  const struct SbEntry *sbe = sdata->entry;
+  const struct Mailbox *m = sbe->mailbox;
+
+  if (m->msg_flagged == 0)
+  {
+    buf_strcpy(buf, "");
+  }
+  else if (m->msg_flagged == 1)
+  {
+    buf_strcpy(buf, "!");
+  }
+  else if (m->msg_flagged == 2)
+  {
+    buf_strcpy(buf, "!!");
+  }
+  else
+  {
+    buf_printf(buf, "%d!", m->msg_flagged);
+  }
+}
+
+/**
+ * sidebar_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void sidebar_a(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct SidebarData *sdata = data;
+  const struct SbEntry *sbe = sdata->entry;
+  const struct Mailbox *m = sbe->mailbox;
+
+  const int num = m->notify_user;
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * sidebar_B - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void sidebar_B(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct SidebarData *sdata = data;
+  const struct SbEntry *sbe = sdata->entry;
+
+  char tmp[256] = { 0 };
+
+  const size_t ilen = sizeof(tmp);
+  const size_t off = add_indent(tmp, ilen, sbe);
+  snprintf(tmp + off, ilen - off, "%s", sbe->box);
+
+  buf_strcpy(buf, tmp);
+}
+
+/**
+ * sidebar_d - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void sidebar_d(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct SidebarData *sdata = data;
+  const struct SbEntry *sbe = sdata->entry;
+  const struct IndexSharedData *shared = sdata->shared;
+  const struct Mailbox *m = sbe->mailbox;
+  const struct Mailbox *m_cur = shared->mailbox;
+
+  const bool c = m_cur && mutt_str_equal(m_cur->realpath, m->realpath);
+
+  const int num = c ? m_cur->msg_deleted : 0;
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * sidebar_D - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void sidebar_D(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct SidebarData *sdata = data;
+  const struct SbEntry *sbe = sdata->entry;
+
+  char tmp[256] = { 0 };
+
+  const size_t ilen = sizeof(tmp);
+  const size_t off = add_indent(tmp, ilen, sbe);
+
+  if (sbe->mailbox->name)
+  {
+    snprintf(tmp + off, ilen - off, "%s", sbe->mailbox->name);
+  }
+  else
+  {
+    snprintf(tmp + off, ilen - off, "%s", sbe->box);
+  }
+
+  buf_strcpy(buf, tmp);
+}
+
+/**
+ * sidebar_F - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void sidebar_F(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct SidebarData *sdata = data;
+  const struct SbEntry *sbe = sdata->entry;
+  const struct Mailbox *m = sbe->mailbox;
+
+  const int num = m->msg_flagged;
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * sidebar_L - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void sidebar_L(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct SidebarData *sdata = data;
+  const struct SbEntry *sbe = sdata->entry;
+  const struct IndexSharedData *shared = sdata->shared;
+  const struct Mailbox *m = sbe->mailbox;
+  const struct Mailbox *m_cur = shared->mailbox;
+
+  const bool c = m_cur && mutt_str_equal(m_cur->realpath, m->realpath);
+
+  const int num = c ? m_cur->vcount : m->msg_count;
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * sidebar_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void sidebar_n(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct SidebarData *sdata = data;
+  const struct SbEntry *sbe = sdata->entry;
+  const struct Mailbox *m = sbe->mailbox;
+
+  // NOTE(g0mb4): use $flag_chars?
+  const char *s = m->has_new ? "N" : " ";
+  buf_strcpy(buf, NONULL(s));
+}
+
+/**
+ * sidebar_N - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void sidebar_N(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct SidebarData *sdata = data;
+  const struct SbEntry *sbe = sdata->entry;
+  const struct Mailbox *m = sbe->mailbox;
+
+  const int num = m->msg_unread;
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * sidebar_o - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void sidebar_o(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct SidebarData *sdata = data;
+  const struct SbEntry *sbe = sdata->entry;
+  const struct Mailbox *m = sbe->mailbox;
+
+  const int num = m->msg_unread - m->msg_new;
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * sidebar_p - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void sidebar_p(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct SidebarData *sdata = data;
+  const struct SbEntry *sbe = sdata->entry;
+  const struct Mailbox *m = sbe->mailbox;
+
+  const int num = m->poll_new_mail;
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * sidebar_r - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void sidebar_r(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct SidebarData *sdata = data;
+  const struct SbEntry *sbe = sdata->entry;
+  const struct Mailbox *m = sbe->mailbox;
+
+  const int num = m->msg_count - m->msg_unread;
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * sidebar_S - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void sidebar_S(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct SidebarData *sdata = data;
+  const struct SbEntry *sbe = sdata->entry;
+  const struct Mailbox *m = sbe->mailbox;
+
+  const int num = m->msg_count;
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * sidebar_t - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void sidebar_t(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct SidebarData *sdata = data;
+  const struct SbEntry *sbe = sdata->entry;
+  const struct IndexSharedData *shared = sdata->shared;
+  const struct Mailbox *m = sbe->mailbox;
+  const struct Mailbox *m_cur = shared->mailbox;
+
+  const bool c = m_cur && mutt_str_equal(m_cur->realpath, m->realpath);
+
+  const int num = c ? m_cur->msg_tagged : 0;
+  buf_printf(buf, "%d", num);
+}
+
+/**
+ * sidebar_Z - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void sidebar_Z(const struct ExpandoNode *node, void *data,
+               MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  const struct SidebarData *sdata = data;
+  const struct SbEntry *sbe = sdata->entry;
+  const struct Mailbox *m = sbe->mailbox;
+
+  const int num = m->msg_new;
+  buf_printf(buf, "%d", num);
 }
 
 /**
