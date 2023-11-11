@@ -5,7 +5,7 @@
  * @authors
  * Copyright (C) 2020 Aditya De Saha <adityadesaha@gmail.com>
  * Copyright (C) 2020 Pietro Cerutti <gahr@gahr.ch>
- * Copyright (C) 2020-2023 Richard Russon <rich@flatcap.org>
+ * Copyright (C) 2020-2024 Richard Russon <rich@flatcap.org>
  *
  * @copyright
  * This program is free software: you can redistribute it and/or modify it under
@@ -31,8 +31,10 @@
 #include "config.h"
 #include <stddef.h>
 #include <stdbool.h>
+#include "private.h"
 #include "mutt/lib.h"
 #include "config/lib.h"
+#include "expando/lib.h"
 
 /**
  * SortSidebarMethods - Sort methods for the sidebar
@@ -54,6 +56,33 @@ static const struct Mapping SortSidebarMethods[] = {
 };
 
 /**
+ * SidebarFormatData - Expando definitions
+ *
+ * Config:
+ * - $sidebar_format
+ */
+static struct ExpandoDefinition SidebarFormatData[] = {
+  // clang-format off
+  { "!", "flagged",       ED_SIDEBAR, ED_SID_FLAGGED,       E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "a", "notify",        ED_SIDEBAR, ED_SID_NOTIFY,        E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "B", "name",          ED_SIDEBAR, ED_SID_NAME,          E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "d", "deleted-count", ED_SIDEBAR, ED_SID_DELETED_COUNT, E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "D", "description",   ED_SIDEBAR, ED_SID_DESCRIPTION,   E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "F", "flagged-count", ED_SIDEBAR, ED_SID_FLAGGED_COUNT, E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "L", "limited-count", ED_SIDEBAR, ED_SID_LIMITED_COUNT, E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "n", "new-mail",      ED_SIDEBAR, ED_SID_NEW_MAIL,      E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "N", "unread-count",  ED_SIDEBAR, ED_SID_UNREAD_COUNT,  E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "o", "old-count",     ED_SIDEBAR, ED_SID_OLD_COUNT,     E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "p", "poll",          ED_SIDEBAR, ED_SID_POLL,          E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "r", "read-count",    ED_SIDEBAR, ED_SID_READ_COUNT,    E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "S", "message-count", ED_SIDEBAR, ED_SID_MESSAGE_COUNT, E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "t", "tagged-count",  ED_SIDEBAR, ED_SID_TAGGED_COUNT,  E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "Z", "unseen-count",  ED_SIDEBAR, ED_SID_UNSEEN_COUNT,  E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { NULL, NULL, 0, -1, -1, 0, NULL }
+  // clang-format on
+};
+
+/**
  * SidebarVars - Config definitions for the sidebar
  */
 static struct ConfigDef SidebarVars[] = {
@@ -70,7 +99,7 @@ static struct ConfigDef SidebarVars[] = {
   { "sidebar_folder_indent", DT_BOOL, false, 0, NULL,
     "(sidebar) Indent nested folders"
   },
-  { "sidebar_format", DT_STRING|D_NOT_EMPTY, IP "%D%*  %n", 0, NULL,
+  { "sidebar_format", DT_EXPANDO|D_NOT_EMPTY, IP "%D%*  %n", IP &SidebarFormatData, NULL,
     "(sidebar) printf-like format string for the sidebar panel"
   },
   { "sidebar_indent_string", DT_STRING, IP "  ", 0, NULL,

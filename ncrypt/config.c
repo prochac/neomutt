@@ -4,8 +4,9 @@
  *
  * @authors
  * Copyright (C) 2020 Aditya De Saha <adityadesaha@gmail.com>
- * Copyright (C) 2020-2023 Richard Russon <rich@flatcap.org>
+ * Copyright (C) 2020-2024 Richard Russon <rich@flatcap.org>
  * Copyright (C) 2023 наб <nabijaczleweli@nabijaczleweli.xyz>
+ * Copyright (C) 2023-2024 Tóth János <gomba007@gmail.com>
  *
  * @copyright
  * This program is free software: you can redistribute it and/or modify it under
@@ -31,8 +32,13 @@
 #include "config.h"
 #include <stddef.h>
 #include <stdbool.h>
+#include "private.h"
 #include "mutt/lib.h"
 #include "config/lib.h"
+#include "expando/lib.h"
+#include "pgp.h"
+#include "pgplib.h"
+#include "smime.h"
 
 /**
  * SortKeyMethods - Sort methods for encryption keys
@@ -44,6 +50,41 @@ static const struct Mapping SortKeyMethods[] = {
   { "keyid",   SORT_KEYID },
   { "trust",   SORT_TRUST },
   { NULL,      0 },
+  // clang-format on
+};
+
+/**
+ * parse_pgp_date - XXX - Implements ::expando_parser_t - @ingroup expando_parser_api
+ */
+struct ExpandoNode *parse_pgp_date(const char *s, const char **parsed_until,
+                                   int did, int uid, struct ExpandoParseError *error)
+{
+  return expando_parse_enclosed_expando(s, parsed_until, did, uid, ']', error);
+}
+
+/**
+ * PgpEntryFormatData - Expando definitions
+ *
+ * Config:
+ * - $pgp_entry_format
+ */
+static struct ExpandoDefinition PgpEntryFormatData[] = {
+  // clang-format off
+  { "a", "key-algorithm",     ED_PGP_KEY, ED_PGK_KEY_ALGORITHM,     E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "A", "pkey-algorithm",    ED_PGP_KEY, ED_PGK_PKEY_ALGORITHM,    E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "c", "key-capabilities",  ED_PGP_KEY, ED_PGK_KEY_CAPABILITIES,  E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "C", "pkey-capabilities", ED_PGP_KEY, ED_PGK_PKEY_CAPABILITIES, E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "f", "key-flags",         ED_PGP_KEY, ED_PGK_KEY_FLAGS,         E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "F", "pkey-flags",        ED_PGP_KEY, ED_PGK_PKEY_FLAGS,        E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "k", "key-id",            ED_PGP_KEY, ED_PGK_KEY_ID,            E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "K", "pkey-id",           ED_PGP_KEY, ED_PGK_PKEY_ID,           E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "l", "key-length",        ED_PGP_KEY, ED_PGK_KEY_LENGTH,        E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "L", "pkey-length",       ED_PGP_KEY, ED_PGK_PKEY_LENGTH,       E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "n", "number",            ED_PGP,     ED_PGP_NUMBER,            E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "t", "trust",             ED_PGP,     ED_PGP_TRUST,             E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "u", "user-id",           ED_PGP,     ED_PGP_USER_ID,           E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "[", "date",              ED_PGP_KEY, ED_PGK_DATE,              E_TYPE_STRING, E_FLAGS_OPTIONAL, parse_pgp_date },
+  { NULL, NULL, 0, -1, -1, 0, NULL }
   // clang-format on
 };
 
@@ -82,7 +123,7 @@ static struct ConfigDef NcryptVars[] = {
   { "pgp_default_key", DT_STRING, 0, 0, NULL,
     "Default key to use for PGP operations"
   },
-  { "pgp_entry_format", DT_STRING|D_NOT_EMPTY, IP "%4n %t%f %4l/0x%k %-4a %2c %u", 0, NULL,
+  { "pgp_entry_format", DT_EXPANDO|D_NOT_EMPTY, IP "%4n %t%f %4l/0x%k %-4a %2c %u", IP &PgpEntryFormatData, NULL,
     "printf-like format string for the PGP key selection menu"
   },
   { "pgp_ignore_subkeys", DT_BOOL, true, 0, NULL,
@@ -170,6 +211,68 @@ static struct ConfigDef NcryptVarsGpgme[] = {
 
 #if defined(CRYPT_BACKEND_CLASSIC_PGP)
 /**
+ * PgpCommandFormatData - Expando definitions
+ *
+ * Config:
+ * - $pgp_clear_sign_command
+ * - $pgp_decode_command
+ * - $pgp_decrypt_command
+ * - $pgp_encrypt_only_command
+ * - $pgp_encrypt_sign_command
+ * - $pgp_export_command
+ * - $pgp_get_keys_command
+ * - $pgp_import_command
+ * - $pgp_list_pubring_command
+ * - $pgp_list_secring_command
+ * - $pgp_sign_command
+ * - $pgp_verify_command
+ * - $pgp_verify_key_command
+ */
+static struct ExpandoDefinition PgpCommandFormatData[] = {
+  // clang-format off
+  { "a", "sign-as",        ED_PGP_CMD, ED_PGC_SIGN_AS,        E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "f", "file-message",   ED_PGP_CMD, ED_PGC_FILE_MESSAGE,   E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "p", "need-pass",      ED_PGP_CMD, ED_PGC_NEED_PASS,      E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "r", "key-ids",        ED_PGP_CMD, ED_PGC_KEY_IDS,        E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "s", "file-signature", ED_PGP_CMD, ED_PGC_FILE_SIGNATURE, E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { NULL, NULL, 0, -1, -1, 0, NULL }
+  // clang-format on
+};
+#endif
+
+#if defined(CRYPT_BACKEND_CLASSIC_SMIME)
+/**
+ * SmimeCommandFormatData - Expando definitions
+ *
+ * Config:
+ * - $smime_decrypt_command
+ * - $smime_encrypt_command
+ * - $smime_get_cert_command
+ * - $smime_get_cert_email_command
+ * - $smime_get_signer_cert_command
+ * - $smime_import_cert_command
+ * - $smime_pk7out_command
+ * - $smime_sign_command
+ * - $smime_verify_command
+ * - $smime_verify_opaque_command
+ */
+static struct ExpandoDefinition SmimeCommandFormatData[] = {
+  // clang-format off
+  { "a", "algorithm",        ED_SMIME_CMD, ED_SMI_ALGORITHM,        E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "c", "certificate-ids",  ED_SMIME_CMD, ED_SMI_CERTIFICATE_IDS,  E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "C", "certificate-path", ED_GLOBAL,    ED_GLO_CERTIFICATE_PATH, E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "d", "digest-algorithm", ED_SMIME_CMD, ED_SMI_DIGEST_ALGORITHM, E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "f", "message-file",     ED_SMIME_CMD, ED_SMI_MESSAGE_FILE,     E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "i", "intermediate-ids", ED_SMIME_CMD, ED_SMI_INTERMEDIATE_IDS, E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "k", "key",              ED_SMIME_CMD, ED_SMI_KEY,              E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { "s", "signature-file",   ED_SMIME_CMD, ED_SMI_SIGNATURE_FILE,   E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
+  { NULL, NULL, 0, -1, -1, 0, NULL }
+  // clang-format on
+};
+#endif
+
+#if defined(CRYPT_BACKEND_CLASSIC_PGP)
+/**
  * NcryptVarsPgp - PGP Config definitions for the encryption library
  */
 static struct ConfigDef NcryptVarsPgp[] = {
@@ -180,43 +283,43 @@ static struct ConfigDef NcryptVarsPgp[] = {
   { "pgp_check_gpg_decrypt_status_fd", DT_BOOL, true, 0, NULL,
     "File descriptor used for status info"
   },
-  { "pgp_clear_sign_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "pgp_clear_sign_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &PgpCommandFormatData, NULL,
     "(pgp) External command to inline-sign a message"
   },
-  { "pgp_decode_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "pgp_decode_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &PgpCommandFormatData, NULL,
     "(pgp) External command to decode a PGP attachment"
   },
-  { "pgp_decrypt_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "pgp_decrypt_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &PgpCommandFormatData, NULL,
     "(pgp) External command to decrypt a PGP message"
   },
   { "pgp_decryption_okay", DT_REGEX, 0, 0, NULL,
     "Text indicating a successful decryption"
   },
-  { "pgp_encrypt_only_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "pgp_encrypt_only_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &PgpCommandFormatData, NULL,
     "(pgp) External command to encrypt, but not sign a message"
   },
-  { "pgp_encrypt_sign_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "pgp_encrypt_sign_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &PgpCommandFormatData, NULL,
     "(pgp) External command to encrypt and sign a message"
   },
-  { "pgp_export_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "pgp_export_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &PgpCommandFormatData, NULL,
     "(pgp) External command to export a public key from the user's keyring"
   },
-  { "pgp_get_keys_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "pgp_get_keys_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &PgpCommandFormatData, NULL,
     "(pgp) External command to download a key for an email address"
   },
   { "pgp_good_sign", DT_REGEX, 0, 0, NULL,
     "Text indicating a good signature"
   },
-  { "pgp_import_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "pgp_import_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &PgpCommandFormatData, NULL,
     "(pgp) External command to import a key into the user's keyring"
   },
-  { "pgp_list_pubring_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "pgp_list_pubring_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &PgpCommandFormatData, NULL,
     "(pgp) External command to list the public keys in a user's keyring"
   },
-  { "pgp_list_secring_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "pgp_list_secring_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &PgpCommandFormatData, NULL,
     "(pgp) External command to list the private keys in a user's keyring"
   },
-  { "pgp_sign_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "pgp_sign_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &PgpCommandFormatData, NULL,
     "(pgp) External command to create a detached PGP signature"
   },
   { "pgp_timeout", DT_LONG|D_INTEGER_NOT_NEGATIVE, 300, 0, NULL,
@@ -225,10 +328,10 @@ static struct ConfigDef NcryptVarsPgp[] = {
   { "pgp_use_gpg_agent", DT_BOOL, true, 0, NULL,
     "Use a PGP agent for caching passwords"
   },
-  { "pgp_verify_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "pgp_verify_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &PgpCommandFormatData, NULL,
     "(pgp) External command to verify PGP signatures"
   },
-  { "pgp_verify_key_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "pgp_verify_key_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &PgpCommandFormatData, NULL,
     "(pgp) External command to verify key information"
   },
   { "pgp_clearsign_command",  DT_SYNONYM, IP "pgp_clear_sign_command", IP "2021-02-11" },
@@ -253,34 +356,34 @@ static struct ConfigDef NcryptVarsSmime[] = {
   { "smime_certificates", DT_PATH|D_PATH_DIR, 0, 0, NULL,
     "File containing user's public certificates"
   },
-  { "smime_decrypt_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "smime_decrypt_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &SmimeCommandFormatData, NULL,
     "(smime) External command to decrypt an SMIME message"
   },
   { "smime_decrypt_use_default_key", DT_BOOL, true, 0, NULL,
     "Use the default key for decryption"
   },
-  { "smime_encrypt_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "smime_encrypt_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &SmimeCommandFormatData, NULL,
     "(smime) External command to encrypt a message"
   },
-  { "smime_get_cert_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "smime_get_cert_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &SmimeCommandFormatData, NULL,
     "(smime) External command to extract a certificate from a message"
   },
-  { "smime_get_cert_email_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "smime_get_cert_email_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &SmimeCommandFormatData, NULL,
     "(smime) External command to get a certificate for an email"
   },
-  { "smime_get_signer_cert_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "smime_get_signer_cert_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &SmimeCommandFormatData, NULL,
     "(smime) External command to extract a certificate from an email"
   },
-  { "smime_import_cert_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "smime_import_cert_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &SmimeCommandFormatData, NULL,
     "(smime) External command to import a certificate"
   },
   { "smime_keys", DT_PATH|D_PATH_DIR, 0, 0, NULL,
     "File containing user's private certificates"
   },
-  { "smime_pk7out_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "smime_pk7out_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &SmimeCommandFormatData, NULL,
     "(smime) External command to extract a public certificate"
   },
-  { "smime_sign_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "smime_sign_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &SmimeCommandFormatData, NULL,
     "(smime) External command to sign a message"
   },
   { "smime_sign_digest_alg", DT_STRING, IP "sha256", 0, NULL,
@@ -289,10 +392,10 @@ static struct ConfigDef NcryptVarsSmime[] = {
   { "smime_timeout", DT_NUMBER|D_INTEGER_NOT_NEGATIVE, 300, 0, NULL,
     "Time in seconds to cache a passphrase"
   },
-  { "smime_verify_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "smime_verify_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &SmimeCommandFormatData, NULL,
     "(smime) External command to verify a signed message"
   },
-  { "smime_verify_opaque_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
+  { "smime_verify_opaque_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &SmimeCommandFormatData, NULL,
     "(smime) External command to verify a signature"
   },
   { NULL },

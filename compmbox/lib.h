@@ -37,6 +37,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "core/lib.h"
+#include "expando/lib.h"
 
 /**
  * ExpandoDataCompress - Expando UIDs for Compression
@@ -69,5 +70,7 @@ bool mutt_comp_can_read(const char *path);
 int  mutt_comp_valid_command(const char *cmd);
 
 extern const struct MxOps MxCompOps;
+
+extern struct ExpandoDefinition CompressFormatData[];
 
 #endif /* MUTT_COMPMBOX_LIB_H */

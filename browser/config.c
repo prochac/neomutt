@@ -4,7 +4,7 @@
  *
  * @authors
  * Copyright (C) 2022 Carlos Henrique Lima Melara <charlesmelara@outlook.com>
- * Copyright (C) 2023 Richard Russon <rich@flatcap.org>
+ * Copyright (C) 2023-2024 Richard Russon <rich@flatcap.org>
  * Copyright (C) 2023 наб <nabijaczleweli@nabijaczleweli.xyz>
  *
  * @copyright
@@ -33,6 +33,8 @@
 #include <stdbool.h>
 #include "mutt/lib.h"
 #include "config/lib.h"
+#include "lib.h"
+#include "expando/lib.h"
 
 /**
  * SortBrowserMethods - Sort methods for the folder/dir browser
@@ -52,6 +54,66 @@ static const struct Mapping SortBrowserMethods[] = {
 };
 
 /**
+ * parse_folder_date - XXX - Implements ::expando_parser_t - @ingroup expando_parser_api
+ */
+struct ExpandoNode *parse_folder_date(const char *s, const char **parsed_until,
+                                      int did, int uid, struct ExpandoParseError *error)
+{
+  return expando_parse_enclosed_expando(s, parsed_until, did, uid, ']', error);
+}
+
+/**
+ * FolderFormatData - Expando definitions
+ *
+ * Config:
+ * - $folder_format
+ * - $mailbox_folder_format
+ */
+static struct ExpandoDefinition FolderFormatData[] = {
+  // clang-format off
+  { "a", "notify",        ED_FOLDER, ED_FOL_NOTIFY,        E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "C", "number",        ED_FOLDER, ED_FOL_NUMBER,        E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },
+  { "d", "date",          ED_FOLDER, ED_FOL_DATE,          E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "D", "date-format",   ED_FOLDER, ED_FOL_DATE_FORMAT,   E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "F", "file-mode",     ED_FOLDER, ED_FOL_FILE_MODE,     E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "f", "filename",      ED_FOLDER, ED_FOL_FILENAME,      E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "g", "file-group",    ED_FOLDER, ED_FOL_FILE_GROUP,    E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "i", "description",   ED_FOLDER, ED_FOL_DESCRIPTION,   E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "l", "hard-links",    ED_FOLDER, ED_FOL_HARD_LINKS,    E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "m", "message-count", ED_FOLDER, ED_FOL_MESSAGE_COUNT, E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "N", "new-mail",      ED_FOLDER, ED_FOL_NEW_MAIL,      E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "n", "unread-count",  ED_FOLDER, ED_FOL_UNREAD_COUNT,  E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "p", "poll",          ED_FOLDER, ED_FOL_POLL,          E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "s", "file-size",     ED_FOLDER, ED_FOL_FILE_SIZE,     E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },
+  { "t", "tagged",        ED_FOLDER, ED_FOL_TAGGED,        E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "u", "file-owner",    ED_FOLDER, ED_FOL_FILE_OWNER,    E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "[", NULL,            ED_FOLDER, ED_FOL_STRF,          E_TYPE_STRING, E_FLAGS_NO_FLAGS, parse_folder_date },
+  { NULL, NULL, 0, -1, -1, 0, NULL }
+  // clang-format on
+};
+
+/**
+ * GroupIndexFormatData - Expando definitions
+ *
+ * Config:
+ * - $group_index_format
+ */
+static struct ExpandoDefinition GroupIndexFormatData[] = {
+  // clang-format off
+  { "a", "notify",       ED_FOLDER, ED_FOL_NOTIFY,       E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "C", "number",       ED_FOLDER, ED_FOL_NUMBER,       E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },
+  { "d", "description",  ED_FOLDER, ED_FOL_DESCRIPTION,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "f", "newsgroup",    ED_FOLDER, ED_FOL_NEWSGROUP,    E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "M", "flags",        ED_FOLDER, ED_FOL_FLAGS,        E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "N", "flags2",       ED_FOLDER, ED_FOL_FLAGS2,       E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "n", "new-count",    ED_FOLDER, ED_FOL_NEW_COUNT,    E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },
+  { "p", "poll",         ED_FOLDER, ED_FOL_POLL,         E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
+  { "s", "unread-count", ED_FOLDER, ED_FOL_UNREAD_COUNT, E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },
+  { NULL, NULL, 0, -1, -1, 0, NULL }
+  // clang-format on
+};
+
+/**
  * BrowserVars - Config definitions for the browser
  */
 static struct ConfigDef BrowserVars[] = {
@@ -59,13 +121,13 @@ static struct ConfigDef BrowserVars[] = {
   { "browser_abbreviate_mailboxes", DT_BOOL, true, 0, NULL,
     "Abbreviate mailboxes using '~' and '=' in the browser"
   },
-  { "folder_format", DT_STRING|D_NOT_EMPTY, IP "%2C %t %N %F %2l %-8.8u %-8.8g %8s %d %i", 0, NULL,
+  { "folder_format", DT_EXPANDO|D_NOT_EMPTY, IP "%2C %t %N %F %2l %-8.8u %-8.8g %8s %d %i", IP &FolderFormatData, NULL,
     "printf-like format string for the browser's display of folders"
   },
-  { "group_index_format", DT_STRING|D_NOT_EMPTY, IP "%4C %M%N %5s  %-45.45f %d", 0, NULL,
+  { "group_index_format", DT_EXPANDO|D_NOT_EMPTY, IP "%4C %M%N %5s  %-45.45f %d", IP &GroupIndexFormatData, NULL,
     "(nntp) printf-like format string for the browser's display of newsgroups"
   },
-  { "mailbox_folder_format", DT_STRING|D_NOT_EMPTY, IP "%2C %<n?%6n&      > %6m %i", 0, NULL,
+  { "mailbox_folder_format", DT_EXPANDO|D_NOT_EMPTY, IP "%2C %<n?%6n&      > %6m %i", IP &FolderFormatData, NULL,
     "printf-like format string for the browser's display of mailbox folders"
   },
   { "mask", DT_REGEX|D_REGEX_MATCH_CASE|D_REGEX_ALLOW_NOT|D_REGEX_NOSUB, IP "!^\\.[^.]", 0, NULL,

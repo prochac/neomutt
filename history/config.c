@@ -3,7 +3,7 @@
  * Config used by libhistory
  *
  * @authors
- * Copyright (C) 2020-2021 Richard Russon <rich@flatcap.org>
+ * Copyright (C) 2020-2024 Richard Russon <rich@flatcap.org>
  *
  * @copyright
  * This program is free software: you can redistribute it and/or modify it under
@@ -30,6 +30,22 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "config/lib.h"
+#include "lib.h"
+#include "expando/lib.h"
+
+/**
+ * HistoryFormatData - Expando definitions
+ *
+ * Config:
+ * - $history_format
+ */
+static struct ExpandoDefinition HistoryFormatData[] = {
+  // clang-format off
+  { "C", "number", ED_HISTORY, ED_HIS_NUMBER, E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },
+  { "s", "match",  ED_HISTORY, ED_HIS_MATCH,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { NULL, NULL, 0, -1, -1, 0, NULL }
+  // clang-format on
+};
 
 /**
  * HistoryVars - Config definitions for the command history
@@ -42,7 +58,7 @@ static struct ConfigDef HistoryVars[] = {
   { "history_file", DT_PATH|D_PATH_FILE, IP "~/.mutthistory", 0, NULL,
     "File to save history in"
   },
-  { "history_format", DT_STRING, IP "%s", 0, NULL,
+  { "history_format", DT_EXPANDO, IP "%s", IP &HistoryFormatData, NULL,
     "printf-like format string for the history menu"
   },
   { "history_remove_dups", DT_BOOL, false, 0, NULL,
