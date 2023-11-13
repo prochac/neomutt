@@ -3,7 +3,7 @@
  * PGP sign, encrypt, check routines
  *
  * @authors
- * Copyright (C) 2017-2023 Richard Russon <rich@flatcap.org>
+ * Copyright (C) 2017-2024 Richard Russon <rich@flatcap.org>
  * Copyright (C) 2019 Pietro Cerutti <gahr@gahr.ch>
  *
  * @copyright
@@ -46,6 +46,18 @@ struct PgpCommandContext
   const char *sig_fname; ///< %s
   const char *signas;    ///< %a
   const char *ids;       ///< %r
+};
+
+/**
+ * ExpandoDataPgpCmd - Expando UIDs for struct PgpCommandContext
+ */
+enum ExpandoDataPgpCmd
+{
+  ED_PGC_FILE_MESSAGE = 1,     ///< XXX
+  ED_PGC_FILE_SIGNATURE,       ///< XXX
+  ED_PGC_KEY_IDS,              ///< XXX
+  ED_PGC_NEED_PASS,            ///< XXX
+  ED_PGC_SIGN_AS,              ///< XXX
 };
 
 char *        pgp_fpr_or_lkeyid                    (struct PgpKeyInfo *k);

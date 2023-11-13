@@ -42,6 +42,16 @@ struct PatternEntry
 };
 
 /**
+ * ExpandoDataPattern - Expando UIDs for struct PatternEntry
+ */
+enum ExpandoDataPattern
+{
+  ED_PAT_DESCRIPTION = 1,      ///< XXX
+  ED_PAT_EXPRESION,            ///< XXX
+  ED_PAT_NUMBER,               ///< XXX
+};
+
+/**
  * enum PatternEat - Function to process pattern arguments
  *
  * Values for PatternFlags.eat_arg

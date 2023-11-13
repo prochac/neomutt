@@ -148,6 +148,16 @@ struct Mailbox
 };
 
 /**
+ * ExpandoDataMailbox - Expando UIDs for struct Mailbox
+ */
+enum ExpandoDataMailbox
+{
+  ED_MBX_MAILBOX_NAME = 1,     ///< XXX
+  ED_MBX_MESSAGE_COUNT,        ///< XXX
+  ED_MBX_PERCENTAGE,           ///< XXX
+};
+
+/**
  * struct MailboxNode - List of Mailboxes
  */
 struct MailboxNode

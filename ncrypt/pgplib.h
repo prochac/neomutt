@@ -4,7 +4,7 @@
  *
  * @authors
  * Copyright (C) 2017 Pietro Cerutti <gahr@gahr.ch>
- * Copyright (C) 2017-2021 Richard Russon <rich@flatcap.org>
+ * Copyright (C) 2017-2024 Richard Russon <rich@flatcap.org>
  *
  * @copyright
  * This program is free software: you can redistribute it and/or modify it under
@@ -55,6 +55,24 @@ struct PgpKeyInfo
   const char *algorithm;
   struct PgpKeyInfo *parent;
   struct PgpKeyInfo *next;
+};
+
+/**
+ * ExpandoDataPgpKey - Expando UIDs for struct PgpKeyInfo
+ */
+enum ExpandoDataPgpKey
+{
+  ED_PGK_DATE = 1,             ///< XXX
+  ED_PGK_KEY_ALGORITHM,        ///< XXX
+  ED_PGK_KEY_CAPABILITIES,     ///< XXX
+  ED_PGK_KEY_FLAGS,            ///< XXX
+  ED_PGK_KEY_ID,               ///< XXX
+  ED_PGK_KEY_LENGTH,           ///< XXX
+  ED_PGK_PKEY_ALGORITHM,       ///< XXX
+  ED_PGK_PKEY_CAPABILITIES,    ///< XXX
+  ED_PGK_PKEY_FLAGS,           ///< XXX
+  ED_PGK_PKEY_ID,              ///< XXX
+  ED_PGK_PKEY_LENGTH,          ///< XXX
 };
 
 const char *pgp_pkalgbytype(unsigned char type);

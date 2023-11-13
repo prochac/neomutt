@@ -3,7 +3,7 @@
  * GUI display the mailboxes in a side panel
  *
  * @authors
- * Copyright (C) 2020-2023 Richard Russon <rich@flatcap.org>
+ * Copyright (C) 2020-2024 Richard Russon <rich@flatcap.org>
  *
  * @copyright
  * This program is free software: you can redistribute it and/or modify it under
@@ -47,6 +47,28 @@ struct SbEntry
   const struct AttrColor *color;  ///< Colour to use
 };
 ARRAY_HEAD(SbEntryArray, struct SbEntry *);
+
+/**
+ * ExpandoDataSidebar - Expando UIDs for struct SbEntry
+ */
+enum ExpandoDataSidebar
+{
+  ED_SID_DELETED_COUNT = 1,    ///< XXX
+  ED_SID_DESCRIPTION,          ///< XXX
+  ED_SID_FLAGGED,              ///< XXX
+  ED_SID_FLAGGED_COUNT,        ///< XXX
+  ED_SID_LIMITED_COUNT,        ///< XXX
+  ED_SID_MESSAGE_COUNT,        ///< XXX
+  ED_SID_NAME,                 ///< XXX
+  ED_SID_NEW_MAIL,             ///< XXX
+  ED_SID_NOTIFY,               ///< XXX
+  ED_SID_OLD_COUNT,            ///< XXX
+  ED_SID_POLL,                 ///< XXX
+  ED_SID_READ_COUNT,           ///< XXX
+  ED_SID_TAGGED_COUNT,         ///< XXX
+  ED_SID_UNREAD_COUNT,         ///< XXX
+  ED_SID_UNSEEN_COUNT,         ///< XXX
+};
 
 /**
  * enum DivType - Source of the sidebar divider character

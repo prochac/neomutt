@@ -3,7 +3,7 @@
  * Connection Credentials
  *
  * @authors
- * Copyright (C) 2018-2020 Richard Russon <rich@flatcap.org>
+ * Copyright (C) 2018-2024 Richard Russon <rich@flatcap.org>
  *
  * @copyright
  * This program is free software: you can redistribute it and/or modify it under
@@ -70,6 +70,19 @@ struct ConnAccount
   const char *(*get_field)(enum ConnAccountField field, void *gf_data);
 
   void *gf_data;          ///< Private data to pass to get_field()
+};
+
+/**
+ * ExpandoDataNntp - Expando UIDs for struct ConnAccount
+ */
+enum ExpandoDataNntp
+{
+  ED_NTP_ACCOUNT = 1,          ///< XXX
+  ED_NTP_PORT,                 ///< XXX
+  ED_NTP_PORT_IF,              ///< XXX
+  ED_NTP_SCHEMA,               ///< XXX
+  ED_NTP_SERVER,               ///< XXX
+  ED_NTP_USERNAME,             ///< XXX
 };
 
 int   mutt_account_getlogin      (struct ConnAccount *account);

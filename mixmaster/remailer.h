@@ -3,7 +3,7 @@
  * Mixmaster Remailer
  *
  * @authors
- * Copyright (C) 2022 Richard Russon <rich@flatcap.org>
+ * Copyright (C) 2022-2024 Richard Russon <rich@flatcap.org>
  *
  * @copyright
  * This program is free software: you can redistribute it and/or modify it under
@@ -45,6 +45,17 @@ struct Remailer
   MixCapFlags caps; ///< Capabilities of host
 };
 ARRAY_HEAD(RemailerArray, struct Remailer *);
+
+/**
+ * ExpandoDataMixmaster - Expando UIDs for struct Remailer
+ */
+enum ExpandoDataMixmaster
+{
+  ED_MIX_ADDRESS = 1,          ///< XXX
+  ED_MIX_CAPABILITIES,         ///< XXX
+  ED_MIX_NUMBER,               ///< XXX
+  ED_MIX_SHORT_NAME,           ///< XXX
+};
 
 void             remailer_free(struct Remailer **ptr);
 struct Remailer *remailer_new (void);

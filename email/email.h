@@ -3,7 +3,7 @@
  * Representation of an email
  *
  * @authors
- * Copyright (C) 2018-2023 Richard Russon <rich@flatcap.org>
+ * Copyright (C) 2018-2024 Richard Russon <rich@flatcap.org>
  * Copyright (C) 2020 Matthew Hughes <matthewhughes934@gmail.com>
  * Copyright (C) 2020 Pietro Cerutti <gahr@gahr.ch>
  *
@@ -128,6 +128,37 @@ struct Email
   char *tree;                  ///< Character string to print thread tree
 };
 ARRAY_HEAD(EmailArray, struct Email *);
+
+/**
+ * ExpandoDataEmail - Expando UIDs for struct Email
+ */
+enum ExpandoDataEmail
+{
+  ED_EMA_ATTACHMENT_COUNT = 1, ///< XXX
+  ED_EMA_COMBINED_FLAGS,       ///< XXX
+  ED_EMA_CRYPTO_FLAGS,         ///< XXX
+  ED_EMA_DATE_FORMAT,          ///< XXX
+  ED_EMA_DATE_FORMAT_LOCAL,    ///< XXX
+  ED_EMA_FROM_LIST,            ///< XXX
+  ED_EMA_INDEX_HOOK,           ///< XXX
+  ED_EMA_LINES,                ///< XXX
+  ED_EMA_MESSAGE_FLAGS,        ///< XXX
+  ED_EMA_NUMBER,               ///< XXX
+  ED_EMA_SAVE_FOLDER,          ///< XXX
+  ED_EMA_SCORE,                ///< XXX
+  ED_EMA_SIZE,                 ///< XXX
+  ED_EMA_STATUS_FLAGS,         ///< XXX
+  ED_EMA_STRF,                 ///< XXX
+  ED_EMA_STRF_LOCAL,           ///< XXX
+  ED_EMA_STRF_RECV_LOCAL,      ///< XXX
+  ED_EMA_TAGS,                 ///< XXX
+  ED_EMA_TAGS_TRANSFORMED,     ///< XXX
+  ED_EMA_THREAD_COUNT,         ///< XXX
+  ED_EMA_THREAD_HIDDEN_COUNT,  ///< XXX
+  ED_EMA_THREAD_NUMBER,        ///< XXX
+  ED_EMA_THREAD_TAGS,          ///< XXX
+  ED_EMA_TO_CHARS,             ///< XXX
+};
 
 /**
  * struct EmailNode - List of Emails

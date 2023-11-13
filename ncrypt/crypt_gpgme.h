@@ -3,7 +3,7 @@
  * Wrapper for PGP/SMIME calls to GPGME
  *
  * @authors
- * Copyright (C) 2017-2023 Richard Russon <rich@flatcap.org>
+ * Copyright (C) 2017-2024 Richard Russon <rich@flatcap.org>
  * Copyright (C) 2019-2021 Pietro Cerutti <gahr@gahr.ch>
  *
  * @copyright
@@ -85,6 +85,30 @@ struct CryptEntry
 {
   size_t num;               ///< Index number
   struct CryptKeyInfo *key; ///< Key
+};
+
+/**
+ * ExpandoDataPgpKeyGpgme - Expando UIDs for struct CryptEntry
+ */
+enum ExpandoDataPgpKeyGpgme
+{
+  ED_GPG_DATE = 1,             ///< XXX
+  ED_GPG_KEY_ALGORITHM,        ///< XXX
+  ED_GPG_KEY_CAPABILITIES,     ///< XXX
+  ED_GPG_KEY_FINGERPRINT,      ///< XXX
+  ED_GPG_KEY_FLAGS,            ///< XXX
+  ED_GPG_KEY_ID,               ///< XXX
+  ED_GPG_KEY_LENGTH,           ///< XXX
+  ED_GPG_NUMBER,               ///< XXX
+  ED_GPG_PKEY_ALGORITHM,       ///< XXX
+  ED_GPG_PKEY_CAPABILITIES,    ///< XXX
+  ED_GPG_PKEY_FINGERPRINT,     ///< XXX
+  ED_GPG_PKEY_FLAGS,           ///< XXX
+  ED_GPG_PKEY_ID,              ///< XXX
+  ED_GPG_PKEY_LENGTH,          ///< XXX
+  ED_GPG_PROTOCOL,             ///< XXX
+  ED_GPG_TRUST,                ///< XXX
+  ED_GPG_USER_ID,              ///< XXX
 };
 
 void                 pgp_gpgme_set_sender           (const char *sender);

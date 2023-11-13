@@ -3,7 +3,7 @@
  * Data shared between Index, Pager and Sidebar
  *
  * @authors
- * Copyright (C) 2021-2023 Richard Russon <rich@flatcap.org>
+ * Copyright (C) 2021-2024 Richard Russon <rich@flatcap.org>
  *
  * @copyright
  * This program is free software: you can redistribute it and/or modify it under
@@ -44,6 +44,29 @@ struct IndexSharedData
   struct Notify       *notify;         ///< Notifications: #NotifyIndex, #IndexSharedData
   struct SearchState  *search_state;   ///< State of the current search
   bool                 attach_msg;     ///< Are we in "attach message" mode?
+};
+
+/**
+ * ExpandoDataIndex - Expando UIDs for struct IndexSharedData
+ */
+enum ExpandoDataIndex
+{
+  ED_IND_DELETED_COUNT = 1,    ///< XXX
+  ED_IND_DESCRIPTION,          ///< XXX
+  ED_IND_FLAGGED_COUNT,        ///< XXX
+  ED_IND_LIMIT_COUNT,          ///< XXX
+  ED_IND_LIMIT_PATTERN,        ///< XXX
+  ED_IND_LIMIT_SIZE,           ///< XXX
+  ED_IND_MAILBOX_PATH,         ///< XXX
+  ED_IND_MAILBOX_SIZE,         ///< XXX
+  ED_IND_MESSAGE_COUNT,        ///< XXX
+  ED_IND_NEW_COUNT,            ///< XXX
+  ED_IND_OLD_COUNT,            ///< XXX
+  ED_IND_POSTPONED_COUNT,      ///< XXX
+  ED_IND_READONLY,             ///< XXX
+  ED_IND_READ_COUNT,           ///< XXX
+  ED_IND_TAGGED_COUNT,         ///< XXX
+  ED_IND_UNREAD_COUNT,         ///< XXX
 };
 
 void                    index_shared_data_free(struct MuttWindow *win, void **ptr);
