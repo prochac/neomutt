@@ -956,6 +956,44 @@ static int select_file_search(struct Menu *menu, regex_t *rx, int line)
  */
 static void folder_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
+  static const struct ExpandoRenderData FolderRenderData[] = {
+    // clang-format off
+    { ED_FOLDER, ED_FOL_NOTIFY,        folder_a    },
+    { ED_FOLDER, ED_FOL_NUMBER,        folder_C    },
+    { ED_FOLDER, ED_FOL_DATE,          folder_d    },
+    { ED_FOLDER, ED_FOL_DATE_FORMAT,   folder_D    },
+    { ED_FOLDER, ED_FOL_FILE_MODE,     folder_F    },
+    { ED_FOLDER, ED_FOL_FILENAME,      folder_f    },
+    { ED_FOLDER, ED_FOL_FILE_GROUP,    folder_g    },
+    { ED_FOLDER, ED_FOL_DESCRIPTION,   folder_i    },
+    { ED_FOLDER, ED_FOL_HARD_LINKS,    folder_l    },
+    { ED_FOLDER, ED_FOL_MESSAGE_COUNT, folder_m    },
+    { ED_FOLDER, ED_FOL_NEW_MAIL,      folder_N    },
+    { ED_FOLDER, ED_FOL_UNREAD_COUNT,  folder_n    },
+    { ED_FOLDER, ED_FOL_POLL,          folder_p    },
+    { ED_FOLDER, ED_FOL_FILE_SIZE,     folder_s    },
+    { ED_FOLDER, ED_FOL_TAGGED,        folder_t    },
+    { ED_FOLDER, ED_FOL_FILE_OWNER,    folder_u    },
+    { ED_FOLDER, ED_FOL_STRF,          folder_date },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
+  static const struct ExpandoRenderData GroupIndexRenderData[] = {
+    // clang-format off
+    { ED_FOLDER, ED_FOL_NOTIFY,       group_index_a },
+    { ED_FOLDER, ED_FOL_NUMBER,       group_index_C },
+    { ED_FOLDER, ED_FOL_DESCRIPTION,  group_index_d },
+    { ED_FOLDER, ED_FOL_NEWSGROUP,    group_index_f },
+    { ED_FOLDER, ED_FOL_FLAGS,        group_index_M },
+    { ED_FOLDER, ED_FOL_FLAGS2,       group_index_N },
+    { ED_FOLDER, ED_FOL_NEW_COUNT,    group_index_n },
+    { ED_FOLDER, ED_FOL_POLL,         group_index_p },
+    { ED_FOLDER, ED_FOL_UNREAD_COUNT, group_index_s },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   struct BrowserState *bstate = menu->mdata;
   struct BrowserEntryArray *entry = &bstate->entry;
   struct Folder folder = {

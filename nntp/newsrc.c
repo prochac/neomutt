@@ -1073,6 +1073,18 @@ static const char *nntp_get_field(enum ConnAccountField field, void *gf_data)
  */
 struct NntpAccountData *nntp_select_server(struct Mailbox *m, const char *server, bool leave_lock)
 {
+  static const struct ExpandoRenderData NntpRenderData[] = {
+    // clang-format off
+    { ED_NNTP, ED_NTP_ACCOUNT,  nntp_a },
+    { ED_NNTP, ED_NTP_PORT,     nntp_p },
+    { ED_NNTP, ED_NTP_PORT_IF,  nntp_P },
+    { ED_NNTP, ED_NTP_SCHEMA,   nntp_S },
+    { ED_NNTP, ED_NTP_SERVER,   nntp_s },
+    { ED_NNTP, ED_NTP_USERNAME, nntp_u },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   char file[PATH_MAX] = { 0 };
   int rc;
   struct ConnAccount cac = { { 0 } };

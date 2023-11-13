@@ -88,6 +88,8 @@ enum FieldType
   DISP_MAX,
 };
 
+extern const struct ExpandoRenderData IndexRenderData[];
+
 /**
  * make_from_prefix - Create a prefix for an author field
  * @param disp   Type of field
@@ -1833,3 +1835,58 @@ void mutt_make_string(struct Buffer *buf, int cols, const char *s,
   // mutt_expando_format(buf->data, buf->dsize, 0, cols, s, index_format_str,
   //                     (intptr_t) &hfi, flags);
 }
+
+const struct ExpandoRenderData IndexRenderData[] = {
+  // clang-format off
+  { ED_EMAIL,    ED_EMA_STRF_RECV_LOCAL,     index_date_recv_local },
+  { ED_EMAIL,    ED_EMA_INDEX_HOOK,          index_format_hook },
+  { ED_ENVELOPE, ED_ENV_FROM,                index_a           },
+  { ED_ENVELOPE, ED_ENV_REPLY_TO,            index_A           },
+  { ED_ENVELOPE, ED_ENV_LIST_ADDRESS,        index_B           },
+  { ED_MAILBOX,  ED_MBX_MAILBOX_NAME,        index_b           },
+  { ED_EMAIL,    ED_EMA_NUMBER,              index_C           },
+  { ED_EMAIL,    ED_EMA_SIZE,                index_c           },
+  { ED_EMAIL,    ED_EMA_DATE_FORMAT,         index_d           },
+  { ED_EMAIL,    ED_EMA_DATE_FORMAT_LOCAL,   index_D           },
+  { ED_EMAIL,    ED_EMA_THREAD_COUNT,        index_E           },
+  { ED_EMAIL,    ED_EMA_THREAD_NUMBER,       index_e           },
+  { ED_ENVELOPE, ED_ENV_FROM_FULL,           index_f           },
+  { ED_ENVELOPE, ED_ENV_SENDER,              index_F           },
+  { ED_EMAIL,    ED_EMA_TAGS,                index_g           },
+  { ED_EMAIL,    ED_EMA_TAGS_TRANSFORMED,    index_G           },
+  { ED_ENVELOPE, ED_ENV_SPAM,                index_H           },
+  { ED_ENVELOPE, ED_ENV_INITIALS,            index_I           },
+  { ED_ENVELOPE, ED_ENV_MESSAGE_ID,          index_i           },
+  { ED_EMAIL,    ED_EMA_THREAD_TAGS,         index_J           },
+  { ED_ENVELOPE, ED_ENV_LIST_EMPTY,          index_K           },
+  { ED_EMAIL,    ED_EMA_FROM_LIST,           index_L           },
+  { ED_EMAIL,    ED_EMA_LINES,               index_l           },
+  { ED_MAILBOX,  ED_MBX_MESSAGE_COUNT,       index_m           },
+  { ED_EMAIL,    ED_EMA_THREAD_HIDDEN_COUNT, index_M           },
+  { ED_ENVELOPE, ED_ENV_NAME,                index_n           },
+  { ED_EMAIL,    ED_EMA_SCORE,               index_N           },
+  { ED_EMAIL,    ED_EMA_SAVE_FOLDER,         index_O           },
+  { ED_MAILBOX,  ED_MBX_PERCENTAGE,          index_P           },
+  { ED_ENVELOPE, ED_ENV_NEWSGROUP,           index_q           },
+  { ED_ENVELOPE, ED_ENV_CC_ALL,              index_R           },
+  { ED_ENVELOPE, ED_ENV_TO_ALL,              index_r           },
+  { ED_EMAIL,    ED_EMA_STATUS_FLAGS,        index_S           },
+  { ED_ENVELOPE, ED_ENV_SUBJECT,             index_s           },
+  { ED_ENVELOPE, ED_ENV_TO,                  index_t           },
+  { ED_EMAIL,    ED_EMA_TO_CHARS,            index_T           },
+  { ED_ENVELOPE, ED_ENV_USERNAME,            index_u           },
+  { ED_ENVELOPE, ED_ENV_FIRST_NAME,          index_v           },
+  { ED_ENVELOPE, ED_ENV_ORGANIZATION,        index_W           },
+  { ED_EMAIL,    ED_EMA_ATTACHMENT_COUNT,    index_X           },
+  { ED_ENVELOPE, ED_ENV_X_COMMENT_TO,        index_x           },
+  { ED_ENVELOPE, ED_ENV_THREAD_X_LABEL,      index_Y           },
+  { ED_ENVELOPE, ED_ENV_X_LABEL,             index_y           },
+  { ED_EMAIL,    ED_EMA_COMBINED_FLAGS,      index_Z           },
+  { ED_EMAIL,    ED_EMA_CRYPTO_FLAGS,        index_zc          },
+  { ED_EMAIL,    ED_EMA_STATUS_FLAGS,        index_zs          },
+  { ED_EMAIL,    ED_EMA_MESSAGE_FLAGS,       index_zt          },
+  { ED_EMAIL,    ED_EMA_STRF_LOCAL,          index_date_local  },
+  { ED_EMAIL,    ED_EMA_STRF,                index_date        },
+  { -1, -1, NULL },
+  // clang-format on
+};

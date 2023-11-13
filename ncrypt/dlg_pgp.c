@@ -579,6 +579,26 @@ void pgp_entry_pgp_L(const struct ExpandoNode *node, void *data,
  */
 static void pgp_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
+  static const struct ExpandoRenderData PgpEntryRenderData[] = {
+    // clang-format off
+    { ED_PGP_KEY,            ED_PGK_KEY_ALGORITHM,       pgp_entry_pgp_date },
+    { ED_PGP_KEY,            ED_PGK_PKEY_ALGORITHM,      pgp_entry_pgp_A    },
+    { ED_PGP_KEY,            ED_PGK_KEY_CAPABILITIES,    pgp_entry_pgp_a    },
+    { ED_PGP_KEY,            ED_PGK_PKEY_CAPABILITIES,   pgp_entry_pgp_C    },
+    { ED_PGP_KEY,            ED_PGK_KEY_FLAGS,           pgp_entry_pgp_c    },
+    { ED_PGP_KEY,            ED_PGK_PKEY_FLAGS,          pgp_entry_pgp_F    },
+    { ED_PGP_KEY,            ED_PGK_KEY_ID,              pgp_entry_pgp_f    },
+    { ED_PGP_KEY,            ED_PGK_PKEY_ID,             pgp_entry_pgp_K    },
+    { ED_PGP_KEY,            ED_PGK_KEY_LENGTH,          pgp_entry_pgp_k    },
+    { ED_PGP_KEY,            ED_PGK_PKEY_LENGTH,         pgp_entry_pgp_L    },
+    { ED_PGP,                ED_PGP_NUMBER,              pgp_entry_pgp_l    },
+    { ED_PGP,                ED_PGP_TRUST,               pgp_entry_pgp_n    },
+    { ED_PGP,                ED_PGP_USER_ID,             pgp_entry_pgp_t    },
+    { ED_PGP_KEY,            ED_PGK_DATE,                pgp_entry_pgp_u    },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   struct PgpUid **key_table = menu->mdata;
 
   struct PgpEntry entry = { 0 };

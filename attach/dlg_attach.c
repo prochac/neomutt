@@ -454,6 +454,34 @@ void attach_X(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
  */
 static void attach_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
+  /**
+   * AttachRenderData - Callbacks for Attachments
+   *
+   * @sa ExpandoDataAttach, ExpandoDataBody, AttachFormatData
+   */
+  static const struct ExpandoRenderData AttachRenderData[] = {
+    // clang-format off
+    { ED_ATTACH, ED_ATT_CHARSET,          attach_C },
+    { ED_BODY,   ED_BOD_CHARSET_CONVERT,  attach_c },
+    { ED_BODY,   ED_BOD_DELETED,          attach_D },
+    { ED_BODY,   ED_BOD_DESCRIPTION,      attach_d },
+    { ED_BODY,   ED_BOD_MIME_ENCODING,    attach_e },
+    { ED_BODY,   ED_BOD_FILE,             attach_f },
+    { ED_BODY,   ED_BOD_FILE_DISPOSITION, attach_F },
+    { ED_BODY,   ED_BOD_DISPOSITION,      attach_I },
+    { ED_BODY,   ED_BOD_MIME_MAJOR,       attach_m },
+    { ED_BODY,   ED_BOD_MIME_MINOR,       attach_M },
+    { ED_ATTACH, ED_ATT_NUMBER,           attach_n },
+    { ED_BODY,   ED_BOD_ATTACH_QUALIFIES, attach_Q },
+    { ED_BODY,   ED_BOD_FILE_SIZE,        attach_s },
+    { ED_BODY,   ED_BOD_TAGGED,           attach_t },
+    { ED_ATTACH, ED_ATT_TREE,             attach_T },
+    { ED_BODY,   ED_BOD_UNLINK,           attach_u },
+    { ED_BODY,   ED_BOD_ATTACH_COUNT,     attach_X },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   struct AttachPrivateData *priv = menu->mdata;
   struct AttachCtx *actx = priv->actx;
 

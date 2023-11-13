@@ -245,6 +245,18 @@ void query_Y(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
  */
 static void query_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
+  static const struct ExpandoRenderData QueryRenderData[] = {
+    // clang-format off
+    { ED_ALIAS, ED_ALI_ADDRESS, query_a },
+    { ED_ALIAS, ED_ALI_NUMBER,  query_c },
+    { ED_ALIAS, ED_ALI_COMMENT, query_e },
+    { ED_ALIAS, ED_ALI_NAME,    query_n },
+    { ED_ALIAS, ED_ALI_TAGGED,  query_t },
+    { ED_ALIAS, ED_ALI_TAGS,    query_Y },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   const struct AliasMenuData *mdata = menu->mdata;
   const struct AliasViewArray *ava = &mdata->ava;
   struct AliasView *av = ARRAY_GET(ava, line);

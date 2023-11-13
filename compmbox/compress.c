@@ -306,6 +306,14 @@ void compress_t(const struct ExpandoNode *node, void *data,
  */
 static bool execute_command(struct Mailbox *m, const char *command, const char *progress)
 {
+  static const struct ExpandoRenderData CompressRenderData[] = {
+    // clang-format off
+    { ED_COMPRESS, ED_CMP_FROM, compress_f },
+    { ED_COMPRESS, ED_CMP_TO,   compress_t },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   if (!m || !command || !progress)
     return false;
 

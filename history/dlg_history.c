@@ -115,6 +115,14 @@ void history_s(const struct ExpandoNode *node, void *data,
  */
 static void history_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
+  static const struct ExpandoRenderData HistoryRenderData[] = {
+    // clang-format off
+    { ED_HISTORY, ED_HIS_NUMBER, history_C },
+    { ED_HISTORY, ED_HIS_MATCH,  history_s },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   char *entry = ((char **) menu->mdata)[line];
 
   struct HistoryEntry h = { line, entry };

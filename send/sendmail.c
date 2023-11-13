@@ -44,8 +44,10 @@
 #include "address/lib.h"
 #include "config/lib.h"
 #include "core/lib.h"
+#include "conn/lib.h"
 #include "gui/lib.h"
 #include "sendmail.h"
+#include "expando/lib.h"
 #include "nntp/lib.h"
 #include "pager/lib.h"
 #include "globals.h"
@@ -305,6 +307,18 @@ int mutt_invoke_sendmail(struct Mailbox *m, struct AddressList *from,
 
   if (OptNewsSend)
   {
+    static const struct ExpandoRenderData NntpRenderData[] = {
+      // clang-format off
+      { ED_NNTP, ED_NTP_ACCOUNT,  nntp_a },
+      { ED_NNTP, ED_NTP_PORT,     nntp_p },
+      { ED_NNTP, ED_NTP_PORT_IF,  nntp_P },
+      { ED_NNTP, ED_NTP_SCHEMA,   nntp_S },
+      { ED_NNTP, ED_NTP_SERVER,   nntp_s },
+      { ED_NNTP, ED_NTP_USERNAME, nntp_u },
+      { -1, -1, NULL },
+      // clang-format on
+    };
+
     char cmd[1024] = { 0 };
 
     const char *const c_inews = cs_subset_string(sub, "inews");

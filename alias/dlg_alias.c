@@ -217,6 +217,19 @@ void alias_Y(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
  */
 static void alias_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
+  static const struct ExpandoRenderData AliasRenderData[] = {
+    // clang-format off
+    { ED_ALIAS, ED_ALI_NAME,    alias_a },
+    { ED_ALIAS, ED_ALI_COMMENT, alias_c },
+    { ED_ALIAS, ED_ALI_FLAGS,   alias_f },
+    { ED_ALIAS, ED_ALI_NUMBER,  alias_n },
+    { ED_ALIAS, ED_ALI_ADDRESS, alias_r },
+    { ED_ALIAS, ED_ALI_TAGGED,  alias_t },
+    { ED_ALIAS, ED_ALI_TAGS,    alias_Y },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   const struct AliasMenuData *mdata = menu->mdata;
   const struct AliasViewArray *ava = &mdata->ava;
   const struct AliasView *av = ARRAY_GET(ava, line);

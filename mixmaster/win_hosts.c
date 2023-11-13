@@ -168,6 +168,16 @@ void mix_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
  */
 static void mix_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
+  static const struct ExpandoRenderData MixRenderData[] = {
+    // clang-format off
+    { ED_MIXMASTER, ED_MIX_ADDRESS,      mix_a },
+    { ED_MIXMASTER, ED_MIX_CAPABILITIES, mix_c },
+    { ED_MIXMASTER, ED_MIX_NUMBER,       mix_n },
+    { ED_MIXMASTER, ED_MIX_SHORT_NAME,   mix_s },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   struct RemailerArray *ra = menu->mdata;
   struct Remailer **r = ARRAY_GET(ra, line);
   if (!r)

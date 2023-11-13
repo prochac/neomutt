@@ -625,6 +625,27 @@ void sidebar_Z(const struct ExpandoNode *node, void *data,
 static void make_sidebar_entry(char *buf, size_t buflen, int width,
                                struct SbEntry *sbe, struct IndexSharedData *shared)
 {
+  static const struct ExpandoRenderData SidebarRenderData[] = {
+    // clang-format off
+    { ED_SIDEBAR, ED_SID_FLAGGED,       sidebar_bang },
+    { ED_SIDEBAR, ED_SID_NOTIFY,        sidebar_a    },
+    { ED_SIDEBAR, ED_SID_NAME,          sidebar_B    },
+    { ED_SIDEBAR, ED_SID_DELETED_COUNT, sidebar_d    },
+    { ED_SIDEBAR, ED_SID_DESCRIPTION,   sidebar_D    },
+    { ED_SIDEBAR, ED_SID_FLAGGED_COUNT, sidebar_F    },
+    { ED_SIDEBAR, ED_SID_LIMITED_COUNT, sidebar_L    },
+    { ED_SIDEBAR, ED_SID_NEW_MAIL,      sidebar_n    },
+    { ED_SIDEBAR, ED_SID_UNREAD_COUNT,  sidebar_N    },
+    { ED_SIDEBAR, ED_SID_OLD_COUNT,     sidebar_o    },
+    { ED_SIDEBAR, ED_SID_POLL,          sidebar_p    },
+    { ED_SIDEBAR, ED_SID_READ_COUNT,    sidebar_r    },
+    { ED_SIDEBAR, ED_SID_MESSAGE_COUNT, sidebar_S    },
+    { ED_SIDEBAR, ED_SID_TAGGED_COUNT,  sidebar_t    },
+    { ED_SIDEBAR, ED_SID_UNSEEN_COUNT,  sidebar_Z    },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   struct SidebarData sdata = { sbe, shared };
 
   const char *const c_sidebar_format = cs_subset_string(NeoMutt->sub, "sidebar_format");

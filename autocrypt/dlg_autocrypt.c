@@ -215,6 +215,17 @@ void autocrypt_s(const struct ExpandoNode *node, void *data,
  */
 static void autocrypt_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
+  static const struct ExpandoRenderData AutocryptRenderData[] = {
+    // clang-format off
+    { ED_AUTOCRYPT, ED_AUT_MAILBOX,        autocrypt_a },
+    { ED_AUTOCRYPT, ED_AUT_KEYID,          autocrypt_k },
+    { ED_AUTOCRYPT, ED_AUT_NUMBER,         autocrypt_n },
+    { ED_AUTOCRYPT, ED_AUT_PREFER_ENCRYPT, autocrypt_p },
+    { ED_AUTOCRYPT, ED_AUT_ENABLED,        autocrypt_s },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   struct AccountEntry *entry = &((struct AccountEntry *) menu->mdata)[line];
 
   const char *const c_autocrypt_acct_format = cs_subset_string(NeoMutt->sub, "autocrypt_acct_format");

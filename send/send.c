@@ -764,6 +764,15 @@ void greeting_v(const struct ExpandoNode *node, void *data,
  */
 static void mutt_make_greeting(struct Email *e, FILE *fp_out, struct ConfigSubset *sub)
 {
+  static const struct ExpandoRenderData GreetingRenderData[] = {
+    // clang-format off
+    { ED_ENVELOPE, ED_ENV_REAL_NAME,  greeting_n },
+    { ED_ENVELOPE, ED_ENV_USER_NAME,  greeting_u },
+    { ED_ENVELOPE, ED_ENV_FIRST_NAME, greeting_v },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   const char *const c_greeting = cs_subset_string(sub, "greeting");
   if (!c_greeting || !fp_out)
     return;

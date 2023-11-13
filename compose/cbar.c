@@ -60,6 +60,7 @@
  */
 
 #include "config.h"
+#include <stddef.h>
 #include <assert.h>
 #include "private.h"
 #include "mutt/lib.h"
@@ -151,6 +152,16 @@ void compose_v(const struct ExpandoNode *node, void *data,
  */
 static int cbar_recalc(struct MuttWindow *win)
 {
+  static const struct ExpandoRenderData ComposeRenderData[] = {
+    // clang-format off
+    { ED_COMPOSE, ED_COM_ATTACH_COUNT, compose_a },
+    { ED_GLOBAL,  ED_GLO_HOSTNAME,     compose_h },
+    { ED_COMPOSE, ED_COM_ATTACH_SIZE,  compose_l },
+    { ED_GLOBAL,  ED_GLO_VERSION,      compose_v },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   char buf[1024] = { 0 };
   struct ComposeSharedData *shared = win->parent->wdata;
 

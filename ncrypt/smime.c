@@ -377,6 +377,20 @@ void smime_command_s(const struct ExpandoNode *node, void *data,
 static void smime_command(struct Buffer *buf, struct SmimeCommandContext *cctx,
                           const char *fmt)
 {
+  static const struct ExpandoRenderData SmimeCommandRenderData[] = {
+    // clang-format off
+    { ED_SMIME_CMD, ED_SMI_ALGORITHM,        smime_command_a },
+    { ED_SMIME_CMD, ED_SMI_CERTIFICATE_IDS,  smime_command_c },
+    { ED_GLOBAL,    ED_GLO_CERTIFICATE_PATH, smime_command_C },
+    { ED_SMIME_CMD, ED_SMI_DIGEST_ALGORITHM, smime_command_d },
+    { ED_SMIME_CMD, ED_SMI_MESSAGE_FILE,     smime_command_f },
+    { ED_SMIME_CMD, ED_SMI_INTERMEDIATE_IDS, smime_command_i },
+    { ED_SMIME_CMD, ED_SMI_KEY,              smime_command_k },
+    { ED_SMIME_CMD, ED_SMI_SIGNATURE_FILE,   smime_command_s },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   // mutt_expando_format(buf->data, buf->dsize, 0, buf->dsize, NONULL(fmt),
   //                     smime_command_format_str, (intptr_t) cctx, MUTT_FORMAT_NO_FLAGS);
   mutt_debug(LL_DEBUG2, "%s\n", buf_string(buf));

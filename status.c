@@ -526,6 +526,35 @@ void status_V(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 void menu_status_line(struct Buffer *buf, struct IndexSharedData *shared,
                       struct Menu *menu, int cols, const char *fmt)
 {
+  static const struct ExpandoRenderData StatusRenderData[] = {
+    // clang-format off
+    { ED_INDEX,  ED_IND_UNREAD_COUNT,    status_b },
+    { ED_INDEX,  ED_IND_DELETED_COUNT,   status_d },
+    { ED_INDEX,  ED_IND_DESCRIPTION,     status_D },
+    { ED_INDEX,  ED_IND_FLAGGED_COUNT,   status_F },
+    { ED_INDEX,  ED_IND_MAILBOX_PATH,    status_f },
+    { ED_GLOBAL, ED_GLO_HOSTNAME,        status_h },
+    { ED_INDEX,  ED_IND_LIMIT_SIZE,      status_L },
+    { ED_INDEX,  ED_IND_MAILBOX_SIZE,    status_l },
+    { ED_INDEX,  ED_IND_LIMIT_COUNT,     status_M },
+    { ED_INDEX,  ED_IND_MESSAGE_COUNT,   status_m },
+    { ED_INDEX,  ED_IND_NEW_COUNT,       status_n },
+    { ED_INDEX,  ED_IND_OLD_COUNT,       status_o },
+    { ED_MENU,   ED_MEN_PERCENTAGE,      status_P },
+    { ED_INDEX,  ED_IND_POSTPONED_COUNT, status_p },
+    { ED_INDEX,  ED_IND_READ_COUNT,      status_R },
+    { ED_INDEX,  ED_IND_READONLY,        status_r },
+    { ED_GLOBAL, ED_GLO_SORT,            status_s },
+    { ED_GLOBAL, ED_GLO_SORT_AUX,        status_S },
+    { ED_INDEX,  ED_IND_TAGGED_COUNT,    status_t },
+    { ED_GLOBAL, ED_GLO_USE_THREADS,     status_T },
+    { ED_INDEX,  ED_IND_UNREAD_COUNT,    status_u },
+    { ED_INDEX,  ED_IND_LIMIT_PATTERN,   status_V },
+    { ED_GLOBAL, ED_GLO_VERSION,         status_v },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   struct MenuStatusLineData data = { shared, menu };
 
   // mutt_expando_format(buf->data, buf->dsize, 0, cols, fmt, status_format_str,

@@ -142,6 +142,15 @@ void pattern_n(const struct ExpandoNode *node, void *data,
  */
 static void make_pattern_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
+  static const struct ExpandoRenderData PatternRenderData[] = {
+    // clang-format off
+    { ED_PATTERN, ED_PAT_DESCRIPTION, pattern_d },
+    { ED_PATTERN, ED_PAT_EXPRESION,   pattern_e },
+    { ED_PATTERN, ED_PAT_NUMBER,      pattern_n },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   struct PatternEntry *entry = &((struct PatternEntry *) menu->mdata)[line];
 
   const char *const c_pattern_format = cs_subset_string(NeoMutt->sub, "pattern_format");

@@ -639,6 +639,29 @@ void pgp_entry_gpgme_L(const struct ExpandoNode *node, void *data,
  */
 static void crypt_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
+  static const struct ExpandoRenderData PgpEntryGpgmeRenderData[] = {
+    // clang-format off
+    { ED_GPGME_KEY,          ED_GPG_DATE,                pgp_entry_gpgme_date },
+    { ED_GPGME_KEY,          ED_GPG_KEY_ALGORITHM,       pgp_entry_gpgme_a    },
+    { ED_GPGME_KEY,          ED_GPG_KEY_CAPABILITIES,    pgp_entry_gpgme_c    },
+    { ED_GPGME_KEY,          ED_GPG_KEY_FINGERPRINT,     pgp_entry_gpgme_i    },
+    { ED_GPGME_KEY,          ED_GPG_KEY_FLAGS,           pgp_entry_gpgme_f    },
+    { ED_GPGME_KEY,          ED_GPG_KEY_ID,              pgp_entry_gpgme_k    },
+    { ED_GPGME_KEY,          ED_GPG_KEY_LENGTH,          pgp_entry_gpgme_l    },
+    { ED_GPGME_KEY,          ED_GPG_NUMBER,              pgp_entry_gpgme_n    },
+    { ED_GPGME_KEY,          ED_GPG_PKEY_ALGORITHM,      pgp_entry_gpgme_A    },
+    { ED_GPGME_KEY,          ED_GPG_PKEY_CAPABILITIES,   pgp_entry_gpgme_C    },
+    { ED_GPGME_KEY,          ED_GPG_PKEY_FINGERPRINT,    pgp_entry_gpgme_I    },
+    { ED_GPGME_KEY,          ED_GPG_PKEY_FLAGS,          pgp_entry_gpgme_F    },
+    { ED_GPGME_KEY,          ED_GPG_PKEY_ID,             pgp_entry_gpgme_K    },
+    { ED_GPGME_KEY,          ED_GPG_PKEY_LENGTH,         pgp_entry_gpgme_L    },
+    { ED_GPGME_KEY,          ED_GPG_PROTOCOL,            pgp_entry_gpgme_p    },
+    { ED_GPGME_KEY,          ED_GPG_TRUST,               pgp_entry_gpgme_t    },
+    { ED_GPGME_KEY,          ED_GPG_USER_ID,             pgp_entry_gpgme_u    },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   struct CryptKeyInfo **key_table = menu->mdata;
   struct CryptEntry entry = { 0 };
 

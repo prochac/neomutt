@@ -131,6 +131,17 @@ void pgp_command_s(const struct ExpandoNode *node, void *data,
 static void mutt_pgp_command(struct Buffer *buf, struct PgpCommandContext *cctx,
                              const char *fmt)
 {
+  static const struct ExpandoRenderData PgpCommandRenderData[] = {
+    // clang-format off
+    { ED_PGP_CMD, ED_PGC_SIGN_AS,        pgp_command_a },
+    { ED_PGP_CMD, ED_PGC_FILE_MESSAGE,   pgp_command_f },
+    { ED_PGP_CMD, ED_PGC_NEED_PASS,      pgp_command_p },
+    { ED_PGP_CMD, ED_PGC_KEY_IDS,        pgp_command_r },
+    { ED_PGP_CMD, ED_PGC_FILE_SIGNATURE, pgp_command_s },
+    { -1, -1, NULL },
+    // clang-format on
+  };
+
   // mutt_expando_format(buf->data, buf->dsize, 0, buf->dsize, NONULL(fmt),
   //                     pgp_command_format_str, (intptr_t) cctx, MUTT_FORMAT_NO_FLAGS);
   mutt_debug(LL_DEBUG2, "%s\n", buf_string(buf));
