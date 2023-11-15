@@ -61,7 +61,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "mutt/lib.h"
-#include "config/lib.h"
 #include "core/lib.h"
 #include "gui/lib.h"
 #include "lib.h"
@@ -127,10 +126,9 @@ static void history_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 
   struct HistoryEntry h = { line, entry };
 
-  const char *const c_history_format = cs_subset_string(NeoMutt->sub, "history_format");
-  // mutt_expando_format(buf->data, buf->dsize, 0, menu->win->state.cols,
-  //                     NONULL(c_history_format), history_format_str,
-  //                     (intptr_t) &h, MUTT_FORMAT_ARROWCURSOR);
+  const struct Expando *c_history_format = cs_subset_expando(NeoMutt->sub, "history_format");
+  expando_render(c_history_format, HistoryRenderData, &h,
+                 MUTT_FORMAT_ARROWCURSOR, menu->win->state.cols, buf);
 }
 
 /**

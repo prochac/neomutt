@@ -605,10 +605,9 @@ static void pgp_make_entry(struct Menu *menu, int line, struct Buffer *buf)
   entry.uid = key_table[line];
   entry.num = line + 1;
 
-  const char *const c_pgp_entry_format = cs_subset_string(NeoMutt->sub, "pgp_entry_format");
-  // mutt_expando_format(buf->data, buf->dsize, 0, menu->win->state.cols,
-  //                     NONULL(c_pgp_entry_format), pgp_entry_format_str,
-  //                     (intptr_t) &entry, MUTT_FORMAT_ARROWCURSOR);
+  const struct Expando *c_pgp_entry_format = cs_subset_expando(NeoMutt->sub, "pgp_entry_format");
+  expando_render(c_pgp_entry_format, PgpEntryRenderData, &entry,
+                 MUTT_FORMAT_ARROWCURSOR, menu->win->state.cols, buf);
 }
 
 /**

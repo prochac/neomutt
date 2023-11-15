@@ -485,10 +485,9 @@ static void attach_make_entry(struct Menu *menu, int line, struct Buffer *buf)
   struct AttachPrivateData *priv = menu->mdata;
   struct AttachCtx *actx = priv->actx;
 
-  const char *const c_attach_format = cs_subset_string(NeoMutt->sub, "attach_format");
-  // mutt_expando_format(buf->data, buf->dsize, 0, menu->win->state.cols,
-  //                     NONULL(c_attach_format), attach_format_str,
-  //                     (intptr_t) (actx->idx[actx->v2r[line]]), MUTT_FORMAT_ARROWCURSOR);
+  const struct Expando *c_attach_format = cs_subset_expando(NeoMutt->sub, "attach_format");
+  expando_render(c_attach_format, AttachRenderData, (actx->idx[actx->v2r[line]]),
+                 MUTT_FORMAT_ARROWCURSOR, menu->win->state.cols, buf);
 }
 
 /**

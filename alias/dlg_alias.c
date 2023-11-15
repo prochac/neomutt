@@ -232,12 +232,11 @@ static void alias_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 
   const struct AliasMenuData *mdata = menu->mdata;
   const struct AliasViewArray *ava = &mdata->ava;
-  const struct AliasView *av = ARRAY_GET(ava, line);
+  struct AliasView *av = ARRAY_GET(ava, line);
 
-  const char *const c_alias_format = cs_subset_string(mdata->sub, "alias_format");
-
-  // mutt_expando_format(buf->data, buf->dsize, 0, menu->win->state.cols, NONULL(c_alias_format),
-  //                     alias_format_str, (intptr_t) av, MUTT_FORMAT_ARROWCURSOR);
+  const struct Expando *c_alias_format = cs_subset_expando(mdata->sub, "alias_format");
+  expando_render(c_alias_format, AliasRenderData, av, MUTT_FORMAT_ARROWCURSOR,
+                 menu->win->state.cols, buf);
 }
 
 /**

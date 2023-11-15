@@ -228,10 +228,9 @@ static void autocrypt_make_entry(struct Menu *menu, int line, struct Buffer *buf
 
   struct AccountEntry *entry = &((struct AccountEntry *) menu->mdata)[line];
 
-  const char *const c_autocrypt_acct_format = cs_subset_string(NeoMutt->sub, "autocrypt_acct_format");
-  // mutt_expando_format(buf->data, buf->dsize, 0, menu->win->state.cols,
-  //                     NONULL(c_autocrypt_acct_format), autocrypt_format_str,
-  //                     (intptr_t) entry, MUTT_FORMAT_ARROWCURSOR);
+  const struct Expando *c_autocrypt_acct_format = cs_subset_expando(NeoMutt->sub, "autocrypt_acct_format");
+  expando_render(c_autocrypt_acct_format, AutocryptRenderData, entry,
+                 MUTT_FORMAT_ARROWCURSOR, menu->win->state.cols, buf);
 }
 
 /**

@@ -48,7 +48,6 @@
 #include <stddef.h>
 #include <assert.h>
 #include "mutt/lib.h"
-#include "config/lib.h"
 #include "core/lib.h"
 #include "gui/lib.h"
 #include "expando/lib.h"
@@ -183,10 +182,9 @@ static void mix_make_entry(struct Menu *menu, int line, struct Buffer *buf)
   if (!r)
     return;
 
-  const char *const c_mix_entry_format = cs_subset_string(NeoMutt->sub, "mix_entry_format");
-  // mutt_expando_format(buf->data, buf->dsize, 0, menu->win->state.cols,
-  //                     NONULL(c_mix_entry_format), mix_format_str, (intptr_t) *r,
-  //                     MUTT_FORMAT_ARROWCURSOR);
+  const struct Expando *c_mix_entry_format = cs_subset_expando(NeoMutt->sub, "mix_entry_format");
+  expando_render(c_mix_entry_format, MixRenderData, *r, MUTT_FORMAT_ARROWCURSOR,
+                 menu->win->state.cols, buf);
 }
 
 /**

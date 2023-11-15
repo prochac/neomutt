@@ -261,10 +261,9 @@ static void query_make_entry(struct Menu *menu, int line, struct Buffer *buf)
   const struct AliasViewArray *ava = &mdata->ava;
   struct AliasView *av = ARRAY_GET(ava, line);
 
-  const char *const c_query_format = cs_subset_string(mdata->sub, "query_format");
-
-  // mutt_expando_format(buf->data, buf->dsize, 0, menu->win->state.cols, NONULL(c_query_format),
-  //                     query_format_str, (intptr_t) av, MUTT_FORMAT_ARROWCURSOR);
+  const struct Expando *c_query_format = cs_subset_expando(mdata->sub, "query_format");
+  expando_render(c_query_format, QueryRenderData, av, MUTT_FORMAT_ARROWCURSOR,
+                 menu->win->state.cols, buf);
 }
 
 /**

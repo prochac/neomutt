@@ -1003,24 +1003,21 @@ static void folder_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 
   if (OptNews)
   {
-    const char *const c_group_index_format = cs_subset_string(NeoMutt->sub, "group_index_format");
-    // mutt_expando_format(buf->data, buf->dsize, 0, menu->win->state.cols,
-    //                     NONULL(c_group_index_format), group_index_format_str,
-    //                     (intptr_t) &folder, MUTT_FORMAT_ARROWCURSOR);
+    const struct Expando *c_group_index_format = cs_subset_expando(NeoMutt->sub, "group_index_format");
+    expando_render(c_group_index_format, GroupIndexRenderData, &folder,
+                   MUTT_FORMAT_ARROWCURSOR, menu->win->state.cols, buf);
   }
   else if (bstate->is_mailbox_list)
   {
-    const char *const c_mailbox_folder_format = cs_subset_string(NeoMutt->sub, "mailbox_folder_format");
-    // mutt_expando_format(buf->data, buf->dsize, 0, menu->win->state.cols,
-    //                     NONULL(c_mailbox_folder_format), folder_format_str,
-    //                     (intptr_t) &folder, MUTT_FORMAT_ARROWCURSOR);
+    const struct Expando *c_mailbox_folder_format = cs_subset_expando(NeoMutt->sub, "mailbox_folder_format");
+    expando_render(c_mailbox_folder_format, FolderRenderData, &folder,
+                   MUTT_FORMAT_ARROWCURSOR, menu->win->state.cols, buf);
   }
   else
   {
-    const char *const c_folder_format = cs_subset_string(NeoMutt->sub, "folder_format");
-    // mutt_expando_format(buf->data, buf->dsize, 0, menu->win->state.cols,
-    //                     NONULL(c_folder_format), folder_format_str,
-    //                     (intptr_t) &folder, MUTT_FORMAT_ARROWCURSOR);
+    const struct Expando *c_folder_format = cs_subset_expando(NeoMutt->sub, "folder_format");
+    expando_render(c_folder_format, FolderRenderData, &folder,
+                   MUTT_FORMAT_ARROWCURSOR, menu->win->state.cols, buf);
   }
 }
 
