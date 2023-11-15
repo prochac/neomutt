@@ -24,6 +24,7 @@
 #define MUTT_STATUS_H
 
 struct Buffer;
+struct Expando;
 struct IndexSharedData;
 struct Menu;
 
@@ -35,6 +36,6 @@ enum ExpandoDataMenu
   ED_MEN_PERCENTAGE = 1,       ///< XXX
 };
 
-void menu_status_line(struct Buffer *buf, struct IndexSharedData *shared, struct Menu *menu, int cols, const char *fmt);
+void menu_status_line(struct Buffer *buf, struct IndexSharedData *shared, struct Menu *menu, int cols, const struct Expando *exp);
 
 #endif /* MUTT_STATUS_H */
