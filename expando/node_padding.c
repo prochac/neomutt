@@ -88,6 +88,21 @@ static struct ExpandoNode *node_padding_new(enum ExpandoPadType pad_type,
   node->did = ED_ALL;
   node->uid = ED_ALL_PAD;
 
+  switch (pad_type)
+  {
+    case EPT_FILL_EOL:
+      node->render = node_padding_render_eol;
+      break;
+    case EPT_HARD_FILL:
+      node->render = node_padding_render_hard;
+      break;
+    case EPT_SOFT_FILL:
+      node->render = node_padding_render_soft;
+      break;
+    default:
+      assert(0 && "Unknown pad type");
+  };
+
   node->ndata = node_padding_private_new(pad_type);
   node->ndata_free = node_padding_private_free;
 

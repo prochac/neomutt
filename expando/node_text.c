@@ -30,6 +30,7 @@
 #include "config.h"
 #include <assert.h>
 #include "mutt/lib.h"
+#include "node_text.h"
 #include "domain.h"
 #include "format_callbacks.h"
 #include "helpers.h"
@@ -52,6 +53,7 @@ struct ExpandoNode *node_text_new(const char *start, const char *end)
 
   node->did = ED_ALL;
   node->uid = ED_ALL_TEXT;
+  node->render = node_text_render;
 
   return node;
 }

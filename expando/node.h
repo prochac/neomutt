@@ -25,6 +25,7 @@
 #define MUTT_EXPANDO_NODE_H
 
 #include "gui/lib.h"
+#include "format_callbacks.h"
 
 /**
  * enum ExpandoNodeType - XXX
@@ -73,6 +74,20 @@ struct ExpandoNode
 
   void *ndata;                           ///< XXX
   void (*ndata_free)(void **ptr);        ///< XXX
+
+  /**
+   * @defgroup expando_render Expando Render API
+   *
+   * render - Render an Expando
+   * @param[in]  node     Node to render
+   * @param[out] buf      Buffer in which to save string
+   * @param[in]  buf_len  Buffer length
+   * @param[in]  cols_len Number of screen columns
+   * @param[in]  data     Private data
+   * @param[in]  flags    Flags, see #MuttFormatFlags
+   * @retval num Number of bytes written to buf
+   */
+  int (*render)(const struct ExpandoNode *node, const struct ExpandoRenderData *rdata, char *buf, int buf_len, int cols_len, void *data, MuttFormatFlags flags);
 };
 
 struct ExpandoNode *expando_node_new(void);

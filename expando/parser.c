@@ -38,6 +38,7 @@
 #include "gui/lib.h"
 #include "parser.h"
 #include "domain.h"
+#include "format_callbacks.h"
 #include "node.h"
 #include "node_condition.h"
 #include "node_expando.h"
@@ -57,6 +58,7 @@ static struct ExpandoNode *new_empty_node(void)
   node->type = ENT_EMPTY;
   node->did = ED_ALL;
   node->uid = ED_ALL_EMPTY;
+  node->render = NULL; // Nothing to do
 
   return node;
 }

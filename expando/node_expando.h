@@ -24,7 +24,9 @@
 #ifndef MUTT_EXPANDO_NODE_EXPANDO_H
 #define MUTT_EXPANDO_NODE_EXPANDO_H
 
+#include <limits.h>
 #include <stdbool.h>
+#include "format_callbacks.h"
 
 struct ExpandoFormat;
 
@@ -41,5 +43,6 @@ struct ExpandoNode *node_expando_new(const char *start, const char *end, struct 
 
 void node_expando_set_color   (const struct ExpandoNode *node, int cid);
 void node_expando_set_has_tree(const struct ExpandoNode *node, bool has_tree);
+int node_expando_render(const struct ExpandoNode *node, const struct ExpandoRenderData *rdata, char *buf, int buf_len, int cols_len, void *data, MuttFormatFlags flags);
 
 #endif /* MUTT_EXPANDO_NODE_EXPANDO_H */

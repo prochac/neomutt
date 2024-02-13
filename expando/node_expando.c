@@ -28,8 +28,10 @@
  */
 
 #include "config.h"
+#include <assert.h>
 #include "mutt/lib.h"
 #include "node_expando.h"
+#include "helpers.h"
 #include "node.h"
 
 /**
@@ -77,6 +79,7 @@ struct ExpandoNode *node_expando_new(const char *start, const char *end,
 
   node->did = did;
   node->uid = uid;
+  node->render = node_expando_render;
 
   node->format = fmt;
 
@@ -110,4 +113,48 @@ void node_expando_set_has_tree(const struct ExpandoNode *node, bool has_tree)
   struct NodeExpandoPrivate *priv = node->ndata;
 
   priv->has_tree = has_tree;
+}
+
+/**
+ * node_expando_render - Callback for every expando node
+ * @param node     XXX
+ * @param rdata    XXX
+ * @param buf      XXX
+ * @param buf_len  XXX
+ * @param cols_len XXX
+ * @param data     XXX
+ * @param flags    XXX
+ * @retval num XXX
+ */
+int node_expando_render(const struct ExpandoNode *node,
+                        const struct ExpandoRenderData *rdata, char *buf,
+                        int buf_len, int cols_len, void *data, MuttFormatFlags flags)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  struct Buffer *expando_buf = buf_pool_get();
+  int printed = 0;
+
+  const struct ExpandoRenderData *rd = &rdata[0];
+  bool found = false;
+  while (rd->did != -1)
+  {
+    if ((rd->did == node->did) && (rd->uid == node->uid))
+    {
+      found = true;
+      rd->callback(node, data, flags, cols_len, expando_buf);
+      break;
+    }
+    rd++;
+  }
+
+  if (!found)
+  {
+    assert(0 && "Unknown UID");
+  }
+
+  printed = format_string(buf, buf_len, node, expando_buf);
+
+  buf_pool_release(&expando_buf);
+  return printed;
 }

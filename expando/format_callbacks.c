@@ -51,81 +51,26 @@
  * @param data    XXX
  * @param flags   XXX
  */
-void format_tree(struct ExpandoNode *tree, const struct ExpandoRenderData *rdata,
-                 char *buf, size_t buf_len, size_t col_len, void *data, MuttFormatFlags flags)
+void format_tree(const struct ExpandoNode *node, const struct ExpandoRenderData *rdata,
+                 char *buf, int buf_len, int cols_len, void *data, MuttFormatFlags flags)
 {
-  const struct ExpandoNode *node = tree;
-  char *buffer = buf;
-  int buffer_len = (int) buf_len - 1;
-  int columns_len = (int) col_len;
-
-  struct Buffer *expando_buf = buf_pool_get();
+  buf_len--;
 
   int printed = 0;
 
-  while (node && (buffer_len > 0) && (columns_len > 0))
+  while (node && (buf_len > 0) && (cols_len > 0))
   {
-    // General formats
-    if (node->did == ED_ALL)
+    if (node->render)
     {
-      switch (node->uid)
-      {
-        case ED_ALL_EMPTY:
-          break;
-
-        case ED_ALL_TEXT:
-          printed = node_text_render(node, rdata, buffer, buffer_len,
-                                     columns_len, data, flags);
-          break;
-
-        case ED_ALL_PAD:
-          printed = node_padding_render(node, rdata, buffer, buffer_len,
-                                        columns_len, data, flags);
-          break;
-
-        case ED_ALL_CONDITION:
-          printed = node_condition_render(node, rdata, buffer, buffer_len,
-                                          columns_len, data, flags);
-          break;
-
-        default:
-          assert(0 && "Invalid UID");
-          return;
-      }
-    }
-    else
-    {
-      const struct ExpandoRenderData *rd = &rdata[0];
-      bool found = false;
-      while (rd->did != -1)
-      {
-        if ((rd->did == node->did) && (rd->uid == node->uid))
-        {
-          found = true;
-          rd->callback(node, data, flags, columns_len, expando_buf);
-          break;
-        }
-        rd++;
-      }
-
-      if (!found)
-      {
-        assert(0 && "Unknown UID");
-      }
-
-      printed = format_string(buffer, buffer_len, node, expando_buf);
+      printed = node->render(node, rdata, buf, buf_len, cols_len, data, flags);
     }
 
-    columns_len -= mutt_strwidth_nonnull(buffer, buffer + printed);
-    buffer_len -= printed;
-    buffer += printed;
+    cols_len -= mutt_strwidth_nonnull(buf, buf + printed);
+    buf_len -= printed;
+    buf += printed;
 
     node = node->next;
   }
-
-  buf_pool_release(&expando_buf);
-
-  *buffer = '\0';
 }
 
 /**

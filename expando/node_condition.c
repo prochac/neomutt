@@ -59,6 +59,7 @@ struct ExpandoNode *node_condition_new(struct ExpandoNode *condition,
   node->type = ENT_CONDITION;
   node->did = ED_ALL;
   node->uid = ED_ALL_CONDITION;
+  node->render = node_condition_render;
 
   ARRAY_SET(&node->children, ENC_CONDITION, condition);
   ARRAY_SET(&node->children, ENC_TRUE, if_true_tree);
@@ -151,10 +152,6 @@ int node_condition_render(const struct ExpandoNode *node,
       int copylen = strlen(tmp);
       memcpy_safe(buf, tmp, copylen, buf_len);
       return copylen;
-    }
-    else
-    {
-      return 0;
     }
   }
   return 0;
