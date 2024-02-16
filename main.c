@@ -184,9 +184,7 @@
 #ifdef USE_AUTOCRYPT
 #include "autocrypt/lib.h"
 #endif
-#if defined(USE_DEBUG_NOTIFY) || defined(USE_DEBUG_BACKTRACE)
 #include "debug/lib.h"
-#endif
 
 bool StartupComplete = false; ///< When the config has been read
 
@@ -940,6 +938,8 @@ main
 
   if (batch_mode)
   {
+    const struct Expando *c_index_format = cs_subset_expando(NeoMutt->sub, "index_format");
+    dump_graphviz_expando_node(c_index_format->tree);
     goto main_ok; // TEST22: neomutt -B
   }
   StartupComplete = true;
