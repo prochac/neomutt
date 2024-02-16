@@ -53,6 +53,15 @@ void free_node(struct ExpandoNode *node)
     node->ndata_free(&node->ndata);
   }
 
+  struct ExpandoNode **enp = NULL;
+  ARRAY_FOREACH(enp, &node->children)
+  {
+    if (enp)
+      free_tree(*enp);
+  }
+
+  ARRAY_FREE(&node->children);
+
   FREE(&node);
 }
 
@@ -68,4 +77,33 @@ void free_tree(struct ExpandoNode *node)
     node = node->next;
     free_node(n);
   }
+}
+
+/**
+ * expando_node_get_child - XXX
+ */
+struct ExpandoNode *expando_node_get_child(struct ExpandoNode *node, int index)
+{
+  if (!node)
+    return NULL;
+
+  struct ExpandoNode **ptr = ARRAY_GET(&node->children, index);
+  if (!ptr)
+    return NULL;
+
+  return *ptr;
+}
+
+/**
+ * expando_node_set_child - XXX
+ */
+void expando_node_set_child(struct ExpandoNode *node, int index, struct ExpandoNode *child)
+{
+  if (!node)
+    return;
+
+  struct ExpandoNode *old = expando_node_get_child(node, index);
+  free_tree(old);
+
+  ARRAY_SET(&node->children, index, child);
 }

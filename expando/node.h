@@ -39,21 +39,25 @@ enum ExpandoNodeType
   ENT_CONDDATE,    ///< XXX
 };
 
+ARRAY_HEAD(ExpandoNodeArray, struct ExpandoNode *);
+
 /**
  * struct ExpandoNode - XXX
  */
 struct ExpandoNode
 {
-  enum ExpandoNodeType type;       ///< Type of Node, e.g. #ENT_EXPANDO
-  struct ExpandoNode  *next;       ///< XXX
-  int                  did;        ///< Domain ID, e.g. #ED_EMAIL
-  int                  uid;        ///< Unique ID, e.g. #ED_EMA_SIZE
+  enum ExpandoNodeType    type;          ///< Type of Node, e.g. #ENT_EXPANDO
+  struct ExpandoNode     *next;          ///< XXX
+  int                     did;           ///< Domain ID, e.g. #ED_EMAIL
+  int                     uid;           ///< Unique ID, e.g. #ED_EMA_SIZE
 
-  const char          *start;      ///< XXX
-  const char          *end;        ///< XXX
+  struct ExpandoNodeArray children;      ///< Children nodes
 
-  void *ndata;                     ///< XXX
-  void (*ndata_free)(void **ptr);  ///< XXX
+  const char             *start;         ///< XXX
+  const char             *end;           ///< XXX
+
+  void *ndata;                           ///< XXX
+  void (*ndata_free)(void **ptr);        ///< XXX
 };
 
 /**
@@ -74,5 +78,8 @@ struct ExpandoNode *expando_node_new(void);
 
 void free_node(struct ExpandoNode *node);
 void free_tree(struct ExpandoNode *node);
+
+struct ExpandoNode *expando_node_get_child(struct ExpandoNode *node, int index);
+void                expando_node_set_child(struct ExpandoNode *node, int index, struct ExpandoNode *child);
 
 #endif /* MUTT_EXPANDO_NODE_H */
