@@ -79,7 +79,7 @@ struct ExpandoNode *expando_node_new(void);
 void free_node(struct ExpandoNode *node);
 void free_tree(struct ExpandoNode *node);
 
-struct ExpandoNode *expando_node_get_child(struct ExpandoNode *node, int index);
+struct ExpandoNode *expando_node_get_child(const struct ExpandoNode *node, int index);
 void                expando_node_set_child(struct ExpandoNode *node, int index, struct ExpandoNode *child);
 
 #endif /* MUTT_EXPANDO_NODE_H */

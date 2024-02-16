@@ -38,11 +38,15 @@ void test_expando_empty_if_else(void)
   {
     struct ExpandoNode *node = get_nth_node(&root1, 0);
     check_condition_node_head(node);
-    struct NodeConditionPrivate *cond = node->ndata;
 
-    check_expando_node(cond->condition, "c", NULL);
-    check_empty_node(cond->if_true_tree);
-    TEST_CHECK(cond->if_false_tree == NULL);
+    struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);
+    struct ExpandoNode *if_true_tree = expando_node_get_child(node, ENC_TRUE);
+    struct ExpandoNode *if_false_tree = expando_node_get_child(node, ENC_FALSE);
+
+
+    check_expando_node(condition, "c", NULL);
+    check_empty_node(if_true_tree);
+    TEST_CHECK(if_false_tree == NULL);
   }
   expando_tree_free(&root1);
 
@@ -53,11 +57,15 @@ void test_expando_empty_if_else(void)
   {
     struct ExpandoNode *node = get_nth_node(&root2, 0);
     check_condition_node_head(node);
-    struct NodeConditionPrivate *cond = node->ndata;
 
-    check_expando_node(cond->condition, "c", NULL);
-    check_empty_node(cond->if_true_tree);
-    check_empty_node(cond->if_false_tree);
+    struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);
+    struct ExpandoNode *if_true_tree = expando_node_get_child(node, ENC_TRUE);
+    struct ExpandoNode *if_false_tree = expando_node_get_child(node, ENC_FALSE);
+
+
+    check_expando_node(condition, "c", NULL);
+    check_empty_node(if_true_tree);
+    check_empty_node(if_false_tree);
   }
   expando_tree_free(&root2);
 
@@ -68,11 +76,14 @@ void test_expando_empty_if_else(void)
   {
     struct ExpandoNode *node = get_nth_node(&root3, 0);
     check_condition_node_head(node);
-    struct NodeConditionPrivate *cond = node->ndata;
 
-    check_expando_node(cond->condition, "c", NULL);
-    check_expando_node(cond->if_true_tree, "t", NULL);
-    check_empty_node(cond->if_false_tree);
+    struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);
+    struct ExpandoNode *if_true_tree = expando_node_get_child(node, ENC_TRUE);
+    struct ExpandoNode *if_false_tree = expando_node_get_child(node, ENC_FALSE);
+
+    check_expando_node(condition, "c", NULL);
+    check_expando_node(if_true_tree, "t", NULL);
+    check_empty_node(if_false_tree);
   }
   expando_tree_free(&root3);
 
@@ -83,11 +94,14 @@ void test_expando_empty_if_else(void)
   {
     struct ExpandoNode *node = get_nth_node(&root4, 0);
     check_condition_node_head(node);
-    struct NodeConditionPrivate *cond = node->ndata;
 
-    check_expando_node(cond->condition, "c", NULL);
-    check_empty_node(cond->if_true_tree);
-    check_expando_node(cond->if_false_tree, "f", NULL);
+    struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);
+    struct ExpandoNode *if_true_tree = expando_node_get_child(node, ENC_TRUE);
+    struct ExpandoNode *if_false_tree = expando_node_get_child(node, ENC_FALSE);
+
+    check_expando_node(condition, "c", NULL);
+    check_empty_node(if_true_tree);
+    check_expando_node(if_false_tree, "f", NULL);
   }
   expando_tree_free(&root4);
 }

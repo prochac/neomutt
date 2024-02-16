@@ -143,18 +143,19 @@ static void print_pad_node(FILE *fp, const struct ExpandoNode *node, int indent)
  */
 static void print_condition_node(FILE *fp, const struct ExpandoNode *node, int indent)
 {
-  assert(node->ndata);
-  struct NodeConditionPrivate *c = node->ndata;
+  struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);
+  struct ExpandoNode *if_true_tree = expando_node_get_child(node, ENC_TRUE);
+  struct ExpandoNode *if_false_tree = expando_node_get_child(node, ENC_FALSE);
 
   fprintf(fp, "%*sCONDITION:\n", indent, "");
-  print_node(fp, c->condition, indent + 2 * EXPANDO_DEBUG_PRINT_INDENT);
+  print_node(fp, condition, indent + 2 * EXPANDO_DEBUG_PRINT_INDENT);
   fprintf(fp, "%*sIF TRUE :\n", indent + EXPANDO_DEBUG_PRINT_INDENT, "");
-  expando_tree_fprint_rec(fp, &c->if_true_tree, indent + 2 * EXPANDO_DEBUG_PRINT_INDENT);
+  expando_tree_fprint_rec(fp, &if_true_tree, indent + 2 * EXPANDO_DEBUG_PRINT_INDENT);
 
-  if (c->if_false_tree)
+  if (if_false_tree)
   {
     fprintf(fp, "%*sIF FALSE:\n", indent + EXPANDO_DEBUG_PRINT_INDENT, "");
-    expando_tree_fprint_rec(fp, &c->if_false_tree, indent + 2 * EXPANDO_DEBUG_PRINT_INDENT);
+    expando_tree_fprint_rec(fp, &if_false_tree, indent + 2 * EXPANDO_DEBUG_PRINT_INDENT);
   }
 }
 

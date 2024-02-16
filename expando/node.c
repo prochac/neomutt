@@ -82,7 +82,7 @@ void free_tree(struct ExpandoNode *node)
 /**
  * expando_node_get_child - XXX
  */
-struct ExpandoNode *expando_node_get_child(struct ExpandoNode *node, int index)
+struct ExpandoNode *expando_node_get_child(const struct ExpandoNode *node, int index)
 {
   if (!node)
     return NULL;

@@ -40,13 +40,13 @@ enum ExpandoConditionStart
 };
 
 /**
- * struct NodeConditionPrivate - XXX
+ * enum ENCondition - XXX
  */
-struct NodeConditionPrivate
+enum ENCondition
 {
-  struct ExpandoNode *condition;       ///< XXX
-  struct ExpandoNode *if_true_tree;    ///< XXX
-  struct ExpandoNode *if_false_tree;   ///< XXX
+  ENC_CONDITION,      ///< Index of Condition Node
+  ENC_TRUE,           ///< Index of True Node
+  ENC_FALSE,          ///< Index of False Node
 };
 
 int node_condition_render(const struct ExpandoNode *node, const struct ExpandoRenderData *rdata, char *buf, int buf_len, int cols_len, void *data, MuttFormatFlags flags);

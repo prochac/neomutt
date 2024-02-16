@@ -43,17 +43,20 @@ void test_expando_old_if_else(void)
   {
     struct ExpandoNode *node = get_nth_node(&root, 1);
     check_condition_node_head(node);
-    struct NodeConditionPrivate *cond = node->ndata;
 
-    check_expando_node(cond->condition, "l", NULL);
+    struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);
+    struct ExpandoNode *if_true_tree = expando_node_get_child(node, ENC_TRUE);
+    struct ExpandoNode *if_false_tree = expando_node_get_child(node, ENC_FALSE);
+
+    check_expando_node(condition, "l", NULL);
 
     struct ExpandoFormatPrivate fmt = { 0 };
     fmt.min = 4;
     fmt.max = INT_MAX;
     fmt.justification = JUSTIFY_RIGHT;
     fmt.leader = ' ';
-    check_expando_node(cond->if_true_tree, "l", &fmt);
-    TEST_CHECK(cond->if_false_tree == NULL);
+    check_expando_node(if_true_tree, "l", &fmt);
+    TEST_CHECK(if_false_tree == NULL);
   }
 
   check_text_node(get_nth_node(&root, 2), "  if-else: ");
@@ -61,17 +64,20 @@ void test_expando_old_if_else(void)
   {
     struct ExpandoNode *node = get_nth_node(&root, 3);
     check_condition_node_head(node);
-    struct NodeConditionPrivate *cond = node->ndata;
 
-    check_expando_node(cond->condition, "l", NULL);
+    struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);
+    struct ExpandoNode *if_true_tree = expando_node_get_child(node, ENC_TRUE);
+    struct ExpandoNode *if_false_tree = expando_node_get_child(node, ENC_FALSE);
+
+    check_expando_node(condition, "l", NULL);
 
     struct ExpandoFormatPrivate fmt = { 0 };
     fmt.min = 4;
     fmt.max = INT_MAX;
     fmt.justification = JUSTIFY_RIGHT;
     fmt.leader = ' ';
-    check_expando_node(cond->if_true_tree, "l", &fmt);
-    check_expando_node(cond->if_false_tree, "c", &fmt);
+    check_expando_node(if_true_tree, "l", &fmt);
+    check_expando_node(if_false_tree, "c", &fmt);
   }
 
   expando_tree_free(&root);

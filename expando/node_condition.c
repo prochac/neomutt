@@ -41,37 +41,6 @@
 #include "uid.h"
 
 /**
- * node_condition_private_new - XXX
- */
-static struct NodeConditionPrivate *
-node_condition_private_new(struct ExpandoNode *condition, struct ExpandoNode *if_true_tree,
-                           struct ExpandoNode *if_false_tree)
-{
-  struct NodeConditionPrivate *priv = mutt_mem_calloc(1, sizeof(struct NodeConditionPrivate));
-
-  priv->condition = condition;
-  priv->if_true_tree = if_true_tree;
-  priv->if_false_tree = if_false_tree;
-
-  return priv;
-}
-
-/**
- * node_condition_private_free - XXX
- * @param ptr XXX
- */
-static void node_condition_private_free(void **ptr)
-{
-  struct NodeConditionPrivate *p = *ptr;
-
-  free_node(p->condition);
-  free_tree(p->if_true_tree);
-  free_tree(p->if_false_tree);
-
-  FREE(ptr);
-}
-
-/**
  * node_condition_new - XXX
  * @param condition     XXX
  * @param if_true_tree  XXX
@@ -91,8 +60,9 @@ struct ExpandoNode *node_condition_new(struct ExpandoNode *condition,
   node->did = ED_ALL;
   node->uid = ED_ALL_CONDITION;
 
-  node->ndata = node_condition_private_new(condition, if_true_tree, if_false_tree);
-  node->ndata_free = node_condition_private_free;
+  ARRAY_SET(&node->children, ENC_CONDITION, condition);
+  ARRAY_SET(&node->children, ENC_TRUE, if_true_tree);
+  ARRAY_SET(&node->children, ENC_FALSE, if_false_tree);
 
   return node;
 }
@@ -147,15 +117,14 @@ int node_condition_render(const struct ExpandoNode *node,
                           int buf_len, int cols_len, void *data, MuttFormatFlags flags)
 {
   assert(node->type == ENT_CONDITION);
-  assert(node->ndata);
-  struct NodeConditionPrivate *cp = node->ndata;
 
-  assert(cp->condition);
-  assert(cp->if_true_tree);
+  struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);
+  struct ExpandoNode *if_true_tree = expando_node_get_child(node, ENC_TRUE);
+  struct ExpandoNode *if_false_tree = expando_node_get_child(node, ENC_FALSE);
 
   char tmp[1024] = { 0 };
 
-  format_tree(cp->condition, rdata, tmp, sizeof(tmp), sizeof(tmp), data, flags);
+  format_tree(condition, rdata, tmp, sizeof(tmp), sizeof(tmp), data, flags);
 
   /* true if:
     - not 0 (numbers)
@@ -165,7 +134,7 @@ int node_condition_render(const struct ExpandoNode *node,
   if (!is_equal(tmp, '0') && !is_equal(tmp, '\0') && !is_equal(tmp, ' '))
   {
     memset(tmp, 0, sizeof(tmp));
-    format_tree(cp->if_true_tree, rdata, tmp, sizeof(tmp), sizeof(tmp), data, flags);
+    format_tree(if_true_tree, rdata, tmp, sizeof(tmp), sizeof(tmp), data, flags);
 
     int copylen = strlen(tmp);
     memcpy_safe(buf, tmp, copylen, buf_len);
@@ -174,10 +143,10 @@ int node_condition_render(const struct ExpandoNode *node,
   }
   else
   {
-    if (cp->if_false_tree)
+    if (if_false_tree)
     {
       memset(tmp, 0, sizeof(tmp));
-      format_tree(cp->if_false_tree, rdata, tmp, sizeof(tmp), sizeof(tmp), data, flags);
+      format_tree(if_false_tree, rdata, tmp, sizeof(tmp), sizeof(tmp), data, flags);
 
       int copylen = strlen(tmp);
       memcpy_safe(buf, tmp, copylen, buf_len);

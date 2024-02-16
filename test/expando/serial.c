@@ -55,19 +55,19 @@ static void dump_node_condition(const struct ExpandoNode *node, struct Buffer *b
   if (node->end)
     buf_add_printf(buf, ",end=%p", node->end);
 
-  assert(node->ndata);
-  assert(node->ndata_free);
-  struct NodeConditionPrivate *priv = node->ndata;
+  struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);
+  struct ExpandoNode *if_true_tree = expando_node_get_child(node, ENC_TRUE);
+  struct ExpandoNode *if_false_tree = expando_node_get_child(node, ENC_FALSE);
 
-  assert(priv->condition);
-  assert(priv->if_true_tree);
-  assert(priv->if_false_tree);
+  assert(condition);
+  assert(if_true_tree);
+  assert(if_false_tree);
   buf_addstr(buf, ":");
-  dump_node(priv->condition, buf);
+  dump_node(condition, buf);
   buf_addstr(buf, "|");
-  dump_node(priv->if_true_tree, buf);
+  dump_node(if_true_tree, buf);
   buf_addstr(buf, "|");
-  dump_node(priv->if_false_tree, buf);
+  dump_node(if_false_tree, buf);
 
   buf_addstr(buf, ">");
 }
