@@ -234,15 +234,13 @@ static const char *skip_until_if_false_end(const char *start, char end_terminato
  * @param error XXX
  * @retval ptr XXX
  */
-static struct ExpandoFormatPrivate *parse_format(const char *start, const char *end,
-                                                 struct ExpandoParseError *error)
+static struct ExpandoFormat *parse_format(const char *start, const char *end,
+                                          struct ExpandoParseError *error)
 {
   if (start == end)
-  {
     return NULL;
-  }
 
-  struct ExpandoFormatPrivate *format = mutt_mem_calloc(1, sizeof(struct ExpandoFormatPrivate));
+  struct ExpandoFormat *format = mutt_mem_calloc(1, sizeof(struct ExpandoFormat));
 
   format->leader = ' ';
   format->start = start;
@@ -337,7 +335,7 @@ static struct ExpandoNode *parse_expando_node(const char *s, const char **parsed
   const int expando_len = expando_end - format_end;
   mutt_strn_copy(expando, format_end, expando_len, sizeof(expando));
 
-  struct ExpandoFormatPrivate *format = parse_format(s, format_end, error);
+  struct ExpandoFormat *format = parse_format(s, format_end, error);
   if (error->position)
   {
     FREE(&format);
@@ -407,7 +405,7 @@ struct ExpandoNode *expando_parse_enclosed_expando(const char *s, const char **p
   }
 
   // revert skipping for format
-  struct ExpandoFormatPrivate *format = parse_format(s, format_end - 1, error);
+  struct ExpandoFormat *format = parse_format(s, format_end - 1, error);
   if (error->position)
   {
     FREE(&format);

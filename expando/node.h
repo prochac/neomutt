@@ -42,6 +42,19 @@ enum ExpandoNodeType
 ARRAY_HEAD(ExpandoNodeArray, struct ExpandoNode *);
 
 /**
+ * struct ExpandoFormat - XXX
+ */
+struct ExpandoFormat
+{
+  int                min;             ///< XXX
+  int                max;             ///< XXX
+  enum FormatJustify justification;   ///< XXX
+  char               leader;          ///< XXX
+  const char         *start;          ///< XXX
+  const char         *end;            ///< XXX
+};
+
+/**
  * struct ExpandoNode - XXX
  */
 struct ExpandoNode
@@ -51,6 +64,8 @@ struct ExpandoNode
   int                     did;           ///< Domain ID, e.g. #ED_EMAIL
   int                     uid;           ///< Unique ID, e.g. #ED_EMA_SIZE
 
+  struct ExpandoFormat   *format;        ///< Formatting info
+
   struct ExpandoNodeArray children;      ///< Children nodes
 
   const char             *start;         ///< XXX
@@ -58,20 +73,6 @@ struct ExpandoNode
 
   void *ndata;                           ///< XXX
   void (*ndata_free)(void **ptr);        ///< XXX
-};
-
-/**
- * struct ExpandoFormatPrivate - XXX
- */
-struct ExpandoFormatPrivate
-{
-  int                min;             ///< XXX
-  int                max;             ///< XXX
-  enum FormatJustify justification;   ///< XXX
-  // NOTE(g0mb4): multibyte leader?
-  char               leader;          ///< XXX
-  const char         *start;          ///< XXX
-  const char         *end;            ///< XXX
 };
 
 struct ExpandoNode *expando_node_new(void);

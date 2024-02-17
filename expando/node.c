@@ -60,6 +60,8 @@ void free_node(struct ExpandoNode *node)
       free_tree(*enp);
   }
 
+  FREE(&node->format);
+
   ARRAY_FREE(&node->children);
 
   FREE(&node);

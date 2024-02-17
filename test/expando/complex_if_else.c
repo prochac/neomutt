@@ -50,7 +50,7 @@ void test_expando_complex_if_else(void)
 
     check_expando_node(condition, "l", NULL);
 
-    struct ExpandoFormatPrivate fmt = { 0 };
+    struct ExpandoFormat fmt = { 0 };
     fmt.min = 4;
     fmt.max = INT_MAX;
     fmt.justification = JUSTIFY_RIGHT;
@@ -75,7 +75,7 @@ void test_expando_complex_if_else(void)
 
     check_expando_node(condition, "l", NULL);
 
-    struct ExpandoFormatPrivate fmt = { 0 };
+    struct ExpandoFormat fmt = { 0 };
     fmt.min = 4;
     fmt.max = INT_MAX;
     fmt.justification = JUSTIFY_RIGHT;

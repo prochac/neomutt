@@ -70,7 +70,7 @@ void check_text_node(struct ExpandoNode *node, const char *text)
 }
 
 void check_expando_node(struct ExpandoNode *node, const char *expando,
-                        const struct ExpandoFormatPrivate *format)
+                        const struct ExpandoFormat *format)
 {
   TEST_CHECK(node != NULL);
   TEST_CHECK(node->type == ENT_EXPANDO);
@@ -82,15 +82,14 @@ void check_expando_node(struct ExpandoNode *node, const char *expando,
   TEST_CHECK(n == m);
   TEST_CHECK(mutt_strn_equal(node->start, expando, n));
 
-  struct NodeExpandoPrivate *p = node->ndata;
+  struct ExpandoFormat *f = node->format;
 
   if (format == NULL)
   {
-    TEST_CHECK(p->format == NULL);
+    TEST_CHECK(f == NULL);
   }
   else
   {
-    struct ExpandoFormatPrivate *f = p->format;
     TEST_CHECK(f != NULL);
     TEST_CHECK(f->justification == format->justification);
     TEST_CHECK(f->leader == format->leader);

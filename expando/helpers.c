@@ -101,7 +101,7 @@ int format_string(char *buffer, int buffer_len, const struct ExpandoNode *node,
   assert((size_t) buffer_len > expando_buffer_len);
 
   const struct NodeExpandoPrivate *p = node && node->type == ENT_EXPANDO ? node->ndata : NULL;
-  const struct ExpandoFormatPrivate *format = p ? p->format : NULL;
+  const struct ExpandoFormat *format = node->format;
   const int color = p ? p->color : -1;
   const bool has_tree = p ? p->has_tree : false;
 

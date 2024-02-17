@@ -116,7 +116,7 @@ void test_expando_date_render(void)
 
     TEST_CHECK(error.position == NULL);
 
-    struct ExpandoFormatPrivate fmt = { 0 };
+    struct ExpandoFormat fmt = { 0 };
     fmt.min = 12;
     fmt.max = INT_MAX;
     fmt.justification = JUSTIFY_LEFT;

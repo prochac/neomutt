@@ -134,8 +134,7 @@ static void dump_node_expando(const struct ExpandoNode *node, struct Buffer *buf
   assert(node->ndata);
   assert(node->ndata_free);
 
-  const struct NodeExpandoPrivate *priv = node->ndata;
-  const struct ExpandoFormatPrivate *fmt = priv->format;
+  const struct ExpandoFormat *fmt = node->format;
   if (fmt)
   {
     const char *just = name_format_justify(fmt->justification);

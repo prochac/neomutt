@@ -35,11 +35,10 @@
 /**
  * node_expando_private_new - XXX
  */
-static struct NodeExpandoPrivate *node_expando_private_new(struct ExpandoFormatPrivate *format)
+static struct NodeExpandoPrivate *node_expando_private_new(void)
 {
   struct NodeExpandoPrivate *priv = mutt_mem_calloc(1, sizeof(struct NodeExpandoPrivate));
 
-  priv->format = format;
   // NOTE(g0mb4): Expando definition should contain this
   priv->color = -1;
 
@@ -52,9 +51,6 @@ static struct NodeExpandoPrivate *node_expando_private_new(struct ExpandoFormatP
  */
 static void node_expando_private_free(void **ptr)
 {
-  struct NodeExpandoPrivate *p = *ptr;
-
-  FREE(&p->format);
   FREE(ptr);
 }
 
@@ -68,7 +64,7 @@ static void node_expando_private_free(void **ptr)
  * @retval ptr XXX
  */
 struct ExpandoNode *node_expando_new(const char *start, const char *end,
-                                     struct ExpandoFormatPrivate *format, int did, int uid)
+                                     struct ExpandoFormat *format, int did, int uid)
 {
   struct ExpandoNode *node = expando_node_new();
 
@@ -79,7 +75,9 @@ struct ExpandoNode *node_expando_new(const char *start, const char *end,
   node->did = did;
   node->uid = uid;
 
-  node->ndata = node_expando_private_new(format);
+  node->format = format;
+
+  node->ndata = node_expando_private_new();
   node->ndata_free = node_expando_private_free;
 
   return node;

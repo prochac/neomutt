@@ -26,19 +26,18 @@
 
 #include <stdbool.h>
 
-struct ExpandoFormatPrivate;
+struct ExpandoFormat;
 
 /**
  * struct NodeExpandoPrivate - XXX
  */
 struct NodeExpandoPrivate
 {
-  struct ExpandoFormatPrivate *format;  ///< XXX
   int color;                            ///< XXX
   bool has_tree;                        ///< XXX, used in $index_format's %s
 };
 
-struct ExpandoNode *node_expando_new(const char *start, const char *end, struct ExpandoFormatPrivate *format, int did, int uid);
+struct ExpandoNode *node_expando_new(const char *start, const char *end, struct ExpandoFormat *format, int did, int uid);
 
 void node_expando_set_color   (const struct ExpandoNode *node, int cid);
 void node_expando_set_has_tree(const struct ExpandoNode *node, bool has_tree);
