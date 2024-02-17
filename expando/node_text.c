@@ -110,7 +110,7 @@ int node_text_render(const struct ExpandoNode *node,
 {
   assert(node->type == ENT_TEXT);
 
-  int copylen = node->end - node->start;
+  int copylen = MIN(node->end - node->start, cols_len);
   memcpy_safe(buf, node->start, copylen, buf_len);
 
   return copylen;

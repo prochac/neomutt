@@ -583,6 +583,45 @@ static struct ExpandoNode *parse_node(const char *s, const char *end,
 }
 
 /**
+ * repad - XXX
+ */
+static void repad(struct ExpandoNode **parent)
+{
+  if (!parent || !*parent)
+    return;
+
+  struct ExpandoNode *node = *parent;
+  struct ExpandoNode *prev = NULL;
+  for (; node; prev = node, node = node->next)
+  {
+    if (node->type == ENT_PADDING)
+    {
+      if (node != *parent)
+        ARRAY_SET(&node->children, ENP_LEFT, *parent); // First sibling
+
+      ARRAY_SET(&node->children, ENP_RIGHT, node->next); // Sibling after Padding
+
+      if (prev)
+        prev->next = NULL;
+      node->next = NULL;
+      *parent = node;
+      return;
+    }
+
+    if (node->type == ENT_CONDITION)
+    {
+      struct ExpandoNode **ptr = NULL;
+
+      ptr = ARRAY_GET(&node->children, ENC_TRUE);
+      repad(ptr);
+
+      ptr = ARRAY_GET(&node->children, ENC_FALSE);
+      repad(ptr);
+    }
+  }
+}
+
+/**
  * expando_tree_parse - XXX
  * @param root   XXX
  * @param string XXX
@@ -610,6 +649,8 @@ void expando_tree_parse(struct ExpandoNode **root, const char *string,
     append_node(root, node);
     start = end;
   }
+
+  repad(root);
 }
 
 /**

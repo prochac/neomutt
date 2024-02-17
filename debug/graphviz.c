@@ -1824,6 +1824,20 @@ void dot_expando_node_pad(FILE *fp, struct ExpandoNode *node, struct ListHead *l
 
   dot_object_footer(fp);
 
+  struct ExpandoNode *left = expando_node_get_child(node, ENP_LEFT);
+  if (left)
+  {
+    dot_expando_node_tree(fp, left, links);
+    dot_add_link(links, node, left, "Pad->left", "left", false, "#80ff80");
+  }
+
+  struct ExpandoNode *right = expando_node_get_child(node, ENP_RIGHT);
+  if (right)
+  {
+    dot_expando_node_tree(fp, right, links);
+    dot_add_link(links, node, right, "Pad->right", "right", false, "#ff8080");
+  }
+
   buf_pool_release(&buf);
 }
 

@@ -86,9 +86,9 @@ void test_expando_parser(void)
     { "%<[10y?AAA&BBB>", "<COND:<DATE:(EMAIL,STRF_LOCAL):10:y:31536000>|<TEXT:'AAA'>|<TEXT:'BBB'>>" },
 
     // Padding
-    { "AAA%>XBBB", "<TEXT:'AAA'><PAD:HARD:'X'><TEXT:'BBB'>" },
-    { "AAA%|XBBB", "<TEXT:'AAA'><PAD:EOL:'X'><TEXT:'BBB'>" },
-    { "AAA%*XBBB", "<TEXT:'AAA'><PAD:SOFT:'X'><TEXT:'BBB'>" },
+    { "AAA%>XBBB", "<PAD:HARD:'X':<TEXT:'AAA'>|<TEXT:'BBB'>>" },
+    { "AAA%|XBBB", "<PAD:EOL:'X':<TEXT:'AAA'>|<TEXT:'BBB'>>" },
+    { "AAA%*XBBB", "<PAD:SOFT:'X':<TEXT:'AAA'>|<TEXT:'BBB'>>" },
     // clang-format on
   };
 

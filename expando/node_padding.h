@@ -41,13 +41,20 @@ enum ExpandoPadType
 };
 
 /**
+ * enum ENPad - XXX
+ */
+enum ENPad
+{
+  ENP_LEFT,           ///< Index of Left-Hand Nodes
+  ENP_RIGHT,          ///< Index of Right-Hand Nodes
+};
+
+/**
  * struct NodePaddingPrivate - XXX
  */
 struct NodePaddingPrivate
 {
   enum ExpandoPadType  pad_type;        ///< XXX
-  char                *buffer_start;    ///< XXX
-  size_t               buffer_len;      ///< XXX
 };
 
 int node_padding_render (const struct ExpandoNode *node, const struct ExpandoRenderData *rdata, char *buf, int buf_len, int cols_len, void *data, MuttFormatFlags flags);

@@ -128,140 +128,6 @@ static bool is_utf8_4_byte_head(uint8_t c)
 }
 
 /**
- * is_utf8_cont_byte - XXX
- * @param c XXX
- */
-static bool is_utf8_cont_byte(uint8_t c)
-{
-  return (c & 0xC0) == 0x80;
-}
-
-/**
- * count_spec - XXX
- * @param s XXX
- * @retval num XXX
- */
-static int count_spec(const char *s)
-{
-  int n = 0;
-  while (*s)
-  {
-    if (*s == MUTT_SPECIAL_INDEX)
-    {
-      n++;
-    }
-
-    s++;
-  }
-
-  return n;
-}
-
-/**
- * count_spec_end - XXX
- * @param s   XXX
- * @param end XXX
- * @retval num XXX
- */
-static int count_spec_end(const char *s, const char *end)
-{
-  int n = 0;
-  while (*s && s <= end)
-  {
-    if (*s == MUTT_SPECIAL_INDEX)
-    {
-      n++;
-    }
-
-    s++;
-  }
-
-  return n;
-}
-
-/**
- * softpad_correct_utf8 - XXX
- * @param buf        XXX
- * @param copy_start XXX
- */
-static void softpad_correct_utf8(const char *buf, char **copy_start)
-{
-  char *s = *copy_start;
-  uint8_t c = (uint8_t) *s;
-
-  if (is_ascii_byte(c))
-  {
-    return;
-  }
-
-  while (is_utf8_cont_byte(c))
-  {
-    assert(s - 1 >= buf);
-    s--;
-    c = (uint8_t) *s;
-  }
-
-  if (is_utf8_2_byte_head(c))
-  {
-    *copy_start = (char *) (s + 2);
-  }
-  else if (is_utf8_3_byte_head(c))
-  {
-    *copy_start = (char *) s + 3;
-  }
-  else if (is_utf8_4_byte_head(c))
-  {
-    *copy_start = (char *) s + 4;
-  }
-  else
-  {
-    assert(0 && "Unreachable");
-  }
-}
-
-/**
- * softpad_move_markers - XXX
- * @param buf        XXX
- * @param copy_start XXX
- */
-static void softpad_move_markers(char *buf, char *copy_start)
-{
-  const int n = count_spec_end(buf, copy_start);
-
-  // all markers are closed
-  if (n % 2 == 0)
-  {
-    // if position is a marker
-    if (*copy_start == MUTT_SPECIAL_INDEX)
-    {
-      const char color = *(copy_start + 1);
-      assert(color == MT_COLOR_INDEX);
-
-      // move marker
-      *(copy_start - 2) = MUTT_SPECIAL_INDEX;
-      *(copy_start - 1) = MT_COLOR_INDEX;
-    }
-    // if position is a color
-    else if (*(copy_start - 1) == MUTT_SPECIAL_INDEX)
-    {
-      const char color = *copy_start;
-      assert(color == MT_COLOR_INDEX);
-
-      // move marker
-      *(copy_start - 2) = MUTT_SPECIAL_INDEX;
-      *(copy_start - 1) = MT_COLOR_INDEX;
-    }
-  }
-  // one marker is open
-  else
-  {
-    // move marker
-    *(copy_start - 2) = MUTT_SPECIAL_INDEX;
-    *(copy_start - 1) = MT_COLOR_INDEX;
-  }
-}
-
-/**
  * node_padding_parse - XXX
  * @param s            XXX
  * @param parsed_until XXX
@@ -335,11 +201,20 @@ int node_padding_render_eol(const struct ExpandoNode *node,
                             const struct ExpandoRenderData *rdata, char *buf,
                             int buf_len, int cols_len, void *data, MuttFormatFlags flags)
 {
+  struct ExpandoNode *left = expando_node_get_child(node, ENP_LEFT);
+
+  format_tree(left, rdata, buf, buf_len, buf_len, data, flags);
+
+  const int left_len = mutt_str_len(buf);
+  const int left_width = mutt_strwidth(buf);
+
   const int pad_len = node->end - node->start;
   const int pad_width = mutt_strwidth_nonnull(node->start, node->end);
 
-  int len = buf_len;
-  int cols = cols_len;
+  int len = buf_len - left_len;
+  int cols = cols_len - left_width;
+
+  buf += left_len;
 
   bool is_space_to_write = ((len - pad_len) > 0) && ((cols - pad_width) >= 0);
   while (is_space_to_write)
@@ -372,19 +247,30 @@ int node_padding_render_hard(const struct ExpandoNode *node,
                              const struct ExpandoRenderData *rdata, char *buf,
                              int buf_len, int cols_len, void *data, MuttFormatFlags flags)
 {
+  struct ExpandoNode *left = expando_node_get_child(node, ENP_LEFT);
+
+  format_tree(left, rdata, buf, buf_len, cols_len, data, flags);
+
   const int pad_len = node->end - node->start;
   const int pad_width = mutt_strwidth_nonnull(node->start, node->end);
 
-  char right[1024] = { 0 };
-  struct ExpandoNode *root = node->next;
-  format_tree(root, rdata, right, sizeof(right), sizeof(right), data, flags);
-  const int right_len = mutt_str_len(right);
-  const int right_width = mutt_strwidth(right);
+  const int left_len = mutt_str_len(buf);
+  const int left_width = mutt_strwidth(buf);
 
-  int len = buf_len;
-  int cols = cols_len;
-  bool is_space_to_write = ((len - pad_len - right_len) > 0) &&
-                           ((cols - pad_width - right_width) >= 0);
+  struct ExpandoNode *right = expando_node_get_child(node, ENP_RIGHT);
+
+  char right_str[1024] = { 0 };
+  format_tree(right, rdata, right_str, sizeof(right_str), cols_len - left_width, data, flags);
+
+  const int right_len = mutt_str_len(right_str);
+  const int right_width = mutt_strwidth(right_str);
+
+  int len = buf_len - left_len - right_len;
+  int cols = cols_len - left_width - right_width;
+
+  buf += left_len;
+
+  bool is_space_to_write = ((len - pad_len) > 0) && ((cols - pad_width) >= 0);
 
   while (is_space_to_write)
   {
@@ -394,11 +280,10 @@ int node_padding_render_hard(const struct ExpandoNode *node,
     len -= pad_len;
     cols -= pad_width;
 
-    is_space_to_write = ((len - pad_len - right_len) > 0) &&
-                        ((cols - pad_width - right_width) >= 0);
+    is_space_to_write = ((len - pad_len) > 0) && ((cols - pad_width) >= 0);
   }
 
-  mutt_strn_copy(buf, right, MIN(cols_len, right_len), len);
+  mutt_strn_copy(buf, right_str, MIN(cols_len, right_len), len);
 
   // formatting of the whole buffer is done
   return buf_len;
@@ -419,57 +304,60 @@ int node_padding_render_soft(const struct ExpandoNode *node,
                              const struct ExpandoRenderData *rdata, char *buf,
                              int buf_len, int cols_len, void *data, MuttFormatFlags flags)
 {
+  char right_str[1024] = { 0 };
+  // int right_len = 0;
+  int right_width = 0;
+
+  struct ExpandoNode *right = expando_node_get_child(node, ENP_RIGHT);
+  if (right)
+  {
+    format_tree(right, rdata, right_str, sizeof(right_str), cols_len, data, flags);
+
+    // right_len = mutt_str_len(right_str);
+    right_width = mutt_strwidth(right_str);
+
+    cols_len -= right_width;
+  }
+
+  char left_str[1024] = { 0 };
+  int left_len = 0;
+  int left_width = 0;
+
+  struct ExpandoNode *left = expando_node_get_child(node, ENP_LEFT);
+  if (left)
+  {
+    format_tree(left, rdata, left_str, sizeof(left_str), cols_len, data, flags);
+
+    left_len = mutt_str_len(left_str);
+    left_width = mutt_strwidth(left_str);
+
+    cols_len -= left_width;
+  }
+
+  mutt_str_copy(buf, left_str, buf_len);
+
+  buf += left_len;
+  buf_len -= left_len;
+
   const int pad_len = node->end - node->start;
   const int pad_width = mutt_strwidth_nonnull(node->start, node->end);
 
-  const struct NodePaddingPrivate *pp = node->ndata;
-
-  char right[1024] = { 0 };
-  struct ExpandoNode *root = node->next;
-  format_tree(root, rdata, right, sizeof(right), sizeof(right), data, flags);
-
-  int right_len = mutt_str_len(right);
-
-  const int no_spec = count_spec(right);
-
   int len = buf_len;
 
-  // NOTE(g0mb4): Dirty hack...
-  // somehow the colormarkers count as a column
-  int cols = cols_len + no_spec * 2;
-
   // fill space
-  bool is_space_to_write = ((len - pad_len) > 0) && ((cols - pad_width) >= 0);
+  bool is_space_to_write = ((len - pad_len) > 0) && ((cols_len - pad_width) >= 0);
   while (is_space_to_write)
   {
     memcpy(buf, node->start, pad_len);
 
     buf += pad_len;
     len -= pad_len;
-    cols -= pad_width;
+    cols_len -= pad_width;
 
-    is_space_to_write = ((len - pad_len) > 0) && ((cols - pad_width) >= 0);
+    is_space_to_write = ((len - pad_len) > 0) && ((cols_len - pad_width) >= 0);
   }
 
-  char *copy_start = buf - right_len;
-  if (copy_start < pp->buffer_start)
-  {
-    mutt_strn_copy(pp->buffer_start, right, right_len, pp->buffer_len);
-  }
-  else
-  {
-    softpad_correct_utf8(pp->buffer_start, &copy_start);
-
-    const size_t occupied = copy_start - pp->buffer_start;
-    const size_t remaining = pp->buffer_len - occupied;
-
-    if (no_spec > 0)
-    {
-      softpad_move_markers(pp->buffer_start, copy_start);
-    }
-
-    mutt_strn_copy(copy_start, right, right_len, remaining);
-  }
+  mutt_str_copy(buf, right_str, buf_len);
 
   // formatting of the whole buffer is done
   return buf_len;

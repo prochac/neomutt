@@ -161,6 +161,9 @@ static void dump_node_pad(const struct ExpandoNode *node, struct Buffer *buf)
   assert(node->ndata_free);
   struct NodePaddingPrivate *priv = node->ndata;
 
+  struct ExpandoNode *left = expando_node_get_child(node, ENP_LEFT);
+  struct ExpandoNode *right = expando_node_get_child(node, ENP_RIGHT);
+
   switch (priv->pad_type)
   {
     case EPT_FILL_EOL:
@@ -181,6 +184,11 @@ static void dump_node_pad(const struct ExpandoNode *node, struct Buffer *buf)
   int len = node->end - node->start;
   if (len > 0)
     buf_add_printf(buf, "'%.*s'", len, node->start);
+
+  buf_addstr(buf, ":");
+  dump_node(left, buf);
+  buf_addstr(buf, "|");
+  dump_node(right, buf);
 
   // buf_add_printf(buf, ":(%s,%zu)", priv->buffer_start, priv->buffer_len);
 

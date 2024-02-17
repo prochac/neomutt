@@ -139,10 +139,17 @@ void test_expando_colors_render(void)
     expando_tree_parse(&root, input, defs, &error);
 
     TEST_CHECK(error.position == NULL);
-    check_expando_node(get_nth_node(&root, 0), "C", NULL);
-    check_text_node(get_nth_node(&root, 1), " ");
-    check_pad_node(get_nth_node(&root, 2), " ", EPT_SOFT_FILL);
-    check_expando_node(get_nth_node(&root, 3), "s", NULL);
+    check_pad_node(root, " ", EPT_SOFT_FILL);
+
+    struct ExpandoNode *left = expando_node_get_child(root, ENP_LEFT);
+    struct ExpandoNode *right = expando_node_get_child(root, ENP_RIGHT);
+
+    TEST_CHECK(left != NULL);
+    TEST_CHECK(right != NULL);
+
+    check_expando_node(get_nth_node(&left, 0), "C", NULL);
+    check_text_node(get_nth_node(&left, 1), " ");
+    check_expando_node(get_nth_node(&right, 0), "s", NULL);
 
     const struct Expando expando = {
       .string = input,
@@ -213,10 +220,17 @@ void test_expando_colors_render(void)
     expando_tree_parse(&root, input, defs, &error);
 
     TEST_CHECK(error.position == NULL);
-    check_expando_node(get_nth_node(&root, 0), "s", NULL);
-    check_text_node(get_nth_node(&root, 1), " ");
-    check_pad_node(get_nth_node(&root, 2), " ", EPT_SOFT_FILL);
-    check_expando_node(get_nth_node(&root, 3), "s", NULL);
+    check_pad_node(root, " ", EPT_SOFT_FILL);
+
+    struct ExpandoNode *left = expando_node_get_child(root, ENP_LEFT);
+    struct ExpandoNode *right = expando_node_get_child(root, ENP_RIGHT);
+
+    TEST_CHECK(left != NULL);
+    TEST_CHECK(right != NULL);
+
+    check_expando_node(get_nth_node(&left, 0), "s", NULL);
+    check_text_node(get_nth_node(&left, 1), " ");
+    check_expando_node(get_nth_node(&right, 0), "s", NULL);
 
     const struct Expando expando = {
       .string = input,
@@ -250,6 +264,8 @@ void test_expando_colors_render(void)
     const int expected_width = mutt_str_len(expected) - 8;
     TEST_CHECK(mutt_strwidth(expected) == expected_width);
     TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    TEST_MSG("Expected: %s", expected);
+    TEST_MSG("Actual:   %s", buf_string(buf));
 
     expando_tree_free(&root);
     buf_pool_release(&buf);
@@ -270,10 +286,17 @@ void test_expando_colors_render(void)
     expando_tree_parse(&root, input, defs, &error);
 
     TEST_CHECK(error.position == NULL);
-    check_expando_node(get_nth_node(&root, 0), "s", NULL);
-    check_text_node(get_nth_node(&root, 1), " ");
-    check_pad_node(get_nth_node(&root, 2), " ", EPT_SOFT_FILL);
-    check_expando_node(get_nth_node(&root, 3), "s", NULL);
+    check_pad_node(root, " ", EPT_SOFT_FILL);
+
+    struct ExpandoNode *left = expando_node_get_child(root, ENP_LEFT);
+    struct ExpandoNode *right = expando_node_get_child(root, ENP_RIGHT);
+
+    TEST_CHECK(left != NULL);
+    TEST_CHECK(right != NULL);
+
+    check_expando_node(get_nth_node(&left, 0), "s", NULL);
+    check_text_node(get_nth_node(&left, 1), " ");
+    check_expando_node(get_nth_node(&right, 0), "s", NULL);
 
     const struct Expando expando = {
       .string = input,
@@ -297,6 +320,8 @@ void test_expando_colors_render(void)
 
     TEST_CHECK(mutt_strwidth(expected) == 6);
     TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    TEST_MSG("Expected: %s", expected);
+    TEST_MSG("Actual:   %s", buf_string(buf));
 
     expando_tree_free(&root);
     buf_pool_release(&buf);

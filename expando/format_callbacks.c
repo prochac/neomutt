@@ -79,14 +79,9 @@ void format_tree(struct ExpandoNode *tree, const struct ExpandoRenderData *rdata
           break;
 
         case ED_ALL_PAD:
-        {
-          struct NodePaddingPrivate *pp = node->ndata;
-          pp->buffer_start = buf;
-          pp->buffer_len = buf_len;
           printed = node_padding_render(node, rdata, buffer, buffer_len,
                                         columns_len, data, flags);
-        }
-        break;
+          break;
 
         case ED_ALL_CONDITION:
           printed = node_condition_render(node, rdata, buffer, buffer_len,
@@ -125,20 +120,6 @@ void format_tree(struct ExpandoNode *tree, const struct ExpandoRenderData *rdata
     buffer_len -= printed;
     buffer += printed;
 
-    node = node->next;
-  }
-
-  // give softpad nodes a chance to act
-  while (node)
-  {
-    if (node->type == ENT_PADDING)
-    {
-      struct NodePaddingPrivate *pp = node->ndata;
-      pp->buffer_start = buf;
-      pp->buffer_len = buf_len;
-
-      node_padding_render(node, rdata, buffer, buffer_len, columns_len, data, flags);
-    }
     node = node->next;
   }
 
