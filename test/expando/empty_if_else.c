@@ -33,7 +33,7 @@ void test_expando_empty_if_else(void)
 
   const char *input1 = "%<c?>";
   struct ExpandoNode *root1 = NULL;
-  expando_tree_parse(&root1, &input1, NULL, &error);
+  expando_tree_parse(&root1, input1, NULL, &error);
   TEST_CHECK(error.position == NULL);
   {
     struct ExpandoNode *node = get_nth_node(&root1, 0);
@@ -48,7 +48,7 @@ void test_expando_empty_if_else(void)
 
   const char *input2 = "%<c?&>";
   struct ExpandoNode *root2 = NULL;
-  expando_tree_parse(&root2, &input2, NULL, &error);
+  expando_tree_parse(&root2, input2, NULL, &error);
   TEST_CHECK(error.position == NULL);
   {
     struct ExpandoNode *node = get_nth_node(&root2, 0);
@@ -63,7 +63,7 @@ void test_expando_empty_if_else(void)
 
   const char *input3 = "%<c?%t&>";
   struct ExpandoNode *root3 = NULL;
-  expando_tree_parse(&root3, &input3, NULL, &error);
+  expando_tree_parse(&root3, input3, NULL, &error);
   TEST_CHECK(error.position == NULL);
   {
     struct ExpandoNode *node = get_nth_node(&root3, 0);
@@ -78,7 +78,7 @@ void test_expando_empty_if_else(void)
 
   const char *input4 = "%<c?&%f>";
   struct ExpandoNode *root4 = NULL;
-  expando_tree_parse(&root4, &input4, NULL, &error);
+  expando_tree_parse(&root4, input4, NULL, &error);
   TEST_CHECK(error.position == NULL);
   {
     struct ExpandoNode *node = get_nth_node(&root4, 0);

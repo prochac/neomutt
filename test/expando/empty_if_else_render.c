@@ -70,7 +70,7 @@ void test_expando_empty_if_else_render(void)
   };
 
   struct ExpandoNode *root = NULL;
-  expando_tree_parse(&root, &input, defs, &error);
+  expando_tree_parse(&root, input, defs, &error);
   TEST_CHECK(error.position == NULL);
 
   struct ExpandoNode *node = get_nth_node(&root, 0);

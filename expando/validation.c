@@ -53,7 +53,7 @@ struct Expando *expando_parse(const char *str, const struct ExpandoDefinition *d
   struct ExpandoParseError error = { 0 };
   struct ExpandoNode *root = NULL;
 
-  expando_tree_parse(&root, &exp->string, defs, &error);
+  expando_tree_parse(&root, exp->string, defs, &error);
 
   if (error.position)
   {

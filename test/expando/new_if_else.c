@@ -35,7 +35,7 @@ void test_expando_new_if_else(void)
   struct ExpandoParseError error = { 0 };
   struct ExpandoNode *root = NULL;
 
-  expando_tree_parse(&root, &input, NULL, &error);
+  expando_tree_parse(&root, input, NULL, &error);
 
   TEST_CHECK(error.position == NULL);
   check_text_node(get_nth_node(&root, 0), "if: ");

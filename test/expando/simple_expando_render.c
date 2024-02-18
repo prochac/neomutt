@@ -70,7 +70,7 @@ void test_expando_simple_expando_render(void)
     { NULL, NULL, 0, 0, 0, 0, NULL },
   };
 
-  expando_tree_parse(&root, &input, defs, &error);
+  expando_tree_parse(&root, input, defs, &error);
 
   TEST_CHECK(error.position == NULL);
   check_expando_node(get_nth_node(&root, 0), "s", NULL);

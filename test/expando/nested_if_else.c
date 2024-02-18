@@ -36,7 +36,7 @@ void test_expando_nested_if_else(void)
 
     struct ExpandoNode *root = NULL;
 
-    expando_tree_parse(&root, &input, NULL, &error);
+    expando_tree_parse(&root, input, NULL, &error);
 
     TEST_CHECK(error.position == NULL);
 
@@ -67,7 +67,7 @@ void test_expando_nested_if_else(void)
 
     struct ExpandoNode *root = NULL;
 
-    expando_tree_parse(&root, &input, NULL, &error);
+    expando_tree_parse(&root, input, NULL, &error);
 
     TEST_CHECK(error.position == NULL);
 
@@ -98,7 +98,7 @@ void test_expando_nested_if_else(void)
 
     struct ExpandoNode *root = NULL;
 
-    expando_tree_parse(&root, &input, NULL, &error);
+    expando_tree_parse(&root, input, NULL, &error);
 
     TEST_CHECK(error.position == NULL);
 
@@ -129,7 +129,7 @@ void test_expando_nested_if_else(void)
 
     struct ExpandoNode *root = NULL;
 
-    expando_tree_parse(&root, &input, NULL, &error);
+    expando_tree_parse(&root, input, NULL, &error);
 
     TEST_CHECK(error.position == NULL);
 
@@ -160,7 +160,7 @@ void test_expando_nested_if_else(void)
 
     struct ExpandoNode *root = NULL;
 
-    expando_tree_parse(&root, &input, NULL, &error);
+    expando_tree_parse(&root, input, NULL, &error);
 
     TEST_CHECK(error.position == NULL);
 

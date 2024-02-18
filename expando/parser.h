@@ -36,7 +36,7 @@ struct ExpandoParseError
   const char *position;       ///< XXX
 };
 
-void expando_tree_parse(struct ExpandoNode **root, const char **string, const struct ExpandoDefinition *defs, struct ExpandoParseError *error);
+void expando_tree_parse(struct ExpandoNode **root, const char *string, const struct ExpandoDefinition *defs, struct ExpandoParseError *error);
 void expando_tree_free(struct ExpandoNode **root);
 
 struct ExpandoNode *expando_parse_enclosed_expando(const char *s, const char **parsed_until, int did, int uid, char terminator, struct ExpandoParseError *error);

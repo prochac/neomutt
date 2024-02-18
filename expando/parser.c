@@ -908,17 +908,17 @@ static struct ExpandoNode *parse_node(const char *s, const char *end,
  * @param defs   XXX
  * @param error  XXX
  */
-void expando_tree_parse(struct ExpandoNode **root, const char **string,
+void expando_tree_parse(struct ExpandoNode **root, const char *string,
                         const struct ExpandoDefinition *defs, struct ExpandoParseError *error)
 {
-  if (!string || !*string || !**string)
+  if (!string || !*string)
   {
     append_node(root, new_empty_node());
     return;
   }
 
   const char *end = NULL;
-  const char *start = *string;
+  const char *start = string;
 
   while (*start)
   {

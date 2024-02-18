@@ -35,7 +35,7 @@ void test_expando_formatted_expando(void)
   struct ExpandoParseError error = { 0 };
   struct ExpandoNode *root = NULL;
 
-  expando_tree_parse(&root, &input, NULL, &error);
+  expando_tree_parse(&root, input, NULL, &error);
 
   TEST_CHECK(error.position == NULL);
   check_expando_node(get_nth_node(&root, 0), "X", NULL);

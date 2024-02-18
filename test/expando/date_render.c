@@ -74,7 +74,7 @@ void test_expando_date_render(void)
       { NULL, NULL, 0, 0, 0, 0, NULL },
     };
 
-    expando_tree_parse(&root, &input, defs, &error);
+    expando_tree_parse(&root, input, defs, &error);
 
     TEST_CHECK(error.position == NULL);
 
@@ -112,7 +112,7 @@ void test_expando_date_render(void)
       { NULL, NULL, 0, 0, 0, 0, NULL },
     };
 
-    expando_tree_parse(&root, &input, defs, &error);
+    expando_tree_parse(&root, input, defs, &error);
 
     TEST_CHECK(error.position == NULL);
 
