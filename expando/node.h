@@ -122,6 +122,8 @@ struct ExpandoConditionalDatePrivate
   time_t multiplier;    ///< XXX
 };
 
+struct ExpandoNode *expando_node_new(void);
+
 void free_node(struct ExpandoNode *node);
 void free_tree(struct ExpandoNode *node);
 

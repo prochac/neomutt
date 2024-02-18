@@ -32,6 +32,14 @@
 #include "node.h"
 
 /**
+ * expando_node_new - XXX
+ */
+struct ExpandoNode *expando_node_new(void)
+{
+  return mutt_mem_calloc(1, sizeof(struct ExpandoNode));
+}
+
+/**
  * free_node - XXX
  * @param node XXX
  */

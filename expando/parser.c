@@ -62,7 +62,7 @@ enum ExpandoConditionStart
  */
 static struct ExpandoNode *new_empty_node(void)
 {
-  struct ExpandoNode *node = mutt_mem_calloc(1, sizeof(struct ExpandoNode));
+  struct ExpandoNode *node = expando_node_new();
 
   node->type = ENT_EMPTY;
   node->did = ED_ALL;
