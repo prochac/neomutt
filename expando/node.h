@@ -25,7 +25,6 @@
 #define MUTT_EXPANDO_NODE_H
 
 #include <stdbool.h>
-#include <time.h>
 #include "gui/lib.h"
 
 /**
@@ -38,7 +37,7 @@ enum ExpandoNodeType
   ENT_EXPANDO,             ///< XXX
   ENT_PADDING,                 ///< XXX
   ENT_CONDITION,           ///< XXX
-  ENT_CONDITIONAL_DATE,    ///< XXX
+  ENT_CONDDATE,    ///< XXX
 };
 
 /**
@@ -82,22 +81,11 @@ struct ExpandoExpandoPrivate
   bool has_tree;                        ///< XXX, used in $index_format's %s
 };
 
-/**
- * struct ExpandoConditionalDatePrivate - XXX
- */
-struct ExpandoConditionalDatePrivate
-{
-  int    count;         ///< XXX
-  char   period;        ///< XXX
-  time_t multiplier;    ///< XXX
-};
-
 struct ExpandoNode *expando_node_new(void);
 
 void free_node(struct ExpandoNode *node);
 void free_tree(struct ExpandoNode *node);
 
-void free_expando_private(void **ptr);
 void free_expando_private_expando(void **ptr);
 
 #endif /* MUTT_EXPANDO_NODE_H */

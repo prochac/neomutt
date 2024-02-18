@@ -124,10 +124,10 @@ void check_condition_node_head(struct ExpandoNode *node)
 void check_conditional_date_node(struct ExpandoNode *node, int count, char period)
 {
   TEST_CHECK(node != NULL);
-  TEST_CHECK(node->type == ENT_CONDITIONAL_DATE);
+  TEST_CHECK(node->type == ENT_CONDDATE);
 
   TEST_CHECK(node->ndata != NULL);
-  struct ExpandoConditionalDatePrivate *p = node->ndata;
+  struct NodeCondDatePrivate *p = node->ndata;
 
   TEST_CHECK(p->count == count);
   TEST_CHECK(p->period == period);
@@ -139,7 +139,7 @@ struct ExpandoNode *parse_date(const char *s, const char **parsed_until,
   // s-1 is always something valid
   if (*(s - 1) == '<')
   {
-    return expando_parse_conditional_date(s + 1, parsed_until, did, uid, error);
+    return node_conddate_parse(s + 1, parsed_until, did, uid, error);
   }
 
   return expando_parse_enclosed_expando(s, parsed_until, did, uid, ']', error);

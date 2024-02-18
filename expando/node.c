@@ -71,15 +71,6 @@ void free_tree(struct ExpandoNode *node)
 }
 
 /**
- * free_expando_private - XXX
- * @param ptr XXX
- */
-void free_expando_private(void **ptr)
-{
-  FREE(ptr);
-}
-
-/**
  * free_expando_private_expando - XXX
  * @param ptr XXX
  */

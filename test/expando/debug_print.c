@@ -167,7 +167,7 @@ static void print_condition_node(FILE *fp, const struct ExpandoNode *node, int i
 static void print_conditional_date_node(FILE *fp, const struct ExpandoNode *node, int indent)
 {
   assert(node->ndata);
-  struct ExpandoConditionalDatePrivate *d = node->ndata;
+  struct NodeCondDatePrivate *d = node->ndata;
   fprintf(fp, "%*sCOND DATE: (did=%d, uid=%d)(period=`%c`, count=%d)\n", indent,
           "", node->did, node->uid, d->period, d->count);
 }
@@ -218,7 +218,7 @@ static void print_node(FILE *fp, const struct ExpandoNode *node, int indent)
     }
     break;
 
-    case ENT_CONDITIONAL_DATE:
+    case ENT_CONDDATE:
     {
       print_conditional_date_node(fp, node, indent);
     }

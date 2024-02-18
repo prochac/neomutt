@@ -21,24 +21,23 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MUTT_EXPANDO_PARSER_H
-#define MUTT_EXPANDO_PARSER_H
+#ifndef MUTT_EXPANDO_NODE_CONDDATE_H
+#define MUTT_EXPANDO_NODE_CONDDATE_H
 
-struct ExpandoNode;
-struct ExpandoDefinition;
+#include <time.h>
+
+struct ExpandoParseError;
 
 /**
- * struct ExpandoParseError - XXX
+ * struct NodeCondDatePrivate - XXX
  */
-struct ExpandoParseError
+struct NodeCondDatePrivate
 {
-  char        message[128];   ///< XXX
-  const char *position;       ///< XXX
+  int    count;         ///< XXX
+  char   period;        ///< XXX
+  time_t multiplier;    ///< XXX
 };
 
-void expando_tree_parse(struct ExpandoNode **root, const char *string, const struct ExpandoDefinition *defs, struct ExpandoParseError *error);
-void expando_tree_free(struct ExpandoNode **root);
+struct ExpandoNode *node_conddate_parse(const char *s, const char **parsed_until, int did, int uid, struct ExpandoParseError *error);
 
-struct ExpandoNode *expando_parse_enclosed_expando(const char *s, const char **parsed_until, int did, int uid, char terminator, struct ExpandoParseError *error);
-
-#endif /* MUTT_EXPANDO_PARSER_H */
+#endif /* MUTT_EXPANDO_NODE_CONDDATE_H */

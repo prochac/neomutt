@@ -34,7 +34,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include "mutt/lib.h"
 #include "gui/lib.h"
 #include "parser.h"
@@ -90,34 +89,6 @@ static struct ExpandoNode *new_expando_node(const char *start, const char *end,
 
   node->ndata = p;
   node->ndata_free = free_expando_private_expando;
-
-  return node;
-}
-
-/**
- * new_conditional_date - XXX
- * @param count      XXX
- * @param period     XXX
- * @param multiplier XXX
- * @param did        XXX
- * @param uid        XXX
- * @retval ptr XXX
- */
-static struct ExpandoNode *new_conditional_date(int count, char period,
-                                                time_t multiplier, int did, int uid)
-{
-  struct ExpandoNode *node = mutt_mem_calloc(1, sizeof(struct ExpandoNode));
-  node->type = ENT_CONDITIONAL_DATE;
-  node->did = did;
-  node->uid = uid;
-
-  struct ExpandoConditionalDatePrivate *dp = mutt_mem_calloc(1, sizeof(struct ExpandoConditionalDatePrivate));
-  dp->count = count;
-  dp->period = period;
-  dp->multiplier = multiplier;
-
-  node->ndata = dp;
-  node->ndata_free = free_expando_private;
 
   return node;
 }
@@ -476,86 +447,6 @@ struct ExpandoNode *expando_parse_enclosed_expando(const char *s, const char **p
 
   *parsed_until = expando_end + 1;
   return new_expando_node(format_end, expando_end, format, did, uid);
-}
-
-/**
- * expando_parse_conditional_date - XXX
- * @param s            XXX
- * @param parsed_until XXX
- * @param did          XXX
- * @param uid          XXX
- * @param error        XXX
- * @retval ptr XXX
- */
-struct ExpandoNode *expando_parse_conditional_date(const char *s, const char **parsed_until,
-                                                   int did, int uid,
-                                                   struct ExpandoParseError *error)
-{
-  int count = 1;
-  char period = 0;
-  time_t multiplier = 0;
-
-  if (isdigit(*s))
-  {
-    char *end_ptr;
-    int number = strtol(s, &end_ptr, 10);
-
-    // NOTE(g0mb4): start is NOT null-terminated
-    if (!end_ptr)
-    {
-      error->position = s;
-      snprintf(error->message, sizeof(error->message), "Wrong number");
-      return NULL;
-    }
-
-    count = number;
-    s = end_ptr;
-  };
-
-  switch (*s)
-  {
-    case 'y':
-      period = *s;
-      multiplier = 60 * 60 * 24 * 365;
-      break;
-
-    case 'm':
-      // NOTE(g0mb4): semi-broken (assuming 30 days in all months)
-      period = *s;
-      multiplier = 60 * 60 * 24 * 30;
-      break;
-
-    case 'w':
-      period = *s;
-      multiplier = 60 * 60 * 24 * 7;
-      break;
-
-    case 'd':
-      period = *s;
-      multiplier = 60 * 60 * 24;
-      break;
-
-    case 'H':
-      period = *s;
-      multiplier = 60 * 60;
-      break;
-
-    case 'M':
-      period = *s;
-      multiplier = 60;
-      break;
-
-    default:
-    {
-      error->position = s;
-      snprintf(error->message, sizeof(error->message), "Wrong period: `%c`", *s);
-      return NULL;
-    }
-  }
-
-  *parsed_until = s + 1;
-
-  return new_conditional_date(count, period, multiplier, did, uid);
 }
 
 /**

@@ -84,7 +84,7 @@ static void dump_node_conditional_date(const struct ExpandoNode *node, struct Bu
 
   assert(node->ndata);
   assert(node->ndata_free);
-  struct ExpandoConditionalDatePrivate *priv = node->ndata;
+  struct NodeCondDatePrivate *priv = node->ndata;
   buf_add_printf(buf, ":%d:%c:%zu", priv->count, priv->period, priv->multiplier);
 
   // These shouldn't happen
@@ -226,7 +226,7 @@ static void dump_node(const struct ExpandoNode *node, struct Buffer *buf)
       case ENT_CONDITION:
         dump_node_condition(node, buf);
         break;
-      case ENT_CONDITIONAL_DATE:
+      case ENT_CONDDATE:
         dump_node_conditional_date(node, buf);
         break;
       case ENT_EMPTY:

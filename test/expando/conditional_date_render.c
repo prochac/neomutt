@@ -39,7 +39,7 @@ struct CondDateData
 static void cond_date(const struct ExpandoNode *node, void *data,
                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
 {
-  assert(node->type == ENT_EXPANDO || node->type == ENT_CONDITIONAL_DATE);
+  assert(node->type == ENT_EXPANDO || node->type == ENT_CONDDATE);
 
   const struct CondDateData *dd = data;
   struct tm tm = mutt_date_localtime(dd->t);
@@ -59,7 +59,7 @@ static void cond_date(const struct ExpandoNode *node, void *data,
   {
     assert(node->ndata);
 
-    const struct ExpandoConditionalDatePrivate *cd = node->ndata;
+    const struct NodeCondDatePrivate *cd = node->ndata;
 
     time_t t = mutt_date_now();
     t -= cd->count * cd->multiplier;

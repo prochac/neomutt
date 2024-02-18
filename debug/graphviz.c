@@ -1869,7 +1869,7 @@ void dot_expando_node_conditional_date(FILE *fp, struct ExpandoNode *node,
 {
   struct Buffer *buf = buf_pool_get();
   dot_object_header(fp, node, "CondDate", "#c0c0ff");
-  // dot_type_string(fp, "type", "ENT_CONDITIONAL_DATE", true);
+  // dot_type_string(fp, "type", "ENT_CONDDATE", true);
   dot_type_string(fp, "did", name_expando_domain(node->did), true);
   dot_type_string(fp, "uid", name_expando_uid(node->did, node->uid), true);
 
@@ -1882,7 +1882,7 @@ void dot_expando_node_conditional_date(FILE *fp, struct ExpandoNode *node,
     dot_type_string(fp, "string", str, true);
   }
 
-  struct ExpandoConditionalDatePrivate *priv = node->ndata;
+  struct NodeCondDatePrivate *priv = node->ndata;
   dot_type_number(fp, "count", priv->count);
   dot_type_char(fp, "period", priv->period);
   dot_type_number(fp, "multiplier", priv->multiplier);
@@ -1976,7 +1976,7 @@ void dot_expando_node_tree(FILE *fp, struct ExpandoNode *node, struct ListHead *
       case ENT_CONDITION:
         dot_expando_node_condition(fp, node, links);
         break;
-      case ENT_CONDITIONAL_DATE:
+      case ENT_CONDDATE:
         dot_expando_node_conditional_date(fp, node, links);
         break;
       case ENT_EMPTY:

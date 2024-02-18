@@ -161,7 +161,7 @@ struct ExpandoNode *parse_index_date_recv_local(const char *s, const char **pars
   // s-1 is always something valid
   if (*(s - 1) == '<')
   {
-    return expando_parse_conditional_date(s + 1, parsed_until, did, uid, error);
+    return node_conddate_parse(s + 1, parsed_until, did, uid, error);
   }
 
   return expando_parse_enclosed_expando(s, parsed_until, did, uid, ')', error);
@@ -176,7 +176,7 @@ struct ExpandoNode *parse_index_date_local(const char *s, const char **parsed_un
   // s-1 is always something valid
   if (*(s - 1) == '<')
   {
-    return expando_parse_conditional_date(s + 1, parsed_until, did, uid, error);
+    return node_conddate_parse(s + 1, parsed_until, did, uid, error);
   }
 
   return expando_parse_enclosed_expando(s, parsed_until, did, uid, ']', error);
@@ -191,7 +191,7 @@ struct ExpandoNode *parse_index_date(const char *s, const char **parsed_until,
   // s-1 is always something valid
   if (*(s - 1) == '<')
   {
-    return expando_parse_conditional_date(s + 1, parsed_until, did, uid, error);
+    return node_conddate_parse(s + 1, parsed_until, did, uid, error);
   }
 
   return expando_parse_enclosed_expando(s, parsed_until, did, uid, '}', error);

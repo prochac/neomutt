@@ -308,7 +308,7 @@ static bool thread_is_old(struct Email *e)
 void index_date_recv_local(const struct ExpandoNode *node, void *data,
                            MuttFormatFlags flags, int max_width, struct Buffer *buf)
 {
-  assert((node->type == ENT_EXPANDO) || (node->type == ENT_CONDITIONAL_DATE));
+  assert((node->type == ENT_EXPANDO) || (node->type == ENT_CONDDATE));
 
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
@@ -349,7 +349,7 @@ void index_date_recv_local(const struct ExpandoNode *node, void *data,
   {
     assert(node->ndata);
 
-    const struct ExpandoConditionalDatePrivate *cd = node->ndata;
+    const struct NodeCondDatePrivate *cd = node->ndata;
 
     time_t t = mutt_date_now();
     t -= cd->count * cd->multiplier;
@@ -369,7 +369,7 @@ void index_date_recv_local(const struct ExpandoNode *node, void *data,
 void index_date_local(const struct ExpandoNode *node, void *data,
                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
 {
-  assert((node->type == ENT_EXPANDO) || (node->type == ENT_CONDITIONAL_DATE));
+  assert((node->type == ENT_EXPANDO) || (node->type == ENT_CONDDATE));
 
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
@@ -410,7 +410,7 @@ void index_date_local(const struct ExpandoNode *node, void *data,
   {
     assert(node->ndata);
 
-    const struct ExpandoConditionalDatePrivate *cd = node->ndata;
+    const struct NodeCondDatePrivate *cd = node->ndata;
 
     time_t t = mutt_date_now();
     t -= cd->count * cd->multiplier;
@@ -430,7 +430,7 @@ void index_date_local(const struct ExpandoNode *node, void *data,
 void index_date(const struct ExpandoNode *node, void *data,
                 MuttFormatFlags flags, int max_width, struct Buffer *buf)
 {
-  assert((node->type == ENT_EXPANDO) || (node->type == ENT_CONDITIONAL_DATE));
+  assert((node->type == ENT_EXPANDO) || (node->type == ENT_CONDDATE));
 
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
@@ -478,7 +478,7 @@ void index_date(const struct ExpandoNode *node, void *data,
   {
     assert(node->ndata);
 
-    const struct ExpandoConditionalDatePrivate *cd = node->ndata;
+    const struct NodeCondDatePrivate *cd = node->ndata;
 
     time_t t = mutt_date_now();
     t -= cd->count * cd->multiplier;
