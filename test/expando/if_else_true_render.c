@@ -88,7 +88,7 @@ void test_expando_if_else_true_render(void)
   {
     struct ExpandoNode *node = get_nth_node(&root, 0);
     check_condition_node_head(node);
-    struct ExpandoConditionPrivate *cond = node->ndata;
+    struct NodeConditionPrivate *cond = node->ndata;
 
     check_expando_node(cond->condition, "c", NULL);
     check_expando_node(cond->if_true_tree, "t", NULL);
@@ -98,7 +98,7 @@ void test_expando_if_else_true_render(void)
   {
     struct ExpandoNode *node = get_nth_node(&root, 1);
     check_condition_node_head(node);
-    struct ExpandoConditionPrivate *cond = node->ndata;
+    struct NodeConditionPrivate *cond = node->ndata;
 
     check_expando_node(cond->condition, "c", NULL);
     check_expando_node(cond->if_true_tree, "t", NULL);

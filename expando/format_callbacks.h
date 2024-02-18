@@ -77,9 +77,6 @@ int text_format_callback(const struct ExpandoNode *node,
                          const struct ExpandoRenderData *rdata, char *buf, int buf_len,
                          int cols_len, void *data, MuttFormatFlags flags);
 
-int conditional_format_callback(const struct ExpandoNode *node, const struct ExpandoRenderData *rdata, char *buf,
-                                int buf_len, int cols_len, void *data, MuttFormatFlags flags);
-
 void expando_render(const struct Expando *exp, const struct ExpandoRenderData *rdata,
                     void *data, MuttFormatFlags flags, int cols, struct Buffer *buf);
 

@@ -83,16 +83,6 @@ struct ExpandoExpandoPrivate
 };
 
 /**
- * struct ExpandoConditionPrivate - XXX
- */
-struct ExpandoConditionPrivate
-{
-  struct ExpandoNode *condition;       ///< XXX
-  struct ExpandoNode *if_true_tree;    ///< XXX
-  struct ExpandoNode *if_false_tree;   ///< XXX
-};
-
-/**
  * struct ExpandoConditionalDatePrivate - XXX
  */
 struct ExpandoConditionalDatePrivate
@@ -109,6 +99,5 @@ void free_tree(struct ExpandoNode *node);
 
 void free_expando_private(void **ptr);
 void free_expando_private_expando(void **ptr);
-void free_expando_private_condition_node(void **ptr);
 
 #endif /* MUTT_EXPANDO_NODE_H */

@@ -91,7 +91,7 @@ void test_expando_conditional_date_render2(void)
 
   struct ExpandoNode *node = get_nth_node(&root, 0);
   check_condition_node_head(node);
-  struct ExpandoConditionPrivate *cond = node->ndata;
+  struct NodeConditionPrivate *cond = node->ndata;
 
   check_conditional_date_node(cond->condition, 1, 'm');
   check_expando_node(cond->if_true_tree, "%d-%m-%Y", NULL);

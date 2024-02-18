@@ -43,7 +43,7 @@ void test_expando_complex_if_else(void)
   {
     struct ExpandoNode *node = get_nth_node(&root, 1);
     check_condition_node_head(node);
-    struct ExpandoConditionPrivate *cond = node->ndata;
+    struct NodeConditionPrivate *cond = node->ndata;
 
     check_expando_node(cond->condition, "l", NULL);
 
@@ -65,7 +65,7 @@ void test_expando_complex_if_else(void)
   {
     struct ExpandoNode *node = get_nth_node(&root, 3);
     check_condition_node_head(node);
-    struct ExpandoConditionPrivate *cond = node->ndata;
+    struct NodeConditionPrivate *cond = node->ndata;
 
     check_expando_node(cond->condition, "l", NULL);
 

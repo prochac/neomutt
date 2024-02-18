@@ -75,7 +75,7 @@ void test_expando_empty_if_else_render(void)
 
   struct ExpandoNode *node = get_nth_node(&root, 0);
   check_condition_node_head(node);
-  struct ExpandoConditionPrivate *cond = node->ndata;
+  struct NodeConditionPrivate *cond = node->ndata;
 
   check_expando_node(cond->condition, "c", NULL);
   check_empty_node(cond->if_true_tree);

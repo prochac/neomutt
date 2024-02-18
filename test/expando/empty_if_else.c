@@ -38,7 +38,7 @@ void test_expando_empty_if_else(void)
   {
     struct ExpandoNode *node = get_nth_node(&root1, 0);
     check_condition_node_head(node);
-    struct ExpandoConditionPrivate *cond = node->ndata;
+    struct NodeConditionPrivate *cond = node->ndata;
 
     check_expando_node(cond->condition, "c", NULL);
     check_empty_node(cond->if_true_tree);
@@ -53,7 +53,7 @@ void test_expando_empty_if_else(void)
   {
     struct ExpandoNode *node = get_nth_node(&root2, 0);
     check_condition_node_head(node);
-    struct ExpandoConditionPrivate *cond = node->ndata;
+    struct NodeConditionPrivate *cond = node->ndata;
 
     check_expando_node(cond->condition, "c", NULL);
     check_empty_node(cond->if_true_tree);
@@ -68,7 +68,7 @@ void test_expando_empty_if_else(void)
   {
     struct ExpandoNode *node = get_nth_node(&root3, 0);
     check_condition_node_head(node);
-    struct ExpandoConditionPrivate *cond = node->ndata;
+    struct NodeConditionPrivate *cond = node->ndata;
 
     check_expando_node(cond->condition, "c", NULL);
     check_expando_node(cond->if_true_tree, "t", NULL);
@@ -83,7 +83,7 @@ void test_expando_empty_if_else(void)
   {
     struct ExpandoNode *node = get_nth_node(&root4, 0);
     check_condition_node_head(node);
-    struct ExpandoConditionPrivate *cond = node->ndata;
+    struct NodeConditionPrivate *cond = node->ndata;
 
     check_expando_node(cond->condition, "c", NULL);
     check_empty_node(cond->if_true_tree);

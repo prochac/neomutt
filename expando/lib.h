@@ -26,16 +26,17 @@
  *
  * Parse Expando string
  *
- * | File                              | Description                    |
- * | :-------------------------------- | :----------------------------- |
- * | expando/config_type.c             | @subpage expando_config_type   |
- * | expando/expando.c                 | @subpage expando_expando       |
- * | expando/format_callbacks.c        | @subpage expando_format        |
- * | expando/helpers.c                 | @subpage expando_helpers       |
- * | expando/node.c                    | @subpage expando_node          |
- * | expando/node_padding.c            | @subpage expando_node_padding  |
- * | expando/parser.c                  | @subpage expando_parser        |
- * | expando/validation.c              | @subpage expando_validation    |
+ * | File                              | Description                     |
+ * | :-------------------------------- | :------------------------------ |
+ * | expando/config_type.c             | @subpage expando_config_type    |
+ * | expando/expando.c                 | @subpage expando_expando        |
+ * | expando/format_callbacks.c        | @subpage expando_format         |
+ * | expando/helpers.c                 | @subpage expando_helpers        |
+ * | expando/node.c                    | @subpage expando_node           |
+ * | expando/node_condition.c          | @subpage expando_node_condition |
+ * | expando/node_padding.c            | @subpage expando_node_padding   |
+ * | expando/parser.c                  | @subpage expando_parser         |
+ * | expando/validation.c              | @subpage expando_validation     |
  */
 
 #ifndef MUTT_EXPANDO_LIB_H
@@ -47,6 +48,7 @@
 #include "format_callbacks.h"
 #include "helpers.h"
 #include "node.h"
+#include "node_condition.h"
 #include "node_padding.h"
 #include "parser.h"
 #include "uid.h"

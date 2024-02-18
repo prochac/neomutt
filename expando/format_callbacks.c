@@ -30,14 +30,13 @@
 #include "config.h"
 #include <assert.h>
 #include <stdbool.h>
-#include <string.h>
 #include "mutt/lib.h"
 #include "format_callbacks.h"
 #include "domain.h"
 #include "expando.h"
 #include "helpers.h"
-#include "mutt_thread.h"
 #include "node.h"
+#include "node_condition.h"
 #include "node_padding.h"
 #include "uid.h"
 
@@ -89,8 +88,8 @@ void format_tree(struct ExpandoNode *tree, const struct ExpandoRenderData *rdata
         break;
 
         case ED_ALL_CONDITION:
-          printed = conditional_format_callback(node, rdata, buffer, buffer_len,
-                                                columns_len, data, flags);
+          printed = node_condition_render(node, rdata, buffer, buffer_len,
+                                          columns_len, data, flags);
           break;
 
         default:
@@ -168,100 +167,6 @@ int text_format_callback(const struct ExpandoNode *node,
   memcpy_safe(buf, node->start, copylen, buf_len);
 
   return copylen;
-}
-
-/**
- * is_equal - XXX
- * @param s XXX
- * @param c XXX
- * @retval true XXX
- */
-static bool is_equal(const char *s, char c)
-{
-  // skip color
-  if (*s == MUTT_SPECIAL_INDEX)
-  {
-    s += 2;
-  }
-
-  if (*s != c)
-  {
-    return false;
-  }
-  s++;
-
-  // skip color
-  if (*s == MUTT_SPECIAL_INDEX)
-  {
-    s += 2;
-  }
-
-  if (*s != '\0')
-  {
-    return false;
-  }
-
-  return true;
-}
-
-/**
- * conditional_format_callback - Callback for every conditional node
- * @param node     XXX
- * @param rdata    XXX
- * @param buf      XXX
- * @param buf_len  XXX
- * @param cols_len XXX
- * @param data     XXX
- * @param flags    XXX
- * @retval num XXX
- */
-int conditional_format_callback(const struct ExpandoNode *node,
-                                const struct ExpandoRenderData *rdata, char *buf,
-                                int buf_len, int cols_len, void *data, MuttFormatFlags flags)
-{
-  assert(node->type == ENT_CONDITION);
-  assert(node->ndata);
-  struct ExpandoConditionPrivate *cp = node->ndata;
-
-  assert(cp->condition);
-  assert(cp->if_true_tree);
-
-  char tmp[1024] = { 0 };
-
-  format_tree(cp->condition, rdata, tmp, sizeof(tmp), sizeof(tmp), data, flags);
-
-  /* true if:
-    - not 0 (numbers)
-    - not empty string (strings)
-    - not ' ' (flags)
-  */
-  if (!is_equal(tmp, '0') && !is_equal(tmp, '\0') && !is_equal(tmp, ' '))
-  {
-    memset(tmp, 0, sizeof(tmp));
-    format_tree(cp->if_true_tree, rdata, tmp, sizeof(tmp), sizeof(tmp), data, flags);
-
-    int copylen = strlen(tmp);
-    memcpy_safe(buf, tmp, copylen, buf_len);
-
-    return copylen;
-  }
-  else
-  {
-    if (cp->if_false_tree)
-    {
-      memset(tmp, 0, sizeof(tmp));
-      format_tree(cp->if_false_tree, rdata, tmp, sizeof(tmp), sizeof(tmp), data, flags);
-
-      int copylen = strlen(tmp);
-      memcpy_safe(buf, tmp, copylen, buf_len);
-      return copylen;
-    }
-    else
-    {
-      return 0;
-    }
-  }
-  return 0;
 }
 
 /**

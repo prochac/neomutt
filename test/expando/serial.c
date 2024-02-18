@@ -56,7 +56,7 @@ static void dump_node_condition(const struct ExpandoNode *node, struct Buffer *b
 
   assert(node->ndata);
   assert(node->ndata_free);
-  struct ExpandoConditionPrivate *priv = node->ndata;
+  struct NodeConditionPrivate *priv = node->ndata;
 
   assert(priv->condition);
   assert(priv->if_true_tree);

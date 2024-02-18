@@ -42,19 +42,19 @@ void test_expando_nested_if_else(void)
 
     struct ExpandoNode *node = get_nth_node(&root, 0);
     check_condition_node_head(node);
-    struct ExpandoConditionPrivate *cond = node->ndata;
+    struct NodeConditionPrivate *cond = node->ndata;
     check_expando_node(cond->condition, "a", NULL);
 
     struct ExpandoNode *t = cond->if_true_tree;
     check_condition_node_head(t);
-    struct ExpandoConditionPrivate *tcond = t->ndata;
+    struct NodeConditionPrivate *tcond = t->ndata;
     check_expando_node(tcond->condition, "b", NULL);
     check_expando_node(tcond->if_true_tree, "c", NULL);
     check_expando_node(tcond->if_false_tree, "d", NULL);
 
     struct ExpandoNode *f = cond->if_false_tree;
     check_condition_node_head(f);
-    struct ExpandoConditionPrivate *fcond = f->ndata;
+    struct NodeConditionPrivate *fcond = f->ndata;
     check_expando_node(fcond->condition, "e", NULL);
     check_expando_node(fcond->if_true_tree, "f", NULL);
     check_expando_node(fcond->if_false_tree, "g", NULL);
@@ -73,19 +73,19 @@ void test_expando_nested_if_else(void)
 
     struct ExpandoNode *node = get_nth_node(&root, 0);
     check_condition_node_head(node);
-    struct ExpandoConditionPrivate *cond = node->ndata;
+    struct NodeConditionPrivate *cond = node->ndata;
     check_expando_node(cond->condition, "a", NULL);
 
     struct ExpandoNode *t = cond->if_true_tree;
     check_condition_node_head(t);
-    struct ExpandoConditionPrivate *tcond = t->ndata;
+    struct NodeConditionPrivate *tcond = t->ndata;
     check_expando_node(tcond->condition, "b", NULL);
     check_expando_node(tcond->if_true_tree, "c", NULL);
     check_expando_node(tcond->if_false_tree, "d", NULL);
 
     struct ExpandoNode *f = cond->if_false_tree;
     check_condition_node_head(f);
-    struct ExpandoConditionPrivate *fcond = f->ndata;
+    struct NodeConditionPrivate *fcond = f->ndata;
     check_expando_node(fcond->condition, "e", NULL);
     check_expando_node(fcond->if_true_tree, "f", NULL);
     TEST_CHECK(fcond->if_false_tree == NULL);
@@ -104,19 +104,19 @@ void test_expando_nested_if_else(void)
 
     struct ExpandoNode *node = get_nth_node(&root, 0);
     check_condition_node_head(node);
-    struct ExpandoConditionPrivate *cond = node->ndata;
+    struct NodeConditionPrivate *cond = node->ndata;
     check_expando_node(cond->condition, "a", NULL);
 
     struct ExpandoNode *t = cond->if_true_tree;
     check_condition_node_head(t);
-    struct ExpandoConditionPrivate *tcond = t->ndata;
+    struct NodeConditionPrivate *tcond = t->ndata;
     check_expando_node(tcond->condition, "b", NULL);
     check_expando_node(tcond->if_true_tree, "c", NULL);
     check_expando_node(tcond->if_false_tree, "d", NULL);
 
     struct ExpandoNode *f = cond->if_false_tree;
     check_condition_node_head(f);
-    struct ExpandoConditionPrivate *fcond = f->ndata;
+    struct NodeConditionPrivate *fcond = f->ndata;
     check_expando_node(fcond->condition, "e", NULL);
     check_empty_node(fcond->if_true_tree);
     check_expando_node(fcond->if_false_tree, "f", NULL);
@@ -135,19 +135,19 @@ void test_expando_nested_if_else(void)
 
     struct ExpandoNode *node = get_nth_node(&root, 0);
     check_condition_node_head(node);
-    struct ExpandoConditionPrivate *cond = node->ndata;
+    struct NodeConditionPrivate *cond = node->ndata;
     check_expando_node(cond->condition, "a", NULL);
 
     struct ExpandoNode *t = cond->if_true_tree;
     check_condition_node_head(t);
-    struct ExpandoConditionPrivate *tcond = t->ndata;
+    struct NodeConditionPrivate *tcond = t->ndata;
     check_expando_node(tcond->condition, "b", NULL);
     check_expando_node(tcond->if_true_tree, "c", NULL);
     TEST_CHECK(tcond->if_false_tree == NULL);
 
     struct ExpandoNode *f = cond->if_false_tree;
     check_condition_node_head(f);
-    struct ExpandoConditionPrivate *fcond = f->ndata;
+    struct NodeConditionPrivate *fcond = f->ndata;
     check_expando_node(fcond->condition, "e", NULL);
     check_expando_node(fcond->if_true_tree, "f", NULL);
     check_expando_node(fcond->if_false_tree, "g", NULL);
@@ -166,19 +166,19 @@ void test_expando_nested_if_else(void)
 
     struct ExpandoNode *node = get_nth_node(&root, 0);
     check_condition_node_head(node);
-    struct ExpandoConditionPrivate *cond = node->ndata;
+    struct NodeConditionPrivate *cond = node->ndata;
     check_expando_node(cond->condition, "a", NULL);
 
     struct ExpandoNode *t = cond->if_true_tree;
     check_condition_node_head(t);
-    struct ExpandoConditionPrivate *tcond = t->ndata;
+    struct NodeConditionPrivate *tcond = t->ndata;
     check_expando_node(tcond->condition, "b", NULL);
     check_empty_node(tcond->if_true_tree);
     check_expando_node(tcond->if_false_tree, "c", NULL);
 
     struct ExpandoNode *f = cond->if_false_tree;
     check_condition_node_head(f);
-    struct ExpandoConditionPrivate *fcond = f->ndata;
+    struct NodeConditionPrivate *fcond = f->ndata;
     check_expando_node(fcond->condition, "e", NULL);
     check_expando_node(fcond->if_true_tree, "f", NULL);
     check_expando_node(fcond->if_false_tree, "g", NULL);

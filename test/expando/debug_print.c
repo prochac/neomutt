@@ -144,7 +144,7 @@ static void print_pad_node(FILE *fp, const struct ExpandoNode *node, int indent)
 static void print_condition_node(FILE *fp, const struct ExpandoNode *node, int indent)
 {
   assert(node->ndata);
-  struct ExpandoConditionPrivate *c = node->ndata;
+  struct NodeConditionPrivate *c = node->ndata;
 
   fprintf(fp, "%*sCONDITION:\n", indent, "");
   print_node(fp, c->condition, indent + 2 * EXPANDO_DEBUG_PRINT_INDENT);

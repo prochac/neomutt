@@ -75,19 +75,19 @@ void test_expando_nested_if_else_render(void)
 
   struct ExpandoNode *node = get_nth_node(&root, 0);
   check_condition_node_head(node);
-  struct ExpandoConditionPrivate *cond = node->ndata;
+  struct NodeConditionPrivate *cond = node->ndata;
   check_expando_node(cond->condition, "x", NULL);
 
   struct ExpandoNode *t = cond->if_true_tree;
   check_condition_node_head(t);
-  struct ExpandoConditionPrivate *tcond = t->ndata;
+  struct NodeConditionPrivate *tcond = t->ndata;
   check_expando_node(tcond->condition, "y", NULL);
   check_text_node(tcond->if_true_tree, "XY");
   check_text_node(tcond->if_false_tree, "X");
 
   struct ExpandoNode *f = cond->if_false_tree;
   check_condition_node_head(f);
-  struct ExpandoConditionPrivate *fcond = f->ndata;
+  struct NodeConditionPrivate *fcond = f->ndata;
   check_expando_node(fcond->condition, "y", NULL);
   check_text_node(fcond->if_true_tree, "Y");
   check_text_node(fcond->if_false_tree, "NONE");

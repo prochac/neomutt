@@ -40,20 +40,10 @@
 #include "parser.h"
 #include "domain.h"
 #include "node.h"
+#include "node_condition.h"
 #include "node_padding.h"
 #include "uid.h"
 #include "validation.h"
-
-/**
- * ExpandoConditionStart - Signals parse_node() if the parsing started in a conditional statement or not
- *
- * Easier to read than a simple true, false.
- */
-enum ExpandoConditionStart
-{
-  CON_NO_CONDITION, ///< XXX
-  CON_START         ///< XXX
-};
 
 /**
  * new_empty_node - XXX
@@ -119,37 +109,6 @@ static struct ExpandoNode *new_expando_node(const char *start, const char *end,
 
   node->ndata = p;
   node->ndata_free = free_expando_private_expando;
-
-  return node;
-}
-
-/**
- * new_condition_node - XXX
- * @param condition     XXX
- * @param if_true_tree  XXX
- * @param if_false_tree XXX
- * @retval ptr XXX
- */
-static struct ExpandoNode *new_condition_node(struct ExpandoNode *condition,
-                                              struct ExpandoNode *if_true_tree,
-                                              struct ExpandoNode *if_false_tree)
-{
-  assert(condition);
-  assert(if_true_tree);
-
-  struct ExpandoNode *node = mutt_mem_calloc(1, sizeof(struct ExpandoNode));
-
-  node->type = ENT_CONDITION;
-  node->did = ED_ALL;
-  node->uid = ED_ALL_CONDITION;
-
-  struct ExpandoConditionPrivate *cp = mutt_mem_calloc(1, sizeof(struct ExpandoConditionPrivate));
-  cp->condition = condition;
-  cp->if_true_tree = if_true_tree;
-  cp->if_false_tree = if_false_tree;
-
-  node->ndata = cp;
-  node->ndata_free = free_expando_private_condition_node;
 
   return node;
 }
@@ -741,7 +700,7 @@ static struct ExpandoNode *parse_node(const char *s, const char *end,
         if (only_true)
         {
           *parsed_until = if_true_end + 1;
-          return new_condition_node(condition, if_true_tree, NULL);
+          return node_condition_new(condition, if_true_tree, NULL);
         }
         else
         {
@@ -783,7 +742,7 @@ static struct ExpandoNode *parse_node(const char *s, const char *end,
           }
 
           *parsed_until = if_false_end + 1;
-          return new_condition_node(condition, if_true_tree, if_false_tree);
+          return node_condition_new(condition, if_true_tree, if_false_tree);
         }
       }
       // expando

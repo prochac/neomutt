@@ -1844,7 +1844,7 @@ void dot_expando_node_condition(FILE *fp, struct ExpandoNode *node, struct ListH
 
   dot_object_footer(fp);
 
-  struct ExpandoConditionPrivate *priv = node->ndata;
+  struct NodeConditionPrivate *priv = node->ndata;
 
   dot_expando_node_tree(fp, priv->condition, links);
   dot_add_link(links, node, priv->condition, "Condition->condition",
