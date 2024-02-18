@@ -133,7 +133,7 @@ static void dump_node_expando(const struct ExpandoNode *node, struct Buffer *buf
   assert(node->ndata);
   assert(node->ndata_free);
 
-  const struct ExpandoExpandoPrivate *priv = node->ndata;
+  const struct NodeExpandoPrivate *priv = node->ndata;
   const struct ExpandoFormatPrivate *fmt = priv->format;
   if (fmt)
   {

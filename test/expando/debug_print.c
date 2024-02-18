@@ -64,7 +64,7 @@ static void print_text_node(FILE *fp, const struct ExpandoNode *node, int indent
  */
 static void print_expando_node(FILE *fp, const struct ExpandoNode *node, int indent)
 {
-  const struct ExpandoExpandoPrivate *priv = node->ndata;
+  const struct NodeExpandoPrivate *priv = node->ndata;
   const struct ExpandoFormatPrivate *f = priv->format;
   if (f)
   {

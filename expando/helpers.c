@@ -37,6 +37,7 @@
 #include "color/lib.h"
 #include "mutt_thread.h"
 #include "node.h"
+#include "node_expando.h"
 
 /**
  * memcpy_safe - XXX
@@ -99,7 +100,7 @@ int format_string(char *buffer, int buffer_len, const struct ExpandoNode *node,
   assert(buffer_len > 0);
   assert((size_t) buffer_len > expando_buffer_len);
 
-  const struct ExpandoExpandoPrivate *p = node && node->type == ENT_EXPANDO ? node->ndata : NULL;
+  const struct NodeExpandoPrivate *p = node && node->type == ENT_EXPANDO ? node->ndata : NULL;
   const struct ExpandoFormatPrivate *format = p ? p->format : NULL;
   const int color = p ? p->color : -1;
   const bool has_tree = p ? p->has_tree : false;

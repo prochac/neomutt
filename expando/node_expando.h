@@ -21,51 +21,26 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * @page expando_node XXX
- *
- * XXX
- */
+#ifndef MUTT_EXPANDO_NODE_EXPANDO_H
+#define MUTT_EXPANDO_NODE_EXPANDO_H
 
-#include "config.h"
-#include "mutt/lib.h"
-#include "node.h"
+#include <stdbool.h>
+
+struct ExpandoFormatPrivate;
 
 /**
- * expando_node_new - XXX
+ * struct NodeExpandoPrivate - XXX
  */
-struct ExpandoNode *expando_node_new(void)
+struct NodeExpandoPrivate
 {
-  return mutt_mem_calloc(1, sizeof(struct ExpandoNode));
-}
+  struct ExpandoFormatPrivate *format;  ///< XXX
+  int color;                            ///< XXX
+  bool has_tree;                        ///< XXX, used in $index_format's %s
+};
 
-/**
- * free_node - XXX
- * @param node XXX
- */
-void free_node(struct ExpandoNode *node)
-{
-  if (!node)
-    return;
+struct ExpandoNode *node_expando_new(const char *start, const char *end, struct ExpandoFormatPrivate *format, int did, int uid);
 
-  if (node->ndata_free)
-  {
-    node->ndata_free(&node->ndata);
-  }
+void node_expando_set_color   (const struct ExpandoNode *node, int cid);
+void node_expando_set_has_tree(const struct ExpandoNode *node, bool has_tree);
 
-  FREE(&node);
-}
-
-/**
- * free_tree - XXX
- * @param node XXX
- */
-void free_tree(struct ExpandoNode *node)
-{
-  while (node)
-  {
-    struct ExpandoNode *n = node;
-    node = node->next;
-    free_node(n);
-  }
-}
+#endif /* MUTT_EXPANDO_NODE_EXPANDO_H */

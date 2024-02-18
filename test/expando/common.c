@@ -82,7 +82,7 @@ void check_expando_node(struct ExpandoNode *node, const char *expando,
   TEST_CHECK(n == m);
   TEST_CHECK(mutt_strn_equal(node->start, expando, n));
 
-  struct ExpandoExpandoPrivate *p = node->ndata;
+  struct NodeExpandoPrivate *p = node->ndata;
 
   if (format == NULL)
   {

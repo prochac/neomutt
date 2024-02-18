@@ -35,6 +35,7 @@
  * | expando/node.c                    | @subpage expando_node           |
  * | expando/node_conddate.c           | @subpage expando_node_conddate  |
  * | expando/node_condition.c          | @subpage expando_node_condition |
+ * | expando/node_expando.c            | @subpage expando_node_expando   |
  * | expando/node_padding.c            | @subpage expando_node_padding   |
  * | expando/node_text.c               | @subpage expando_node_text      |
  * | expando/parser.c                  | @subpage expando_parser         |
@@ -52,6 +53,7 @@
 #include "node.h"
 #include "node_conddate.h"
 #include "node_condition.h"
+#include "node_expando.h"
 #include "node_padding.h"
 #include "node_text.h"
 #include "parser.h"

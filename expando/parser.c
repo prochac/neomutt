@@ -40,6 +40,7 @@
 #include "domain.h"
 #include "node.h"
 #include "node_condition.h"
+#include "node_expando.h"
 #include "node_padding.h"
 #include "node_text.h"
 #include "uid.h"
@@ -56,39 +57,6 @@ static struct ExpandoNode *new_empty_node(void)
   node->type = ENT_EMPTY;
   node->did = ED_ALL;
   node->uid = ED_ALL_EMPTY;
-
-  return node;
-}
-
-/**
- * new_expando_node - XXX
- * @param start  XXX
- * @param end    XXX
- * @param format XXX
- * @param did    XXX
- * @param uid    XXX
- * @retval ptr XXX
- */
-static struct ExpandoNode *new_expando_node(const char *start, const char *end,
-                                            struct ExpandoFormatPrivate *format,
-                                            int did, int uid)
-{
-  struct ExpandoNode *node = mutt_mem_calloc(1, sizeof(struct ExpandoNode));
-
-  node->type = ENT_EXPANDO;
-  node->start = start;
-  node->end = end;
-
-  node->did = did;
-  node->uid = uid;
-
-  struct ExpandoExpandoPrivate *p = mutt_mem_calloc(1, sizeof(struct ExpandoExpandoPrivate));
-  p->format = format;
-  // NOTE(g0mb4): Expando definition should contain this
-  p->color = -1;
-
-  node->ndata = p;
-  node->ndata_free = free_expando_private_expando;
 
   return node;
 }
@@ -379,7 +347,7 @@ static struct ExpandoNode *parse_expando_node(const char *s, const char **parsed
   if (!definition)
   {
     *parsed_until = expando_end;
-    return new_expando_node(format_end, expando_end, format, ED_ALL, ED_ALL_EMPTY);
+    return node_expando_new(format_end, expando_end, format, ED_ALL, ED_ALL_EMPTY);
   }
 
   while (definition && definition->short_name)
@@ -395,7 +363,7 @@ static struct ExpandoNode *parse_expando_node(const char *s, const char **parsed
       else
       {
         *parsed_until = expando_end;
-        return new_expando_node(format_end, expando_end, format,
+        return node_expando_new(format_end, expando_end, format,
                                 definition->did, definition->uid);
       }
     }
@@ -446,7 +414,7 @@ struct ExpandoNode *expando_parse_enclosed_expando(const char *s, const char **p
   }
 
   *parsed_until = expando_end + 1;
-  return new_expando_node(format_end, expando_end, format, did, uid);
+  return node_expando_new(format_end, expando_end, format, did, uid);
 }
 
 /**

@@ -425,9 +425,11 @@ $(PWD)/envelope:
 ###############################################################################
 # libexpando
 LIBEXPANDO=	libexpando.a
-LIBEXPANDOOBJS=	expando/node_conddate.o expando/node_condition.o expando/config_type.o expando/expando.o \
+LIBEXPANDOOBJS=	expando/config_type.o expando/expando.o \
 		expando/format_callbacks.o expando/helpers.o expando/node.o \
-		expando/node_padding.o expando/parser.o expando/node_text.o expando/validation.o
+		expando/node_conddate.o expando/node_condition.o \
+		expando/node_expando.o expando/node_padding.o \
+		expando/node_text.o expando/parser.o expando/validation.o
 CLEANFILES+=	$(LIBEXPANDO) $(LIBEXPANDOOBJS)
 ALLOBJS+=	$(LIBEXPANDOOBJS)
 

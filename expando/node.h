@@ -24,7 +24,6 @@
 #ifndef MUTT_EXPANDO_NODE_H
 #define MUTT_EXPANDO_NODE_H
 
-#include <stdbool.h>
 #include "gui/lib.h"
 
 /**
@@ -71,21 +70,9 @@ struct ExpandoFormatPrivate
   const char         *end;            ///< XXX
 };
 
-/**
- * struct ExpandoExpandoPrivate - XXX
- */
-struct ExpandoExpandoPrivate
-{
-  struct ExpandoFormatPrivate *format;  ///< XXX
-  int color;                            ///< XXX
-  bool has_tree;                        ///< XXX, used in $index_format's %s
-};
-
 struct ExpandoNode *expando_node_new(void);
 
 void free_node(struct ExpandoNode *node);
 void free_tree(struct ExpandoNode *node);
-
-void free_expando_private_expando(void **ptr);
 
 #endif /* MUTT_EXPANDO_NODE_H */

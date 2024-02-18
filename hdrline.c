@@ -313,7 +313,6 @@ void index_date_recv_local(const struct ExpandoNode *node, void *data,
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
   struct tm tm = mutt_date_localtime(e->received);
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   char tmp[128] = { 0 };
   char tmp2[128] = { 0 };
@@ -342,7 +341,7 @@ void index_date_recv_local(const struct ExpandoNode *node, void *data,
       strftime(tmp, sizeof(tmp), tmp2, &tm);
     }
 
-    priv->color = MT_COLOR_INDEX_DATE;
+    node_expando_set_color(node, MT_COLOR_INDEX_DATE);
     buf_strcpy(buf, tmp);
   }
   else
@@ -374,7 +373,6 @@ void index_date_local(const struct ExpandoNode *node, void *data,
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
   struct tm tm = mutt_date_localtime(e->date_sent);
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   char tmp[128] = { 0 };
   char tmp2[128] = { 0 };
@@ -403,7 +401,7 @@ void index_date_local(const struct ExpandoNode *node, void *data,
       strftime(tmp, sizeof(tmp), tmp2, &tm);
     }
 
-    priv->color = MT_COLOR_INDEX_DATE;
+    node_expando_set_color(node, MT_COLOR_INDEX_DATE);
     buf_strcpy(buf, tmp);
   }
   else
@@ -434,7 +432,6 @@ void index_date(const struct ExpandoNode *node, void *data,
 
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   time_t now = e->date_sent;
   if (e->zoccident)
@@ -471,7 +468,7 @@ void index_date(const struct ExpandoNode *node, void *data,
       strftime(tmp, sizeof(tmp), tmp2, &tm);
     }
 
-    priv->color = MT_COLOR_INDEX_DATE;
+    node_expando_set_color(node, MT_COLOR_INDEX_DATE);
     buf_strcpy(buf, tmp);
   }
   else
@@ -535,7 +532,6 @@ void index_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   const struct Address *from = TAILQ_FIRST(&e->env->from);
 
@@ -545,7 +541,7 @@ void index_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
     s = mutt_addr_for_display(from);
   }
 
-  priv->color = MT_COLOR_INDEX_AUTHOR;
+  node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
   buf_strcpy(buf, NONULL(s));
 }
 
@@ -559,13 +555,12 @@ void index_A(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   const struct Address *reply_to = TAILQ_FIRST(&e->env->reply_to);
 
   if (reply_to && reply_to->mailbox)
   {
-    priv->color = MT_COLOR_INDEX_AUTHOR;
+    node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
     const char *s = mutt_addr_for_display(reply_to);
     buf_strcpy(buf, NONULL(s));
     return;
@@ -654,11 +649,10 @@ void index_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   char tmp[128] = { 0 };
 
-  priv->color = MT_COLOR_INDEX_SIZE;
+  node_expando_set_color(node, MT_COLOR_INDEX_SIZE);
 
   mutt_str_pretty_size(tmp, sizeof(tmp), e->body->length);
   buf_strcpy(buf, tmp);
@@ -674,11 +668,10 @@ void index_cr(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = (const struct HdrFormatInfo *) data;
   const struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   char tmp[128] = { 0 };
 
-  priv->color = MT_COLOR_INDEX_SIZE;
+  node_expando_set_color(node, MT_COLOR_INDEX_SIZE);
 
   mutt_str_pretty_size(tmp, sizeof(tmp), email_size(e));
   buf_strcpy(buf, tmp);
@@ -694,9 +687,8 @@ void index_C(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
-  priv->color = MT_COLOR_INDEX_NUMBER;
+  node_expando_set_color(node, MT_COLOR_INDEX_NUMBER);
 
   const int num = e->msgno + 1;
   buf_printf(buf, "%d", num);
@@ -712,7 +704,6 @@ void index_d(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   const char *c_date_format = cs_subset_string(NeoMutt->sub, "date_format");
   const char *cp = NONULL(c_date_format);
@@ -742,7 +733,7 @@ void index_d(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
     strftime(tmp, sizeof(tmp), cp, &tm);
   }
 
-  priv->color = MT_COLOR_INDEX_DATE;
+  node_expando_set_color(node, MT_COLOR_INDEX_DATE);
 
   buf_strcpy(buf, tmp);
 }
@@ -757,7 +748,6 @@ void index_D(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   const char *c_date_format = cs_subset_string(NeoMutt->sub, "date_format");
   const char *cp = NONULL(c_date_format);
@@ -780,7 +770,7 @@ void index_D(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
     strftime(tmp, sizeof(tmp), cp, &tm);
   }
 
-  priv->color = MT_COLOR_INDEX_DATE;
+  node_expando_set_color(node, MT_COLOR_INDEX_DATE);
 
   buf_strcpy(buf, tmp);
 }
@@ -841,13 +831,12 @@ void index_F(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   char tmp[128] = { 0 };
 
   make_from(e->env, tmp, sizeof(tmp), false, MUTT_FORMAT_NO_FLAGS);
 
-  priv->color = MT_COLOR_INDEX_AUTHOR;
+  node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
 
   buf_strcpy(buf, tmp);
 }
@@ -862,11 +851,10 @@ void index_Fp(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = (const struct HdrFormatInfo *) data;
   struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   char tmp[128] = { 0 };
 
-  priv->color = MT_COLOR_INDEX_AUTHOR;
+  node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
 
   make_from(e->env, tmp, sizeof(tmp), false, MUTT_FORMAT_PLAIN);
 
@@ -883,9 +871,8 @@ void index_g(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
-  priv->color = MT_COLOR_INDEX_TAGS;
+  node_expando_set_color(node, MT_COLOR_INDEX_TAGS);
   driver_tags_get_transformed(&e->tags, buf);
 }
 
@@ -901,7 +888,6 @@ void index_G(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   char tag_format[3] = { 0 };
 
@@ -912,7 +898,7 @@ void index_G(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   char *tag = mutt_hash_find(TagFormats, tag_format);
   if (tag)
   {
-    priv->color = MT_COLOR_INDEX_TAG;
+    node_expando_set_color(node, MT_COLOR_INDEX_TAG);
     driver_tags_get_transformed_for(&e->tags, tag, buf);
   }
   else
@@ -962,13 +948,12 @@ void index_I(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   const struct Email *e = hfi->email;
 
   const struct Address *from = TAILQ_FIRST(&e->env->from);
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   char tmp[128] = { 0 };
 
   if (mutt_mb_get_initials(mutt_get_name(from), tmp, sizeof(tmp)))
   {
-    priv->color = MT_COLOR_INDEX_AUTHOR;
+    node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
 
     buf_strcpy(buf, tmp);
     return;
@@ -987,7 +972,6 @@ void index_J(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   bool have_tags = true;
   struct Buffer *tags = buf_pool_get();
@@ -1015,7 +999,7 @@ void index_J(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
     have_tags = false;
   }
 
-  priv->color = MT_COLOR_INDEX_TAGS;
+  node_expando_set_color(node, MT_COLOR_INDEX_TAGS);
 
   const char *s = have_tags ? buf_string(tags) : "";
   buf_strcpy(buf, NONULL(s));
@@ -1057,9 +1041,7 @@ void index_l(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
 
-  struct ExpandoExpandoPrivate *priv = node->ndata;
-
-  priv->color = MT_COLOR_INDEX_SIZE;
+  node_expando_set_color(node, MT_COLOR_INDEX_SIZE);
 
   const int num = e->lines;
   buf_printf(buf, "%d", num);
@@ -1075,13 +1057,12 @@ void index_L(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   char tmp[128] = { 0 };
 
   make_from(e->env, tmp, sizeof(tmp), true, flags);
 
-  priv->color = MT_COLOR_INDEX_AUTHOR;
+  node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
   buf_strcpy(buf, tmp);
 }
 
@@ -1120,17 +1101,16 @@ void index_M(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   const struct Email *e = hfi->email;
   const bool threads = mutt_using_threads();
   const bool is_index = (flags & MUTT_FORMAT_INDEX) != 0;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   if (threads && is_index && e->collapsed && (e->num_hidden > 1))
   {
-    priv->color = MT_COLOR_INDEX_COLLAPSED;
+    node_expando_set_color(node, MT_COLOR_INDEX_COLLAPSED);
     const int num = e->num_hidden;
     buf_printf(buf, "%d", num);
   }
   else if (is_index && threads)
   {
-    priv->color = MT_COLOR_INDEX_COLLAPSED;
+    node_expando_set_color(node, MT_COLOR_INDEX_COLLAPSED);
     const char *s = " ";
     buf_strcpy(buf, NONULL(s));
   }
@@ -1151,9 +1131,8 @@ void index_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
   const struct Address *from = TAILQ_FIRST(&e->env->from);
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
-  priv->color = MT_COLOR_INDEX_AUTHOR;
+  node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
 
   const char *s = mutt_get_name(from);
   buf_strcpy(buf, NONULL(s));
@@ -1265,7 +1244,6 @@ void index_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   subjrx_apply_mods(e->env);
   char *subj = NULL;
@@ -1279,15 +1257,15 @@ void index_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   {
     if (flags & MUTT_FORMAT_FORCESUBJ)
     {
-      priv->color = MT_COLOR_INDEX_SUBJECT;
-      priv->has_tree = true;
+      node_expando_set_color(node, MT_COLOR_INDEX_SUBJECT);
+      node_expando_set_has_tree(node, true);
 
       buf_printf(buf, "%s%s", e->tree, NONULL(subj));
     }
     else
     {
-      priv->color = MT_COLOR_INDEX_SUBJECT;
-      priv->has_tree = true;
+      node_expando_set_color(node, MT_COLOR_INDEX_SUBJECT);
+      node_expando_set_has_tree(node, true);
 
       const char *s = e->tree;
       buf_strcpy(buf, NONULL(s));
@@ -1295,7 +1273,7 @@ void index_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   }
   else
   {
-    priv->color = MT_COLOR_INDEX_SUBJECT;
+    node_expando_set_color(node, MT_COLOR_INDEX_SUBJECT);
     const char *s = subj;
     buf_strcpy(buf, NONULL(s));
   }
@@ -1311,7 +1289,6 @@ void index_S(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   const struct MbTable *c_flag_chars = cs_subset_mbtable(NeoMutt->sub, "flag_chars");
   const int msg_in_pager = hfi->msg_in_pager;
@@ -1334,7 +1311,7 @@ void index_S(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   else
     wch = mbtable_get_nth_wchar(c_flag_chars, FLAG_CHAR_NEW);
 
-  priv->color = MT_COLOR_INDEX_FLAGS;
+  node_expando_set_color(node, MT_COLOR_INDEX_FLAGS);
 
   buf_strcpy(buf, NONULL(wch));
 }
@@ -1541,9 +1518,7 @@ void index_y(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
 
-  struct ExpandoExpandoPrivate *priv = node->ndata;
-
-  priv->color = MT_COLOR_INDEX_LABEL;
+  node_expando_set_color(node, MT_COLOR_INDEX_LABEL);
 
   const char *s = e->env->x_label;
   buf_strcpy(buf, NONULL(s));
@@ -1559,7 +1534,6 @@ void index_Y(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   bool label = true;
   if (e->env->x_label)
@@ -1586,7 +1560,7 @@ void index_Y(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
     label = false;
   }
 
-  priv->color = MT_COLOR_INDEX_LABEL;
+  node_expando_set_color(node, MT_COLOR_INDEX_LABEL);
 
   if (label)
   {
@@ -1610,7 +1584,6 @@ void index_zc(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   const struct MbTable *c_crypt_chars = cs_subset_mbtable(NeoMutt->sub, "crypt_chars");
 
@@ -1636,7 +1609,7 @@ void index_zc(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
     ch = mbtable_get_nth_wchar(c_crypt_chars, FLAG_CHAR_CRYPT_NO_CRYPTO);
   }
 
-  priv->color = MT_COLOR_INDEX_FLAGS;
+  node_expando_set_color(node, MT_COLOR_INDEX_FLAGS);
   buf_strcpy(buf, NONULL(ch));
 }
 
@@ -1650,7 +1623,6 @@ void index_zs(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   const bool threads = mutt_using_threads();
   const struct MbTable *c_flag_chars = cs_subset_mbtable(NeoMutt->sub, "flag_chars");
@@ -1696,7 +1668,7 @@ void index_zs(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
     }
   }
 
-  priv->color = MT_COLOR_INDEX_FLAGS;
+  node_expando_set_color(node, MT_COLOR_INDEX_FLAGS);
   buf_strcpy(buf, NONULL(ch));
 }
 
@@ -1710,7 +1682,6 @@ void index_zt(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   const struct HdrFormatInfo *hfi = data;
   struct Email *e = hfi->email;
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   const struct MbTable *c_flag_chars = cs_subset_mbtable(NeoMutt->sub, "flag_chars");
   const struct MbTable *c_to_chars = cs_subset_mbtable(NeoMutt->sub, "to_chars");
@@ -1729,7 +1700,7 @@ void index_zt(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
     ch = mbtable_get_nth_wchar(c_to_chars, user_is_recipient(e));
   }
 
-  priv->color = MT_COLOR_INDEX_FLAGS;
+  node_expando_set_color(node, MT_COLOR_INDEX_FLAGS);
   buf_strcpy(buf, NONULL(ch));
 }
 
@@ -1749,8 +1720,6 @@ void index_Z(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   const struct MbTable *c_flag_chars = cs_subset_mbtable(NeoMutt->sub, "flag_chars");
   const struct MbTable *c_to_chars = cs_subset_mbtable(NeoMutt->sub, "to_chars");
   const bool threads = mutt_using_threads();
-
-  struct ExpandoExpandoPrivate *priv = node->ndata;
 
   const char *first = NULL;
   if (threads && thread_is_new(e))
@@ -1810,7 +1779,7 @@ void index_Z(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   else
     third = mbtable_get_nth_wchar(c_to_chars, user_is_recipient(e));
 
-  priv->color = MT_COLOR_INDEX_FLAGS;
+  node_expando_set_color(node, MT_COLOR_INDEX_FLAGS);
 
   buf_printf(buf, "%s%s%s", first, second, third);
 }
