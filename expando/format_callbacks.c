@@ -52,10 +52,10 @@
  * @param data    XXX
  * @param flags   XXX
  */
-void format_tree(struct ExpandoNode **tree, const struct ExpandoRenderData *rdata,
+void format_tree(struct ExpandoNode *tree, const struct ExpandoRenderData *rdata,
                  char *buf, size_t buf_len, size_t col_len, void *data, MuttFormatFlags flags)
 {
-  const struct ExpandoNode *node = *tree;
+  const struct ExpandoNode *node = tree;
   char *buffer = buf;
   int buffer_len = (int) buf_len - 1;
   int columns_len = (int) col_len;
@@ -229,17 +229,17 @@ int conditional_format_callback(const struct ExpandoNode *node,
 
   char tmp[1024] = { 0 };
 
-  format_tree(&cp->condition, rdata, tmp, sizeof(tmp), sizeof(tmp), data, flags);
+  format_tree(cp->condition, rdata, tmp, sizeof(tmp), sizeof(tmp), data, flags);
 
   /* true if:
     - not 0 (numbers)
     - not empty string (strings)
-    - not ' ' (flags) 
+    - not ' ' (flags)
   */
   if (!is_equal(tmp, '0') && !is_equal(tmp, '\0') && !is_equal(tmp, ' '))
   {
     memset(tmp, 0, sizeof(tmp));
-    format_tree(&cp->if_true_tree, rdata, tmp, sizeof(tmp), sizeof(tmp), data, flags);
+    format_tree(cp->if_true_tree, rdata, tmp, sizeof(tmp), sizeof(tmp), data, flags);
 
     int copylen = strlen(tmp);
     memcpy_safe(buf, tmp, copylen, buf_len);
@@ -251,7 +251,7 @@ int conditional_format_callback(const struct ExpandoNode *node,
     if (cp->if_false_tree)
     {
       memset(tmp, 0, sizeof(tmp));
-      format_tree(&cp->if_false_tree, rdata, tmp, sizeof(tmp), sizeof(tmp), data, flags);
+      format_tree(cp->if_false_tree, rdata, tmp, sizeof(tmp), sizeof(tmp), data, flags);
 
       int copylen = strlen(tmp);
       memcpy_safe(buf, tmp, copylen, buf_len);
@@ -322,7 +322,7 @@ int pad_format_hard_fill(const struct ExpandoNode *node,
 
   char right[1024] = { 0 };
   struct ExpandoNode *root = node->next;
-  format_tree(&root, rdata, right, sizeof(right), sizeof(right), data, flags);
+  format_tree(root, rdata, right, sizeof(right), sizeof(right), data, flags);
   const int right_len = mutt_str_len(right);
   const int right_width = mutt_strwidth(right);
 
@@ -496,7 +496,7 @@ int pad_format_soft_fill(const struct ExpandoNode *node,
 
   char right[1024] = { 0 };
   struct ExpandoNode *root = node->next;
-  format_tree(&root, rdata, right, sizeof(right), sizeof(right), data, flags);
+  format_tree(root, rdata, right, sizeof(right), sizeof(right), data, flags);
 
   int right_len = mutt_str_len(right);
 
@@ -604,5 +604,5 @@ void expando_render(const struct Expando *exp, const struct ExpandoRenderData *r
   }
 
   struct ExpandoNode *root = exp->tree;
-  format_tree(&root, rdata, buf->data, buf->dsize, cols, data, flags);
+  format_tree(root, rdata, buf->data, buf->dsize, cols, data, flags);
 }

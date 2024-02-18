@@ -69,8 +69,9 @@ struct ExpandoRenderData
   expando_callback_t callback;   ///< Function to get data
 };
 
-void format_tree(struct ExpandoNode **tree, const struct ExpandoRenderData *rdata, char *buf, size_t buf_len,
-                 size_t col_len, void *data, MuttFormatFlags flags);
+void format_tree(struct ExpandoNode *tree, const struct ExpandoRenderData *rdata,
+                 char *buf, size_t buf_len, size_t col_len, void *data,
+                 MuttFormatFlags flags);
 
 int text_format_callback(const struct ExpandoNode *node,
                          const struct ExpandoRenderData *rdata, char *buf, int buf_len,
