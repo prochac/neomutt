@@ -32,14 +32,13 @@
 #include <stdbool.h>
 #include <string.h>
 #include "mutt/lib.h"
-#include "gui/lib.h"
 #include "format_callbacks.h"
-#include "color/lib.h"
 #include "domain.h"
 #include "expando.h"
 #include "helpers.h"
 #include "mutt_thread.h"
 #include "node.h"
+#include "node_padding.h"
 #include "uid.h"
 
 /**
@@ -81,10 +80,10 @@ void format_tree(struct ExpandoNode *tree, const struct ExpandoRenderData *rdata
 
         case ED_ALL_PAD:
         {
-          struct ExpandoPadPrivate *pp = node->ndata;
+          struct NodePaddingPrivate *pp = node->ndata;
           pp->buffer_start = buf;
           pp->buffer_len = buf_len;
-          printed = pad_format_callback(node, rdata, buffer, buffer_len,
+          printed = node_padding_render(node, rdata, buffer, buffer_len,
                                         columns_len, data, flags);
         }
         break;
@@ -132,13 +131,13 @@ void format_tree(struct ExpandoNode *tree, const struct ExpandoRenderData *rdata
   // give softpad nodes a chance to act
   while (node)
   {
-    if (node->type == ENT_PAD)
+    if (node->type == ENT_PADDING)
     {
-      struct ExpandoPadPrivate *pp = node->ndata;
+      struct NodePaddingPrivate *pp = node->ndata;
       pp->buffer_start = buf;
       pp->buffer_len = buf_len;
 
-      pad_format_callback(node, rdata, buffer, buffer_len, columns_len, data, flags);
+      node_padding_render(node, rdata, buffer, buffer_len, columns_len, data, flags);
     }
     node = node->next;
   }
@@ -262,327 +261,6 @@ int conditional_format_callback(const struct ExpandoNode *node,
       return 0;
     }
   }
-  return 0;
-}
-
-/**
- * pad_format_fill_eol - XXX
- * @param node     XXX
- * @param rdata    XXX
- * @param buf      XXX
- * @param buf_len  XXX
- * @param cols_len XXX
- * @param data     XXX
- * @param flags    XXX
- * @retval num XXX
- */
-int pad_format_fill_eol(const struct ExpandoNode *node,
-                        const struct ExpandoRenderData *rdata, char *buf,
-                        int buf_len, int cols_len, void *data, MuttFormatFlags flags)
-{
-  const int pad_len = node->end - node->start;
-  const int pad_width = mutt_strwidth_nonnull(node->start, node->end);
-
-  int len = buf_len;
-  int cols = cols_len;
-
-  bool is_space_to_write = ((len - pad_len) > 0) && ((cols - pad_width) >= 0);
-  while (is_space_to_write)
-  {
-    memcpy(buf, node->start, pad_len);
-
-    buf += pad_len;
-    len -= pad_len;
-    cols -= pad_width;
-
-    is_space_to_write = ((len - pad_len) > 0) && ((cols - pad_width) >= 0);
-  }
-
-  // formatting of the whole buffer is done
-  return buf_len;
-}
-
-/**
- * pad_format_hard_fill - XXX
- * @param node     XXX
- * @param rdata    XXX
- * @param buf      XXX
- * @param buf_len  XXX
- * @param cols_len XXX
- * @param data     XXX
- * @param flags    XXX
- * @retval num XXX
- */
-int pad_format_hard_fill(const struct ExpandoNode *node,
-                         const struct ExpandoRenderData *rdata, char *buf,
-                         int buf_len, int cols_len, void *data, MuttFormatFlags flags)
-{
-  const int pad_len = node->end - node->start;
-  const int pad_width = mutt_strwidth_nonnull(node->start, node->end);
-
-  char right[1024] = { 0 };
-  struct ExpandoNode *root = node->next;
-  format_tree(root, rdata, right, sizeof(right), sizeof(right), data, flags);
-  const int right_len = mutt_str_len(right);
-  const int right_width = mutt_strwidth(right);
-
-  int len = buf_len;
-  int cols = cols_len;
-  bool is_space_to_write = ((len - pad_len - right_len) > 0) &&
-                           ((cols - pad_width - right_width) >= 0);
-
-  while (is_space_to_write)
-  {
-    memcpy(buf, node->start, pad_len);
-
-    buf += pad_len;
-    len -= pad_len;
-    cols -= pad_width;
-
-    is_space_to_write = ((len - pad_len - right_len) > 0) &&
-                        ((cols - pad_width - right_width) >= 0);
-  }
-
-  mutt_strn_copy(buf, right, MIN(cols_len, right_len), len);
-
-  // formatting of the whole buffer is done
-  return buf_len;
-}
-
-/**
- * count_spec - XXX
- * @param s XXX
- * @retval num XXX
- */
-static int count_spec(const char *s)
-{
-  int n = 0;
-  while (*s)
-  {
-    if (*s == MUTT_SPECIAL_INDEX)
-    {
-      n++;
-    }
-
-    s++;
-  }
-
-  return n;
-}
-
-/**
- * count_spec_end - XXX
- * @param s   XXX
- * @param end XXX
- * @retval num XXX
- */
-static int count_spec_end(const char *s, const char *end)
-{
-  int n = 0;
-  while (*s && s <= end)
-  {
-    if (*s == MUTT_SPECIAL_INDEX)
-    {
-      n++;
-    }
-
-    s++;
-  }
-
-  return n;
-}
-
-/**
- * softpad_correct_utf8 - XXX
- * @param buf        XXX
- * @param copy_start XXX
- */
-static void softpad_correct_utf8(const char *buf, char **copy_start)
-{
-  char *s = *copy_start;
-  uint8_t c = (uint8_t) *s;
-
-  if (is_ascii_byte(c))
-  {
-    return;
-  }
-
-  while (is_utf8_cont_byte(c))
-  {
-    assert(s - 1 >= buf);
-    s--;
-    c = (uint8_t) *s;
-  }
-
-  if (is_utf8_2_byte_head(c))
-  {
-    *copy_start = (char *) (s + 2);
-  }
-  else if (is_utf8_3_byte_head(c))
-  {
-    *copy_start = (char *) s + 3;
-  }
-  else if (is_utf8_4_byte_head(c))
-  {
-    *copy_start = (char *) s + 4;
-  }
-  else
-  {
-    assert(0 && "Unreachable");
-  }
-}
-
-/**
- * softpad_move_markers - XXX
- * @param buf        XXX
- * @param copy_start XXX
- */
-static void softpad_move_markers(char *buf, char *copy_start)
-{
-  const int n = count_spec_end(buf, copy_start);
-
-  // all markers are closed
-  if (n % 2 == 0)
-  {
-    // if position is a marker
-    if (*copy_start == MUTT_SPECIAL_INDEX)
-    {
-      const char color = *(copy_start + 1);
-      assert(color == MT_COLOR_INDEX);
-
-      // move marker
-      *(copy_start - 2) = MUTT_SPECIAL_INDEX;
-      *(copy_start - 1) = MT_COLOR_INDEX;
-    }
-    // if position is a color
-    else if (*(copy_start - 1) == MUTT_SPECIAL_INDEX)
-    {
-      const char color = *copy_start;
-      assert(color == MT_COLOR_INDEX);
-
-      // move marker
-      *(copy_start - 2) = MUTT_SPECIAL_INDEX;
-      *(copy_start - 1) = MT_COLOR_INDEX;
-    }
-  }
-  // one marker is open
-  else
-  {
-    // move marker
-    *(copy_start - 2) = MUTT_SPECIAL_INDEX;
-    *(copy_start - 1) = MT_COLOR_INDEX;
-  }
-}
-
-/**
- * pad_format_soft_fill - XXX
- * @param node     XXX
- * @param rdata    XXX
- * @param buf      XXX
- * @param buf_len  XXX
- * @param cols_len XXX
- * @param data     XXX
- * @param flags    XXX
- * @retval num XXX
- */
-int pad_format_soft_fill(const struct ExpandoNode *node,
-                         const struct ExpandoRenderData *rdata, char *buf,
-                         int buf_len, int cols_len, void *data, MuttFormatFlags flags)
-{
-  const int pad_len = node->end - node->start;
-  const int pad_width = mutt_strwidth_nonnull(node->start, node->end);
-
-  const struct ExpandoPadPrivate *pp = node->ndata;
-
-  char right[1024] = { 0 };
-  struct ExpandoNode *root = node->next;
-  format_tree(root, rdata, right, sizeof(right), sizeof(right), data, flags);
-
-  int right_len = mutt_str_len(right);
-
-  int no_spec = 0;
-
-  int len = buf_len;
-  int cols = cols_len;
-
-  // NOTE(g0mb4): Dirty hack...
-  // somehow the colormarkers count as a column
-  if (flags & MUTT_FORMAT_INDEX)
-  {
-    no_spec = count_spec(right);
-    cols += no_spec * 2;
-  }
-
-  // fill space
-  bool is_space_to_write = ((len - pad_len) > 0) && ((cols - pad_width) >= 0);
-  while (is_space_to_write)
-  {
-    memcpy(buf, node->start, pad_len);
-
-    buf += pad_len;
-    len -= pad_len;
-    cols -= pad_width;
-
-    is_space_to_write = ((len - pad_len) > 0) && ((cols - pad_width) >= 0);
-  }
-
-  char *copy_start = buf - right_len;
-  if (copy_start < pp->buffer_start)
-  {
-    mutt_strn_copy(pp->buffer_start, right, right_len, pp->buffer_len);
-  }
-  else
-  {
-    softpad_correct_utf8(pp->buffer_start, &copy_start);
-
-    const size_t occupied = copy_start - pp->buffer_start;
-    const size_t remaining = pp->buffer_len - occupied;
-
-    if (flags & MUTT_FORMAT_INDEX)
-    {
-      softpad_move_markers(pp->buffer_start, copy_start);
-    }
-
-    mutt_strn_copy(copy_start, right, right_len, remaining);
-  }
-
-  // formatting of the whole buffer is done
-  return buf_len;
-}
-
-/**
- * pad_format_callback - Callback for every pad node.
- * @param node     XXX
- * @param rdata    XXX
- * @param buf      XXX
- * @param buf_len  XXX
- * @param cols_len XXX
- * @param data     XXX
- * @param flags    XXX
- * @retval num XXX
- */
-int pad_format_callback(const struct ExpandoNode *node,
-                        const struct ExpandoRenderData *rdata, char *buf,
-                        int buf_len, int cols_len, void *data, MuttFormatFlags flags)
-{
-  assert(node->type == ENT_PAD);
-  assert(node->ndata);
-
-  struct ExpandoPadPrivate *pp = node->ndata;
-
-  switch (pp->pad_type)
-  {
-    case EPT_FILL_EOL:
-      return pad_format_fill_eol(node, rdata, buf, buf_len, cols_len, data, flags);
-    case EPT_HARD_FILL:
-      return pad_format_hard_fill(node, rdata, buf, buf_len, cols_len, data, flags);
-    case EPT_SOFT_FILL:
-      return pad_format_soft_fill(node, rdata, buf, buf_len, cols_len, data, flags);
-    default:
-      assert(0 && "Unknown pad type");
-  };
-
-  assert(0 && "Unreachable");
   return 0;
 }
 

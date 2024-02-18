@@ -158,7 +158,7 @@ static void dump_node_pad(const struct ExpandoNode *node, struct Buffer *buf)
 
   assert(node->ndata);
   assert(node->ndata_free);
-  struct ExpandoPadPrivate *priv = node->ndata;
+  struct NodePaddingPrivate *priv = node->ndata;
 
   switch (priv->pad_type)
   {
@@ -235,7 +235,7 @@ static void dump_node(const struct ExpandoNode *node, struct Buffer *buf)
       case ENT_EXPANDO:
         dump_node_expando(node, buf);
         break;
-      case ENT_PAD:
+      case ENT_PADDING:
         dump_node_pad(node, buf);
         break;
       case ENT_TEXT:

@@ -1796,9 +1796,9 @@ void dot_expando_node_pad(FILE *fp, struct ExpandoNode *node, struct ListHead *l
 {
   struct Buffer *buf = buf_pool_get();
   dot_object_header(fp, node, "Pad", "#80ffff");
-  // dot_type_string(fp, "type", "ENT_PAD", true);
+  // dot_type_string(fp, "type", "ENT_PADDING", true);
 
-  struct ExpandoPadPrivate *priv = node->ndata;
+  struct NodePaddingPrivate *priv = node->ndata;
   char *pad = "UNKNOWN";
   switch (priv->pad_type)
   {
@@ -1985,7 +1985,7 @@ void dot_expando_node_tree(FILE *fp, struct ExpandoNode *node, struct ListHead *
       case ENT_EXPANDO:
         dot_expando_node_expando(fp, node, links);
         break;
-      case ENT_PAD:
+      case ENT_PADDING:
         dot_expando_node_pad(fp, node, links);
         break;
       case ENT_TEXT:

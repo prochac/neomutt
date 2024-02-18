@@ -80,14 +80,7 @@ int text_format_callback(const struct ExpandoNode *node,
 int conditional_format_callback(const struct ExpandoNode *node, const struct ExpandoRenderData *rdata, char *buf,
                                 int buf_len, int cols_len, void *data, MuttFormatFlags flags);
 
-int pad_format_callback(const struct ExpandoNode *node, const struct ExpandoRenderData *rdata, char *buf,
-                         int buf_len, int cols_len, void *data, MuttFormatFlags flags);
-
 void expando_render(const struct Expando *exp, const struct ExpandoRenderData *rdata,
                     void *data, MuttFormatFlags flags, int cols, struct Buffer *buf);
-
-int pad_format_fill_eol (const struct ExpandoNode *node, const struct ExpandoRenderData *rdata, char *buf, int buf_len, int cols_len, void *data, MuttFormatFlags flags);
-int pad_format_hard_fill(const struct ExpandoNode *node, const struct ExpandoRenderData *rdata, char *buf, int buf_len, int cols_len, void *data, MuttFormatFlags flags);
-int pad_format_soft_fill(const struct ExpandoNode *node, const struct ExpandoRenderData *rdata, char *buf, int buf_len, int cols_len, void *data, MuttFormatFlags flags);
 
 #endif /* MUTT_EXPANDO_FORMAT_CALLBACKS_H */

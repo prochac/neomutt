@@ -32,7 +32,6 @@
 #include <ctype.h>
 #include <limits.h>
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -40,8 +39,8 @@
 #include "gui/lib.h"
 #include "parser.h"
 #include "domain.h"
-#include "helpers.h"
 #include "node.h"
+#include "node_padding.h"
 #include "uid.h"
 #include "validation.h"
 
@@ -120,34 +119,6 @@ static struct ExpandoNode *new_expando_node(const char *start, const char *end,
 
   node->ndata = p;
   node->ndata_free = free_expando_private_expando;
-
-  return node;
-}
-
-/**
- * new_pad_node - XXX
- * @param pad_type XXX
- * @param start    XXX
- * @param end      XXX
- * @retval ptr XXX
- */
-static struct ExpandoNode *new_pad_node(enum ExpandoPadType pad_type,
-                                        const char *start, const char *end)
-{
-  struct ExpandoNode *node = mutt_mem_calloc(1, sizeof(struct ExpandoNode));
-
-  node->type = ENT_PAD;
-  node->start = start;
-  node->end = end;
-
-  node->did = ED_ALL;
-  node->uid = ED_ALL_PAD;
-
-  struct ExpandoPadPrivate *pp = mutt_mem_calloc(1, sizeof(struct ExpandoPadPrivate));
-  pp->pad_type = pad_type;
-
-  node->ndata = pp;
-  node->ndata_free = free_expando_private;
 
   return node;
 }
@@ -494,65 +465,6 @@ static struct ExpandoFormatPrivate *parse_format(const char *start, const char *
 }
 
 /**
- * parse_pad_node - XXX
- * @param s            XXX
- * @param parsed_until XXX
- * @param error        XXX
- * @retval ptr XXX
- */
-static struct ExpandoNode *parse_pad_node(const char *s, const char **parsed_until,
-                                          struct ExpandoParseError *error)
-{
-  enum ExpandoPadType pt = 0;
-  if (*s == '|')
-  {
-    pt = EPT_FILL_EOL;
-  }
-  else if (*s == '>')
-  {
-    pt = EPT_HARD_FILL;
-  }
-  else if (*s == '*')
-  {
-    pt = EPT_SOFT_FILL;
-  }
-  else
-  {
-    error->position = s;
-    snprintf(error->message, sizeof(error->message), "Unknown padding: `%c`", *s);
-    return NULL;
-  }
-  s++;
-
-  size_t consumed = 0;
-  uint8_t c = (uint8_t) *s;
-
-  if (is_ascii_byte(c))
-  {
-    consumed = 1;
-  }
-  else if (is_utf8_2_byte_head(c))
-  {
-    consumed = 2;
-  }
-  else if (is_utf8_3_byte_head(c))
-  {
-    consumed = 3;
-  }
-  else if (is_utf8_4_byte_head(c))
-  {
-    consumed = 4;
-  }
-  else
-  {
-    assert(0 && "Unreachable");
-  }
-
-  *parsed_until = s + consumed;
-  return new_pad_node(pt, s, s + consumed);
-}
-
-/**
  * parse_expando_node - XXX
  * @param s            XXX
  * @param parsed_until XXX
@@ -766,7 +678,7 @@ static struct ExpandoNode *parse_node(const char *s, const char *end,
       // padding
       else if ((*s == '|') || (*s == '>') || (*s == '*'))
       {
-        return parse_pad_node(s, parsed_until, error);
+        return node_padding_parse(s, parsed_until, error);
       } // conditional
       else if ((*s == '?') || (*s == '<'))
       {

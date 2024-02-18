@@ -29,6 +29,7 @@
 
 #include "config.h"
 #include <assert.h>
+#include <stdbool.h>
 #include <string.h>
 #include "mutt/lib.h"
 #include "gui/lib.h"
@@ -146,49 +147,4 @@ int format_string(char *buffer, int buffer_len, const struct ExpandoNode *node,
   }
 
   return printed;
-}
-
-/**
- * is_ascii_byte - XXX
- * @param c XXX
- */
-bool is_ascii_byte(uint8_t c)
-{
-  return (c & 0x80) == 0;
-}
-
-/**
- * is_utf8_2_byte_head - XXX
- * @param c XXX
- */
-bool is_utf8_2_byte_head(uint8_t c)
-{
-  return (c & 0xE0) == 0xC0;
-}
-
-/**
- * is_utf8_3_byte_head - XXX
- * @param c XXX
- */
-bool is_utf8_3_byte_head(uint8_t c)
-{
-  return (c & 0xF0) == 0xE0;
-}
-
-/**
- * is_utf8_4_byte_head - XXX
- * @param c XXX
- */
-bool is_utf8_4_byte_head(uint8_t c)
-{
-  return (c & 0xF8) == 0xF0;
-}
-
-/**
- * is_utf8_cont_byte - XXX
- * @param c XXX
- */
-bool is_utf8_cont_byte(uint8_t c)
-{
-  return (c & 0xC0) == 0x80;
 }

@@ -33,6 +33,7 @@
  * | expando/format_callbacks.c        | @subpage expando_format        |
  * | expando/helpers.c                 | @subpage expando_helpers       |
  * | expando/node.c                    | @subpage expando_node          |
+ * | expando/node_padding.c            | @subpage expando_node_padding  |
  * | expando/parser.c                  | @subpage expando_parser        |
  * | expando/validation.c              | @subpage expando_validation    |
  */
@@ -46,6 +47,7 @@
 #include "format_callbacks.h"
 #include "helpers.h"
 #include "node.h"
+#include "node_padding.h"
 #include "parser.h"
 #include "uid.h"
 #include "validation.h"

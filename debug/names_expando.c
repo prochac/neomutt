@@ -62,7 +62,7 @@ const char *name_expando_node_type(enum ExpandoNodeType type)
     DEBUG_NAME(ENT_EMPTY);
     DEBUG_NAME(ENT_TEXT);
     DEBUG_NAME(ENT_EXPANDO);
-    DEBUG_NAME(ENT_PAD);
+    DEBUG_NAME(ENT_PADDING);
     DEBUG_NAME(ENT_CONDITION);
     DEBUG_NAME(ENT_CONDITIONAL_DATE);
     DEBUG_DEFAULT;

@@ -36,7 +36,7 @@ enum ExpandoNodeType
   ENT_EMPTY = 0,           ///< XXX
   ENT_TEXT,                ///< XXX
   ENT_EXPANDO,             ///< XXX
-  ENT_PAD,                 ///< XXX
+  ENT_PADDING,                 ///< XXX
   ENT_CONDITION,           ///< XXX
   ENT_CONDITIONAL_DATE,    ///< XXX
 };
@@ -80,26 +80,6 @@ struct ExpandoExpandoPrivate
   struct ExpandoFormatPrivate *format;  ///< XXX
   int color;                            ///< XXX
   bool has_tree;                        ///< XXX, used in $index_format's %s
-};
-
-/**
- * enum ExpandoPadType - XXX
- */
-enum ExpandoPadType
-{
-  EPT_FILL_EOL,     ///< XXX
-  EPT_HARD_FILL,    ///< XXX
-  EPT_SOFT_FILL     ///< XXX
-};
-
-/**
- * struct ExpandoPadPrivate - XXX
- */
-struct ExpandoPadPrivate
-{
-  enum ExpandoPadType  pad_type;        ///< XXX
-  char                *buffer_start;    ///< XXX
-  size_t               buffer_len;      ///< XXX
 };
 
 /**

@@ -110,7 +110,7 @@ static void print_expando_node(FILE *fp, const struct ExpandoNode *node, int ind
 static void print_pad_node(FILE *fp, const struct ExpandoNode *node, int indent)
 {
   assert(node->ndata);
-  struct ExpandoPadPrivate *p = node->ndata;
+  struct NodePaddingPrivate *p = node->ndata;
 
   const char *pt = NULL;
   switch (p->pad_type)
@@ -206,7 +206,7 @@ static void print_node(FILE *fp, const struct ExpandoNode *node, int indent)
     }
     break;
 
-    case ENT_PAD:
+    case ENT_PADDING:
     {
       print_pad_node(fp, node, indent);
     }

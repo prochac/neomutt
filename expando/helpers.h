@@ -25,8 +25,6 @@
 #define MUTT_EXPANDO_HELPERS_H
 
 #include <stddef.h>
-#include <stdbool.h>
-#include <stdint.h>
 
 struct Buffer;
 struct ExpandoNode;
@@ -48,11 +46,5 @@ enum HasTreeChars
 };
 
 int format_string(char * buffer, int buffer_len, const struct ExpandoNode *node, struct Buffer *expando_buffer);
-
-bool is_ascii_byte(uint8_t c);
-bool is_utf8_2_byte_head(uint8_t c);
-bool is_utf8_3_byte_head(uint8_t c);
-bool is_utf8_4_byte_head(uint8_t c);
-bool is_utf8_cont_byte(uint8_t c);
 
 #endif /* MUTT_EXPANDO_HELPERS_H */

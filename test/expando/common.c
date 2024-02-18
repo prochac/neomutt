@@ -102,7 +102,7 @@ void check_expando_node(struct ExpandoNode *node, const char *expando,
 void check_pad_node(struct ExpandoNode *node, const char *pad_char, enum ExpandoPadType pad_type)
 {
   TEST_CHECK(node != NULL);
-  TEST_CHECK(node->type == ENT_PAD);
+  TEST_CHECK(node->type == ENT_PADDING);
 
   const size_t n = mutt_str_len(pad_char);
   const size_t m = node->end - node->start;
@@ -111,7 +111,7 @@ void check_pad_node(struct ExpandoNode *node, const char *pad_char, enum Expando
   TEST_CHECK(mutt_strn_equal(node->start, pad_char, n));
 
   TEST_CHECK(node->ndata != NULL);
-  struct ExpandoPadPrivate *p = node->ndata;
+  struct NodePaddingPrivate *p = node->ndata;
   TEST_CHECK(p->pad_type == pad_type);
 }
 
