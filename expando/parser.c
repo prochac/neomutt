@@ -42,6 +42,7 @@
 #include "node.h"
 #include "node_condition.h"
 #include "node_padding.h"
+#include "node_text.h"
 #include "uid.h"
 #include "validation.h"
 
@@ -56,26 +57,6 @@ static struct ExpandoNode *new_empty_node(void)
   node->type = ENT_EMPTY;
   node->did = ED_ALL;
   node->uid = ED_ALL_EMPTY;
-
-  return node;
-}
-
-/**
- * new_text_node - XXX
- * @param start XXX
- * @param end   XXX
- * @retval ptr XXX
- */
-static struct ExpandoNode *new_text_node(const char *start, const char *end)
-{
-  struct ExpandoNode *node = mutt_mem_calloc(1, sizeof(struct ExpandoNode));
-
-  node->type = ENT_TEXT;
-  node->start = start;
-  node->end = end;
-
-  node->did = ED_ALL;
-  node->uid = ED_ALL_TEXT;
 
   return node;
 }
@@ -230,33 +211,6 @@ static const char *skip_until_ch(const char *start, char terminator)
   while (*start)
   {
     if (*start == terminator)
-    {
-      break;
-    }
-
-    start++;
-  }
-
-  return start;
-}
-
-/**
- * skip_until_ch_or_end - XXX
- * @param start      XXX
- * @param terminator XXX
- * @param end        XXX
- * @retval ptr XXX
- */
-static const char *skip_until_ch_or_end(const char *start, char terminator, const char *end)
-{
-  while (*start)
-  {
-    if (*start == terminator)
-    {
-      break;
-    }
-
-    if (end && (start > (end - 1)))
     {
       break;
     }
@@ -632,7 +586,7 @@ static struct ExpandoNode *parse_node(const char *s, const char *end,
       if (*s == '%')
       {
         *parsed_until = s + 1;
-        return new_text_node(s, s + 1);
+        return node_text_new(s, s + 1);
       }
       // padding
       else if ((*s == '|') || (*s == '>') || (*s == '*'))
@@ -761,9 +715,7 @@ static struct ExpandoNode *parse_node(const char *s, const char *end,
     // text
     else
     {
-      const char *text_end = skip_until_ch_or_end(s, '%', end);
-      *parsed_until = text_end;
-      return new_text_node(s, text_end);
+      return node_text_parse(s, end, parsed_until);
     }
   }
 

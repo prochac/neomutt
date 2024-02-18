@@ -38,6 +38,7 @@
 #include "node.h"
 #include "node_condition.h"
 #include "node_padding.h"
+#include "node_text.h"
 #include "uid.h"
 
 /**
@@ -73,8 +74,8 @@ void format_tree(struct ExpandoNode *tree, const struct ExpandoRenderData *rdata
           break;
 
         case ED_ALL_TEXT:
-          printed = text_format_callback(node, rdata, buffer, buffer_len,
-                                         columns_len, data, flags);
+          printed = node_text_render(node, rdata, buffer, buffer_len,
+                                     columns_len, data, flags);
           break;
 
         case ED_ALL_PAD:
@@ -144,29 +145,6 @@ void format_tree(struct ExpandoNode *tree, const struct ExpandoRenderData *rdata
   buf_pool_release(&expando_buf);
 
   *buffer = '\0';
-}
-
-/**
- * text_format_callback - Callback for every text node
- * @param node     XXX
- * @param rdata    XXX
- * @param buf      XXX
- * @param buf_len  XXX
- * @param cols_len XXX
- * @param data     XXX
- * @param flags    XXX
- * @retval num XXX
- */
-int text_format_callback(const struct ExpandoNode *node,
-                         const struct ExpandoRenderData *rdata, char *buf,
-                         int buf_len, int cols_len, void *data, MuttFormatFlags flags)
-{
-  assert(node->type == ENT_TEXT);
-
-  int copylen = node->end - node->start;
-  memcpy_safe(buf, node->start, copylen, buf_len);
-
-  return copylen;
 }
 
 /**

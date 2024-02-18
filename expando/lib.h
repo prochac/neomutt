@@ -35,6 +35,7 @@
  * | expando/node.c                    | @subpage expando_node           |
  * | expando/node_condition.c          | @subpage expando_node_condition |
  * | expando/node_padding.c            | @subpage expando_node_padding   |
+ * | expando/node_text.c               | @subpage expando_node_text      |
  * | expando/parser.c                  | @subpage expando_parser         |
  * | expando/validation.c              | @subpage expando_validation     |
  */
@@ -51,6 +52,7 @@
 #include "node_condition.h"
 #include "node_padding.h"
 #include "parser.h"
+#include "node_text.h"
 #include "uid.h"
 #include "validation.h"
 // IWYU pragma: end_keep
