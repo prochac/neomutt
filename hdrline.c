@@ -47,11 +47,11 @@
 #include "email/lib.h"
 #include "core/lib.h"
 #include "alias/lib.h"
-#include "hdrline.h"
 #include "attach/lib.h"
 #include "color/lib.h"
 #include "expando/lib.h"
 #include "ncrypt/lib.h"
+#include "hdrline.h"
 #include "hook.h"
 #include "maillist.h"
 #include "mutt_thread.h"
@@ -1794,8 +1794,19 @@ void index_arrow(const struct ExpandoNode *node, void *data,
 
   if (c_arrow_cursor)
   {
+    // TODO(g0mb4): Get this info somehow.
+    const bool show_arrow = true;
     const char *c_arrow_string = cs_subset_string(NeoMutt->sub, "arrow_string");
-    buf_strcpy(buf, NONULL(c_arrow_string));
+    const int arrow_width = mutt_strwidth(c_arrow_string);
+
+    if (show_arrow)
+    {
+      buf_strcpy(buf, NONULL(c_arrow_string));
+    }
+    else
+    {
+      buf_printf(buf, "%*s", arrow_width, " ");
+    }
   }
   else
   {
