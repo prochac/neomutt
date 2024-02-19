@@ -34,6 +34,8 @@ struct SimpleIfElseData
   int c;
   int t;
   int f;
+  bool space;
+  bool empty;
 };
 
 static void simple_c(const struct ExpandoNode *node, void *data,
@@ -43,8 +45,20 @@ static void simple_c(const struct ExpandoNode *node, void *data,
 
   const struct SimpleIfElseData *sd = data;
 
-  const int num = sd->c;
-  buf_printf(buf, "%d", num);
+  if (sd->empty)
+  {
+    buf_reset(buf);
+  }
+  else if (sd->space)
+  {
+    const char *s = "";
+    buf_strcpy(buf, NONULL(s));
+  }
+  else
+  {
+    const int num = sd->c;
+    buf_printf(buf, "%d", num);
+  }
 }
 
 static void simple_t(const struct ExpandoNode *node, void *data,
@@ -119,16 +133,49 @@ void test_expando_if_else_false_render(void)
     { -1, -1, NULL },
   };
 
-  struct SimpleIfElseData data = {
-    .c = 0,
-    .t = 2,
-    .f = 3,
-  };
-
   struct Buffer *buf = buf_pool_get();
-  expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, buf->dsize, buf);
 
-  TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+  {
+    struct SimpleIfElseData data = {
+      .c = 0,
+      .t = 2,
+      .f = 3,
+      .space = false,
+      .empty = false,
+    };
+
+    expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, buf->dsize, buf);
+
+    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+  }
+
+  {
+    struct SimpleIfElseData data = {
+      .c = 0,
+      .t = 2,
+      .f = 3,
+      .space = true,
+      .empty = false,
+    };
+
+    expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, buf->dsize, buf);
+
+    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+  }
+
+  {
+    struct SimpleIfElseData data = {
+      .c = 0,
+      .t = 2,
+      .f = 3,
+      .space = false,
+      .empty = true,
+    };
+
+    expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, buf->dsize, buf);
+
+    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+  }
 
   expando_tree_free(&root);
   buf_pool_release(&buf);
