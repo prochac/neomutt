@@ -22,6 +22,7 @@
 
 #include "config.h"
 #include <assert.h>
+#include <limits.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include "mutt/lib.h"
@@ -137,10 +138,11 @@ static void dump_node_expando(const struct ExpandoNode *node, struct Buffer *buf
   const struct ExpandoFormatPrivate *fmt = priv->format;
   if (fmt)
   {
-    len = fmt->end - fmt->start;
     const char *just = name_format_justify(fmt->justification);
-    buf_add_printf(buf, ":{%d,%d,%s,'%c',%.*s}", fmt->min, fmt->max, just + 8,
-                   fmt->leader, len, fmt->start);
+    if (fmt->max == INT_MAX)
+      buf_add_printf(buf, ":{%d,MAX,%s,'%c'}", fmt->min, just + 8, fmt->leader);
+    else
+      buf_add_printf(buf, ":{%d,%d,%s,'%c'}", fmt->min, fmt->max, just + 8, fmt->leader);
   }
 
   // These shouldn't happen

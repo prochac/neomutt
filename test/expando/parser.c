@@ -47,13 +47,13 @@ void test_expando_parser(void)
     // Formatting
     { "",       "<EMPTY>" },
     { "%X",     "<EXP:'X'(EMAIL,ATTACHMENT_COUNT)>" },
-    { "%5X",    "<EXP:'X'(EMAIL,ATTACHMENT_COUNT):{5,2147483647,RIGHT,' ',5}>" },
-    { "%.7X",   "<EXP:'X'(EMAIL,ATTACHMENT_COUNT):{0,7,RIGHT,' ',.7}>" },
-    { "%5.7X",  "<EXP:'X'(EMAIL,ATTACHMENT_COUNT):{5,7,RIGHT,' ',5.7}>" },
-    { "%-5X",   "<EXP:'X'(EMAIL,ATTACHMENT_COUNT):{5,2147483647,LEFT,' ',-5}>" },
-    { "%-.7X",  "<EXP:'X'(EMAIL,ATTACHMENT_COUNT):{0,7,LEFT,' ',-.7}>" },
-    { "%-5.7X", "<EXP:'X'(EMAIL,ATTACHMENT_COUNT):{5,7,LEFT,' ',-5.7}>" },
-    { "%05X",   "<EXP:'X'(EMAIL,ATTACHMENT_COUNT):{5,2147483647,RIGHT,'0',05}>" },
+    { "%5X",    "<EXP:'X'(EMAIL,ATTACHMENT_COUNT):{5,MAX,RIGHT,' '}>" },
+    { "%.7X",   "<EXP:'X'(EMAIL,ATTACHMENT_COUNT):{0,7,RIGHT,' '}>" },
+    { "%5.7X",  "<EXP:'X'(EMAIL,ATTACHMENT_COUNT):{5,7,RIGHT,' '}>" },
+    { "%-5X",   "<EXP:'X'(EMAIL,ATTACHMENT_COUNT):{5,MAX,LEFT,' '}>" },
+    { "%-.7X",  "<EXP:'X'(EMAIL,ATTACHMENT_COUNT):{0,7,LEFT,' '}>" },
+    { "%-5.7X", "<EXP:'X'(EMAIL,ATTACHMENT_COUNT):{5,7,LEFT,' '}>" },
+    { "%05X",   "<EXP:'X'(EMAIL,ATTACHMENT_COUNT):{5,MAX,RIGHT,'0'}>" },
 
     // Conditional (old form)
     { "%?X?&?",       "<COND:<EXP:'X'(EMAIL,ATTACHMENT_COUNT)>|<EMPTY>|<EMPTY>>" },
@@ -69,7 +69,7 @@ void test_expando_parser(void)
 
     // Dates
     { "%[%Y-%m-%d]",    "<EXP:'%Y-%m-%d'(EMAIL,STRF_LOCAL)>" },
-    { "%-5[%Y-%m-%d]",  "<EXP:'%Y-%m-%d'(EMAIL,STRF_LOCAL):{5,2147483647,LEFT,' ',-5}>" },
+    { "%-5[%Y-%m-%d]",  "<EXP:'%Y-%m-%d'(EMAIL,STRF_LOCAL):{5,MAX,LEFT,' '}>" },
 
     // Conditional dates
     { "%<[1M?AAA&BBB>",  "<COND:<DATE:(EMAIL,STRF_LOCAL):1:M:60>|<TEXT:'AAA'>|<TEXT:'BBB'>>" },
