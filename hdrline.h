@@ -78,6 +78,6 @@ enum ToChars
 
 void mutt_make_string(struct Buffer *buf, size_t cols, const struct Expando *exp,
                       struct Mailbox *m, int inpgr, struct Email *e,
-                      MuttFormatFlags flags, const char *progress);
+                      MuttFormatFlags flags, const char *progress, bool show_arrow);
 
 #endif /* MUTT_HDRLINE_H */

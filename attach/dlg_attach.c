@@ -189,7 +189,7 @@ void attach_d(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
       c_message_format && aptr->body->email)
   {
     mutt_make_string(buf, max_width, c_message_format, NULL, -1, aptr->body->email,
-                     MUTT_FORMAT_FORCESUBJ | MUTT_FORMAT_ARROWCURSOR, NULL);
+                     MUTT_FORMAT_FORCESUBJ | MUTT_FORMAT_ARROWCURSOR, NULL, false);
 
     return;
   }

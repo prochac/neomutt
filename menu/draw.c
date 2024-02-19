@@ -343,6 +343,10 @@ void menu_redraw_index(struct Menu *menu)
       if (i == menu->current)
         mutt_curses_set_color(ac_ind);
 
+      // FIXME(g0mb4): Remove this
+      (void) arrow_width;
+      (void) c_arrow_cursor;
+#if 0
       if (c_arrow_cursor)
       {
         if (i == menu->current)
@@ -366,6 +370,9 @@ void menu_redraw_index(struct Menu *menu)
       {
         print_enriched_string(menu->win, i, ac, NULL, buf, menu->sub);
       }
+#else
+      print_enriched_string(menu->win, i, ac, NULL, buf, menu->sub);
+#endif
     }
     else
     {

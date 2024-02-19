@@ -72,6 +72,7 @@ struct HdrFormatInfo
   int msg_in_pager;           ///< Index of Email displayed in the Pager
   struct Email *email;        ///< Current Email
   const char *pager_progress; ///< String representing Pager position through Email
+  bool show_arrow;            ///< XXX
 };
 
 /**
@@ -1791,25 +1792,30 @@ void index_arrow(const struct ExpandoNode *node, void *data,
                  MuttFormatFlags flags, int max_width, struct Buffer *buf)
 {
   const bool c_arrow_cursor = cs_subset_bool(NeoMutt->sub, "arrow_cursor");
+  const struct HdrFormatInfo *hfi = data;
 
   if (c_arrow_cursor)
   {
-    // TODO(g0mb4): Get this info somehow.
-    const bool show_arrow = true;
-    const char *c_arrow_string = cs_subset_string(NeoMutt->sub, "arrow_string");
+    const bool show_arrow = hfi->show_arrow;
+    // FIXME(g0mb4): Uncomment this, just for debugging.
+    //const char *c_arrow_string = cs_subset_string(NeoMutt->sub, "arrow_string");
+    const char *c_arrow_string = "XX";
     const int arrow_width = mutt_strwidth(c_arrow_string);
 
     if (show_arrow)
     {
+      node_expando_set_color(node, MT_COLOR_INDICATOR);
       buf_strcpy(buf, NONULL(c_arrow_string));
     }
     else
     {
+      node_expando_set_color(node, MT_COLOR_NONE);
       buf_printf(buf, "%*s", arrow_width, " ");
     }
   }
   else
   {
+    node_expando_set_color(node, MT_COLOR_NONE);
     buf_reset(buf);
   }
 }
@@ -1827,7 +1833,7 @@ void index_arrow(const struct ExpandoNode *node, void *data,
  */
 void mutt_make_string(struct Buffer *buf, size_t cols, const struct Expando *exp,
                       struct Mailbox *m, int inpgr, struct Email *e,
-                      MuttFormatFlags flags, const char *progress)
+                      MuttFormatFlags flags, const char *progress, bool show_arrow)
 {
   assert(exp);
 
@@ -1837,6 +1843,7 @@ void mutt_make_string(struct Buffer *buf, size_t cols, const struct Expando *exp
   hfi.mailbox = m;
   hfi.msg_in_pager = inpgr;
   hfi.pager_progress = progress;
+  hfi.show_arrow = show_arrow;
 
   expando_render(exp, IndexRenderData, &hfi, flags, cols, buf);
 }

@@ -66,7 +66,6 @@
 #include "config/lib.h"
 #include "core/lib.h"
 #include "gui/lib.h"
-#include "pbar.h"
 #include "lib.h"
 #include "color/lib.h"
 #include "expando/lib.h"
@@ -74,6 +73,7 @@
 #include "display.h"
 #include "hdrline.h"
 #include "mview.h"
+#include "pbar.h"
 #include "private_data.h"
 
 /**
@@ -130,7 +130,7 @@ static int pbar_recalc(struct MuttWindow *win)
 
     const struct Expando *c_pager_format = cs_subset_expando(shared->sub, "pager_format");
     mutt_make_string(buf, win->state.cols, c_pager_format, shared->mailbox, msg_in_pager,
-                     shared->email, MUTT_FORMAT_NO_FLAGS, pager_progress_str);
+                     shared->email, MUTT_FORMAT_NO_FLAGS, pager_progress_str, false);
   }
   else
   {

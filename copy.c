@@ -42,12 +42,12 @@
 #include "core/lib.h"
 #include "gui/lib.h"
 #include "mutt.h"
-#include "copy.h"
 #include "expando/lib.h"
 #include "index/lib.h"
 #include "ncrypt/lib.h"
 #include "pager/lib.h"
 #include "send/lib.h"
+#include "copy.h"
 #include "globals.h"
 #include "handler.h"
 #include "hdrline.h"
@@ -672,7 +672,7 @@ int mutt_copy_message_fp(FILE *fp_out, FILE *fp_in, struct Email *e,
       struct Mailbox *m_cur = get_current_mailbox();
       setlocale(LC_TIME, NONULL(c_attribution_locale));
       mutt_make_string(prefix, wraplen, c_indent_string, m_cur, -1, e,
-                       MUTT_FORMAT_NO_FLAGS, NULL);
+                       MUTT_FORMAT_NO_FLAGS, NULL, false);
       setlocale(LC_TIME, "");
     }
   }

@@ -881,8 +881,10 @@ void index_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 
   const struct Expando *c_index_format = cs_subset_expando(shared->sub, "index_format");
   int msg_in_pager = shared->mailbox_view ? shared->mailbox_view->msg_in_pager : 0;
+
+  const bool show_arrow = menu->current == line;
   mutt_make_string(buf, menu->win->state.cols, c_index_format, m, msg_in_pager,
-                   e, flags, NULL);
+                   e, flags, NULL, show_arrow);
 }
 
 /**

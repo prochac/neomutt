@@ -45,7 +45,6 @@
 #include "email/lib.h"
 #include "core/lib.h"
 #include "alias/lib.h"
-#include "hook.h"
 #include "attach/lib.h"
 #include "compmbox/lib.h"
 #include "expando/lib.h"
@@ -56,6 +55,7 @@
 #include "commands.h"
 #include "globals.h"
 #include "hdrline.h"
+#include "hook.h"
 #include "muttlib.h"
 #include "mx.h"
 
@@ -748,7 +748,7 @@ static int addr_hook(struct Buffer *path, HookFlags type, struct Mailbox *m, str
           hook->regex.pat_not)
       {
         buf_alloc(path, PATH_MAX);
-        mutt_make_string(path, 0, hook->expando, m, -1, e, MUTT_FORMAT_PLAIN, NULL);
+        mutt_make_string(path, 0, hook->expando, m, -1, e, MUTT_FORMAT_PLAIN, NULL, false);
         buf_fix_dptr(path);
         return 0;
       }
