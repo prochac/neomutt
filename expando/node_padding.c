@@ -35,13 +35,13 @@
 #include <string.h>
 #include "mutt/lib.h"
 #include "gui/lib.h"
-#include "node_padding.h"
 #include "color/lib.h"
 #include "domain.h"
 #include "format_callbacks.h"
 #include "helpers.h"
 #include "mutt_thread.h"
 #include "node.h"
+#include "node_padding.h"
 #include "parser.h"
 #include "uid.h"
 
@@ -430,18 +430,13 @@ int node_padding_render_soft(const struct ExpandoNode *node,
 
   int right_len = mutt_str_len(right);
 
-  int no_spec = 0;
+  const int no_spec = count_spec(right);
 
   int len = buf_len;
-  int cols = cols_len;
 
   // NOTE(g0mb4): Dirty hack...
   // somehow the colormarkers count as a column
-  if (flags & MUTT_FORMAT_INDEX)
-  {
-    no_spec = count_spec(right);
-    cols += no_spec * 2;
-  }
+  int cols = cols_len + no_spec * 2;
 
   // fill space
   bool is_space_to_write = ((len - pad_len) > 0) && ((cols - pad_width) >= 0);
@@ -468,7 +463,7 @@ int node_padding_render_soft(const struct ExpandoNode *node,
     const size_t occupied = copy_start - pp->buffer_start;
     const size_t remaining = pp->buffer_len - occupied;
 
-    if (flags & MUTT_FORMAT_INDEX)
+    if (no_spec > 0)
     {
       softpad_move_markers(pp->buffer_start, copy_start);
     }
