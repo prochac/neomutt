@@ -1785,6 +1785,25 @@ void index_Z(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
+ * index_arrow - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void index_arrow(const struct ExpandoNode *node, void *data,
+                 MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  const bool c_arrow_cursor = cs_subset_bool(NeoMutt->sub, "arrow_cursor");
+
+  if (c_arrow_cursor)
+  {
+    const char *c_arrow_string = cs_subset_string(NeoMutt->sub, "arrow_string");
+    buf_strcpy(buf, NONULL(c_arrow_string));
+  }
+  else
+  {
+    buf_reset(buf);
+  }
+}
+
+/**
  * mutt_make_string - Create formatted strings using mailbox expandos
  * @param buf      Buffer for the result
  * @param cols     Number of screen columns (OPTIONAL)
@@ -1862,6 +1881,7 @@ const struct ExpandoRenderData IndexRenderData[] = {
   { ED_EMAIL,    ED_EMA_MESSAGE_FLAGS,       index_zt          },
   { ED_EMAIL,    ED_EMA_STRF_LOCAL,          index_date_local  },
   { ED_EMAIL,    ED_EMA_STRF,                index_date        },
+  { ED_EMAIL,    ED_ARROW,                   index_arrow       },
   { -1, -1, NULL },
   // clang-format on
 };

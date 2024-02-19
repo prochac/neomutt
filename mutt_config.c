@@ -270,6 +270,7 @@ struct ExpandoDefinition IndexFormatData[] = {
   { "zt", "message-flags",       ED_EMAIL,    ED_EMA_MESSAGE_FLAGS,       E_TYPE_STRING, E_FLAGS_NO_FLAGS,    NULL },
   { "[",  NULL,                  ED_EMAIL,    ED_EMA_STRF_LOCAL,          E_TYPE_STRING, E_FLAGS_NO_FLAGS,    parse_index_date_local },
   { "{",  NULL,                  ED_EMAIL,    ED_EMA_STRF,                E_TYPE_STRING, E_FLAGS_NO_FLAGS,    parse_index_date },
+  { "^",  NULL,                  ED_EMAIL,    ED_ARROW,                   E_TYPE_STRING, E_FLAGS_NO_FLAGS,    NULL },
   { NULL, NULL, 0, -1, -1, 0, NULL }
   // clang-format on
 };

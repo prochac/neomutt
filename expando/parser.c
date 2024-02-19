@@ -92,7 +92,8 @@ static bool is_valid_classic_expando(char c)
 {
   // NOTE(g0mb4): Maybe rework this?
   // if special expandos are added this list must be updated!
-  return isalpha(c) || (c == '!') || (c == '{') || (c == '(') || (c == '[') || (c == '@');
+  return isalpha(c) || (c == '!') || (c == '{') || (c == '(') || (c == '[') ||
+         (c == '@') || (c == '^');
 }
 
 /**
