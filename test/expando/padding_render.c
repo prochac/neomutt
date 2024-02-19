@@ -251,4 +251,40 @@ void test_expando_padding_render(void)
     expando_tree_free(&root);
     buf_pool_release(&buf);
   }
+
+  {
+    const char *input = "text1%*-text2";
+    struct ExpandoNode *root = NULL;
+
+    const struct ExpandoDefinition defs[] = {
+      { NULL, NULL, 0, 0, 0, 0, NULL },
+    };
+
+    expando_tree_parse(&root, input, defs, &error);
+
+    TEST_CHECK(error.position == NULL);
+    check_text_node(get_nth_node(&root, 0), "text1");
+    check_pad_node(get_nth_node(&root, 1), "-", EPT_SOFT_FILL);
+    check_text_node(get_nth_node(&root, 2), "text2");
+
+    const struct Expando expando = {
+      .string = input,
+      .tree = root,
+    };
+
+    const struct ExpandoRenderData render[] = {
+      { -1, -1, NULL },
+    };
+
+    struct NullData data = { 0 };
+
+    const char *expected = "text2";
+    struct Buffer *buf = buf_pool_get();
+    expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, 5, buf);
+
+    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+
+    expando_tree_free(&root);
+    buf_pool_release(&buf);
+  }
 }
