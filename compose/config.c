@@ -44,7 +44,7 @@
  * Config:
  * - $compose_format
  */
-static struct ExpandoDefinition ComposeFormatData[] = {
+static const struct ExpandoDefinition ComposeFormatData[] = {
   // clang-format off
   { "a", "attach-count", ED_COMPOSE, ED_COM_ATTACH_COUNT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "h", "hostname",     ED_GLOBAL,  ED_GLO_HOSTNAME,     E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },

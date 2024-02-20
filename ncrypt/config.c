@@ -68,7 +68,7 @@ struct ExpandoNode *parse_pgp_date(const char *s, const char **parsed_until,
  * Config:
  * - $pgp_entry_format
  */
-static struct ExpandoDefinition PgpEntryFormatData[] = {
+static const struct ExpandoDefinition PgpEntryFormatData[] = {
   // clang-format off
   { "a", "key-algorithm",     ED_PGP_KEY, ED_PGK_KEY_ALGORITHM,     E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
   { "A", "pkey-algorithm",    ED_PGP_KEY, ED_PGK_PKEY_ALGORITHM,    E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
@@ -228,7 +228,7 @@ static struct ConfigDef NcryptVarsGpgme[] = {
  * - $pgp_verify_command
  * - $pgp_verify_key_command
  */
-static struct ExpandoDefinition PgpCommandFormatData[] = {
+static const struct ExpandoDefinition PgpCommandFormatData[] = {
   // clang-format off
   { "a", "sign-as",        ED_PGP_CMD, ED_PGC_SIGN_AS,        E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
   { "f", "file-message",   ED_PGP_CMD, ED_PGC_FILE_MESSAGE,   E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
@@ -256,7 +256,7 @@ static struct ExpandoDefinition PgpCommandFormatData[] = {
  * - $smime_verify_command
  * - $smime_verify_opaque_command
  */
-static struct ExpandoDefinition SmimeCommandFormatData[] = {
+static const struct ExpandoDefinition SmimeCommandFormatData[] = {
   // clang-format off
   { "a", "algorithm",        ED_SMIME_CMD, ED_SMI_ALGORITHM,        E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
   { "c", "certificate-ids",  ED_SMIME_CMD, ED_SMI_CERTIFICATE_IDS,  E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },

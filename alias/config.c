@@ -54,7 +54,7 @@ static const struct Mapping SortAliasMethods[] = {
  * Config:
  * - $alias_format
  */
-static struct ExpandoDefinition AliasFormatData[] = {
+static const struct ExpandoDefinition AliasFormatData[] = {
   // clang-format off
   { "a", "name",    ED_ALIAS, ED_ALI_NAME,    E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "c", "comment", ED_ALIAS, ED_ALI_COMMENT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
@@ -73,7 +73,7 @@ static struct ExpandoDefinition AliasFormatData[] = {
  * Config:
  * - $query_format
  */
-static struct ExpandoDefinition QueryFormatData[] = {
+static const struct ExpandoDefinition QueryFormatData[] = {
   // clang-format off
   { "a", "address", ED_ALIAS, ED_ALI_ADDRESS, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "c", "number",  ED_ALIAS, ED_ALI_NUMBER,  E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },

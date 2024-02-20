@@ -76,7 +76,7 @@ static const struct Command CompCommands[] = {
  * - close-hook
  * - open-hook
  */
-struct ExpandoDefinition CompressFormatData[] = {
+const struct ExpandoDefinition CompressFormatData[] = {
   // clang-format off
   { "f", "name",    ED_COMPRESS, ED_CMP_FROM, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "t", "comment", ED_COMPRESS, ED_CMP_TO,   E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },

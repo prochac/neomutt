@@ -128,7 +128,7 @@ static int multipart_validator(const struct ConfigSet *cs, const struct ConfigDe
  *
  * @sa AttachRenderData, ExpandoDataAttach, ExpandoDataBody
  */
-static struct ExpandoDefinition AttachFormatData[] = {
+static const struct ExpandoDefinition AttachFormatData[] = {
   // clang-format off
   { "C", "charset",          ED_ATTACH, ED_ATT_CHARSET,          E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
   { "c", "charset-convert",  ED_BODY,   ED_BOD_CHARSET_CONVERT,  E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
@@ -219,7 +219,7 @@ struct ExpandoNode *parse_index_hook(const char *s, const char **parsed_until,
  * - $message_format
  * - $pager_format
  */
-struct ExpandoDefinition IndexFormatData[] = {
+const struct ExpandoDefinition IndexFormatData[] = {
   // clang-format off
   { "(",  NULL,                  ED_EMAIL,    ED_EMA_STRF_RECV_LOCAL,     E_TYPE_STRING, E_FLAGS_NO_FLAGS,    parse_index_date_recv_local },
   { "@",  NULL,                  ED_EMAIL,    ED_EMA_INDEX_HOOK,          E_TYPE_STRING, E_FLAGS_NO_FLAGS,    parse_index_hook },
@@ -284,7 +284,7 @@ struct ExpandoDefinition IndexFormatData[] = {
  * - $ts_icon_format
  * - $ts_status_format
  */
-static struct ExpandoDefinition StatusFormatData[] = {
+static const struct ExpandoDefinition StatusFormatData[] = {
   // clang-format off
   { "b", "unread-count",    ED_INDEX,  ED_IND_UNREAD_COUNT,    E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
   { "d", "deleted-count",   ED_INDEX,  ED_IND_DELETED_COUNT,   E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
@@ -813,7 +813,7 @@ static struct ConfigDef MainVars[] = {
  * Config:
  * - $mix_entry_format
  */
-static struct ExpandoDefinition MixFormatData[] = {
+static const struct ExpandoDefinition MixFormatData[] = {
   // clang-format off
   { "a", "address",      ED_MIXMASTER, ED_MIX_ADDRESS,      E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
   { "c", "capabilities", ED_MIXMASTER, ED_MIX_CAPABILITIES, E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },

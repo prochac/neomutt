@@ -71,6 +71,6 @@ int  mutt_comp_valid_command(const char *cmd);
 
 extern const struct MxOps MxCompOps;
 
-extern struct ExpandoDefinition CompressFormatData[];
+extern const struct ExpandoDefinition CompressFormatData[];
 
 #endif /* MUTT_COMPMBOX_LIB_H */

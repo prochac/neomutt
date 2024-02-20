@@ -41,7 +41,7 @@
  * - $inews
  * - $newsrc
  */
-struct ExpandoDefinition NntpFormatData[] = {
+const struct ExpandoDefinition NntpFormatData[] = {
   // clang-format off
   { "a", "account",  ED_NNTP, ED_NTP_ACCOUNT,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "p", "port",     ED_NNTP, ED_NTP_PORT,     E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },

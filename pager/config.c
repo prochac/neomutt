@@ -35,7 +35,7 @@
 #include "config/lib.h"
 #include "expando/lib.h"
 
-extern struct ExpandoDefinition IndexFormatData[];
+extern const struct ExpandoDefinition IndexFormatData[];
 
 /**
  * PagerVars - Config definitions for the Pager

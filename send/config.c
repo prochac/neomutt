@@ -45,8 +45,8 @@
 #include "conn/lib.h"
 #endif
 
-extern struct ExpandoDefinition IndexFormatData[];
-extern struct ExpandoDefinition NntpFormatData[];
+extern const struct ExpandoDefinition IndexFormatData[];
+extern const struct ExpandoDefinition NntpFormatData[];
 
 /**
  * wrapheaders_validator - Validate the "wrap_headers" config variable - Implements ConfigDef::validator() - @ingroup cfg_def_validator
@@ -118,7 +118,7 @@ static int simple_command_validator(const struct ConfigSet *cs, const struct Con
  * Config:
  * - $greeting
  */
-static struct ExpandoDefinition GreetingFormatData[] = {
+static const struct ExpandoDefinition GreetingFormatData[] = {
   // clang-format off
   { "n", "real-name",  ED_ENVELOPE, ED_ENV_REAL_NAME,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "u", "user-name",  ED_ENVELOPE, ED_ENV_USER_NAME,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },

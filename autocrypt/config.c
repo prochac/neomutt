@@ -44,7 +44,7 @@ char *AutocryptDefaultKey = NULL; ///< Autocrypt default key id (used for postpo
  * Config:
  * - $autocrypt_acct_format
  */
-static struct ExpandoDefinition AutocryptFormatData[] = {
+static const struct ExpandoDefinition AutocryptFormatData[] = {
   // clang-format off
   { "a", "mailbox",        ED_AUTOCRYPT, ED_AUT_MAILBOX,        E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "k", "keyid",          ED_AUTOCRYPT, ED_AUT_KEYID,          E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },

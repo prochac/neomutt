@@ -39,7 +39,7 @@
  * Config:
  * - $history_format
  */
-static struct ExpandoDefinition HistoryFormatData[] = {
+static const struct ExpandoDefinition HistoryFormatData[] = {
   // clang-format off
   { "C", "number", ED_HISTORY, ED_HIS_NUMBER, E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },
   { "s", "match",  ED_HISTORY, ED_HIS_MATCH,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },

@@ -61,7 +61,7 @@ static const struct Mapping SortSidebarMethods[] = {
  * Config:
  * - $sidebar_format
  */
-static struct ExpandoDefinition SidebarFormatData[] = {
+static const struct ExpandoDefinition SidebarFormatData[] = {
   // clang-format off
   { "!", "flagged",       ED_SIDEBAR, ED_SID_FLAGGED,       E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "a", "notify",        ED_SIDEBAR, ED_SID_NOTIFY,        E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },

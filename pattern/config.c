@@ -39,7 +39,7 @@
  * Config:
  * - $pattern_format
  */
-static struct ExpandoDefinition PatternFormatData[] = {
+static const struct ExpandoDefinition PatternFormatData[] = {
   // clang-format off
   { "d", "description", ED_PATTERN, ED_PAT_DESCRIPTION, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "e", "expresion",   ED_PATTERN, ED_PAT_EXPRESION,   E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },

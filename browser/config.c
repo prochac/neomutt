@@ -69,7 +69,7 @@ struct ExpandoNode *parse_folder_date(const char *s, const char **parsed_until,
  * - $folder_format
  * - $mailbox_folder_format
  */
-static struct ExpandoDefinition FolderFormatData[] = {
+static const struct ExpandoDefinition FolderFormatData[] = {
   // clang-format off
   { "a", "notify",        ED_FOLDER, ED_FOL_NOTIFY,        E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
   { "C", "number",        ED_FOLDER, ED_FOL_NUMBER,        E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },
@@ -98,7 +98,7 @@ static struct ExpandoDefinition FolderFormatData[] = {
  * Config:
  * - $group_index_format
  */
-static struct ExpandoDefinition GroupIndexFormatData[] = {
+static const struct ExpandoDefinition GroupIndexFormatData[] = {
   // clang-format off
   { "a", "notify",       ED_FOLDER, ED_FOL_NOTIFY,       E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
   { "C", "number",       ED_FOLDER, ED_FOL_NUMBER,       E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },

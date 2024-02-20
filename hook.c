@@ -59,7 +59,7 @@
 #include "muttlib.h"
 #include "mx.h"
 
-extern struct ExpandoDefinition IndexFormatData[];
+extern const struct ExpandoDefinition IndexFormatData[];
 
 /**
  * struct Hook - A list of user hooks
