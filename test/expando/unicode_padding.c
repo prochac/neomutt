@@ -29,11 +29,20 @@
 
 void test_expando_unicode_padding(void)
 {
+  static const struct ExpandoDefinition FormatData[] = {
+    // clang-format off
+    { "*", "padding-soft", ED_GLOBAL, ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+    { ">", "padding-hard", ED_GLOBAL, ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+    { "|", "padding-eol",  ED_GLOBAL, ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+    { NULL, NULL, 0, -1, -1, 0, NULL }
+    // clang-format on
+  };
+
   const char *input = "%|😀";
   struct ExpandoParseError error = { 0 };
   struct ExpandoNode *root = NULL;
 
-  expando_tree_parse(&root, input, NULL, &error);
+  expando_tree_parse(&root, input, FormatData, &error);
 
   TEST_CHECK(error.position == NULL);
   check_pad_node(get_nth_node(&root, 0), "😀", EPT_FILL_EOL);

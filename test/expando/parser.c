@@ -36,8 +36,11 @@ void test_expando_parser(void)
 {
   static const struct ExpandoDefinition TestFormatData[] = {
     // clang-format off
-    { "X", "attachment-count", ED_EMAIL, ED_EMA_ATTACHMENT_COUNT, E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },
-    { "[",  NULL,              ED_EMAIL, ED_EMA_STRF_LOCAL,       E_TYPE_STRING, E_FLAGS_NO_FLAGS, parse_date },
+    { "*", "padding-soft",     ED_GLOBAL, ED_GLO_PADDING_SOFT,     E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+    { ">", "padding-hard",     ED_GLOBAL, ED_GLO_PADDING_HARD,     E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+    { "|", "padding-eol",      ED_GLOBAL, ED_GLO_PADDING_EOL,      E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+    { "X", "attachment-count", ED_EMAIL,  ED_EMA_ATTACHMENT_COUNT, E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },
+    { "[", NULL,               ED_EMAIL,  ED_EMA_STRF_LOCAL,       E_TYPE_STRING, E_FLAGS_NO_FLAGS, parse_date },
     { NULL, NULL, 0, -1, -1, 0, NULL }
     // clang-format on
   };

@@ -75,6 +75,9 @@ void test_expando_colors_render(void)
     struct ExpandoParseError error = { 0 };
 
     const struct ExpandoDefinition defs[] = {
+      { "*", "padding-soft", ED_GLOBAL, ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+      { ">", "padding-hard", ED_GLOBAL, ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+      { "|", "padding-eol",  ED_GLOBAL, ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
       { "s", NULL, 1, 0, 0, 0, NULL },
       { "C", NULL, 1, 1, 0, 0, NULL },
       { NULL, NULL, 0, 0, 0, 0, NULL },
@@ -131,6 +134,9 @@ void test_expando_colors_render(void)
     struct ExpandoParseError error = { 0 };
 
     const struct ExpandoDefinition defs[] = {
+      { "*", "padding-soft", ED_GLOBAL, ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+      { ">", "padding-hard", ED_GLOBAL, ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+      { "|", "padding-eol",  ED_GLOBAL, ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
       { "s", NULL, 1, 0, 0, 0, NULL },
       { "C", NULL, 1, 1, 0, 0, NULL },
       { NULL, NULL, 0, 0, 0, 0, NULL },
@@ -212,6 +218,9 @@ void test_expando_colors_render(void)
     struct ExpandoParseError error = { 0 };
 
     const struct ExpandoDefinition defs[] = {
+      { "*", "padding-soft", ED_GLOBAL, ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+      { ">", "padding-hard", ED_GLOBAL, ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+      { "|", "padding-eol",  ED_GLOBAL, ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
       { "s", NULL, 1, 0, 0, 0, NULL },
       { "C", NULL, 1, 1, 0, 0, NULL },
       { NULL, NULL, 0, 0, 0, 0, NULL },
@@ -278,6 +287,9 @@ void test_expando_colors_render(void)
     struct ExpandoParseError error = { 0 };
 
     const struct ExpandoDefinition defs[] = {
+      { "*", "padding-soft", ED_GLOBAL, ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+      { ">", "padding-hard", ED_GLOBAL, ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+      { "|", "padding-eol",  ED_GLOBAL, ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
       { "s", NULL, 1, 0, 0, 0, NULL },
       { "C", NULL, 1, 1, 0, 0, NULL },
       { NULL, NULL, 0, 0, 0, 0, NULL },

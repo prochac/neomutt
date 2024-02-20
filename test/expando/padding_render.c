@@ -35,17 +35,22 @@ struct NullData
 
 void test_expando_padding_render(void)
 {
+  static const struct ExpandoDefinition FormatData[] = {
+    // clang-format off
+    { "*", "padding-soft", ED_GLOBAL, ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+    { ">", "padding-hard", ED_GLOBAL, ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+    { "|", "padding-eol",  ED_GLOBAL, ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+    { NULL, NULL, 0, -1, -1, 0, NULL }
+    // clang-format on
+  };
+
   struct ExpandoParseError error = { 0 };
 
   {
     const char *input = "text1%|-text2";
     struct ExpandoNode *root = NULL;
 
-    const struct ExpandoDefinition defs[] = {
-      { NULL, NULL, 0, 0, 0, 0, NULL },
-    };
-
-    expando_tree_parse(&root, input, defs, &error);
+    expando_tree_parse(&root, input, FormatData, &error);
 
     TEST_CHECK(error.position == NULL);
     check_pad_node(root, "-", EPT_FILL_EOL);
@@ -86,11 +91,7 @@ void test_expando_padding_render(void)
     const char *input = "text1%|-text2";
     struct ExpandoNode *root = NULL;
 
-    const struct ExpandoDefinition defs[] = {
-      { NULL, NULL, 0, 0, 0, 0, NULL },
-    };
-
-    expando_tree_parse(&root, input, defs, &error);
+    expando_tree_parse(&root, input, FormatData, &error);
 
     TEST_CHECK(error.position == NULL);
     check_pad_node(root, "-", EPT_FILL_EOL);
@@ -129,11 +130,7 @@ void test_expando_padding_render(void)
     const char *input = "text1%>-text2";
     struct ExpandoNode *root = NULL;
 
-    const struct ExpandoDefinition defs[] = {
-      { NULL, NULL, 0, 0, 0, 0, NULL },
-    };
-
-    expando_tree_parse(&root, input, defs, &error);
+    expando_tree_parse(&root, input, FormatData, &error);
 
     TEST_CHECK(error.position == NULL);
     check_pad_node(root, "-", EPT_HARD_FILL);
@@ -173,11 +170,7 @@ void test_expando_padding_render(void)
     const char *input = "text1%>-text2";
     struct ExpandoNode *root = NULL;
 
-    const struct ExpandoDefinition defs[] = {
-      { NULL, NULL, 0, 0, 0, 0, NULL },
-    };
-
-    expando_tree_parse(&root, input, defs, &error);
+    expando_tree_parse(&root, input, FormatData, &error);
 
     TEST_CHECK(error.position == NULL);
     check_pad_node(root, "-", EPT_HARD_FILL);
@@ -218,11 +211,7 @@ void test_expando_padding_render(void)
     const char *input = "text1%*-text2";
     struct ExpandoNode *root = NULL;
 
-    const struct ExpandoDefinition defs[] = {
-      { NULL, NULL, 0, 0, 0, 0, NULL },
-    };
-
-    expando_tree_parse(&root, input, defs, &error);
+    expando_tree_parse(&root, input, FormatData, &error);
 
     TEST_CHECK(error.position == NULL);
     check_pad_node(root, "-", EPT_SOFT_FILL);
@@ -263,11 +252,7 @@ void test_expando_padding_render(void)
     const char *input = "text1%*-text2";
     struct ExpandoNode *root = NULL;
 
-    const struct ExpandoDefinition defs[] = {
-      { NULL, NULL, 0, 0, 0, 0, NULL },
-    };
-
-    expando_tree_parse(&root, input, defs, &error);
+    expando_tree_parse(&root, input, FormatData, &error);
 
     TEST_CHECK(error.position == NULL);
     check_pad_node(root, "-", EPT_SOFT_FILL);
@@ -308,11 +293,7 @@ void test_expando_padding_render(void)
     const char *input = "text1%*-text2";
     struct ExpandoNode *root = NULL;
 
-    const struct ExpandoDefinition defs[] = {
-      { NULL, NULL, 0, 0, 0, 0, NULL },
-    };
-
-    expando_tree_parse(&root, input, defs, &error);
+    expando_tree_parse(&root, input, FormatData, &error);
 
     TEST_CHECK(error.position == NULL);
     check_pad_node(root, "-", EPT_SOFT_FILL);
