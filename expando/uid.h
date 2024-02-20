@@ -38,7 +38,7 @@ enum ExpandoDataGlobal
 };
 
 /**
- * ExpandoDataAll - UIDs used for all domains.
+ * ExpandoDataAll - UIDs used for all domains
  */
 enum ExpandoDataAll
 {
