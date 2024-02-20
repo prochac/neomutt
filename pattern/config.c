@@ -41,9 +41,13 @@
  */
 static const struct ExpandoDefinition PatternFormatData[] = {
   // clang-format off
-  { "d", "description", ED_PATTERN, ED_PAT_DESCRIPTION, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { "e", "expresion",   ED_PATTERN, ED_PAT_EXPRESION,   E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { "n", "number",      ED_PATTERN, ED_PAT_NUMBER,      E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },
+  { "^", "arrow",        ED_GLOBAL,  ED_GLO_ARROW,        E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "*", "padding-soft", ED_GLOBAL,  ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { ">", "padding-hard", ED_GLOBAL,  ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "|", "padding-eol",  ED_GLOBAL,  ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "d", "description",  ED_PATTERN, ED_PAT_DESCRIPTION,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "e", "expresion",    ED_PATTERN, ED_PAT_EXPRESION,    E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "n", "number",       ED_PATTERN, ED_PAT_NUMBER,       E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },
   { NULL, NULL, 0, -1, -1, 0, NULL }
   // clang-format on
 };

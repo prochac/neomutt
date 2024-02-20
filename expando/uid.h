@@ -29,8 +29,12 @@
  */
 enum ExpandoDataGlobal
 {
-  ED_GLO_CERTIFICATE_PATH = 1, ///< XXX
+  ED_GLO_ARROW = 1,            ///< XXX
+  ED_GLO_CERTIFICATE_PATH,     ///< XXX
   ED_GLO_HOSTNAME,             ///< XXX
+  ED_GLO_PADDING_EOL,          ///< XXX
+  ED_GLO_PADDING_HARD,         ///< XXX
+  ED_GLO_PADDING_SOFT,         ///< XXX
   ED_GLO_SORT,                 ///< XXX
   ED_GLO_SORT_AUX,             ///< XXX
   ED_GLO_USE_THREADS,          ///< XXX

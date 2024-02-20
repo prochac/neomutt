@@ -46,6 +46,9 @@
  */
 static const struct ExpandoDefinition ComposeFormatData[] = {
   // clang-format off
+  { "*", "padding-soft", ED_GLOBAL,  ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { ">", "padding-hard", ED_GLOBAL,  ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "|", "padding-eol",  ED_GLOBAL,  ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "a", "attach-count", ED_COMPOSE, ED_COM_ATTACH_COUNT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "h", "hostname",     ED_GLOBAL,  ED_GLO_HOSTNAME,     E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "l", "attach-size",  ED_COMPOSE, ED_COM_ATTACH_SIZE,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },

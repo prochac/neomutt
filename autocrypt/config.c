@@ -46,6 +46,10 @@ char *AutocryptDefaultKey = NULL; ///< Autocrypt default key id (used for postpo
  */
 static const struct ExpandoDefinition AutocryptFormatData[] = {
   // clang-format off
+  { "^", "arrow",          ED_GLOBAL,    ED_GLO_ARROW,          E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "*", "padding-soft",   ED_GLOBAL,    ED_GLO_PADDING_SOFT,   E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { ">", "padding-hard",   ED_GLOBAL,    ED_GLO_PADDING_HARD,   E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "|", "padding-eol",    ED_GLOBAL,    ED_GLO_PADDING_EOL,    E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "a", "mailbox",        ED_AUTOCRYPT, ED_AUT_MAILBOX,        E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "k", "keyid",          ED_AUTOCRYPT, ED_AUT_KEYID,          E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "n", "number",         ED_AUTOCRYPT, ED_AUT_NUMBER,         E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },

@@ -1899,7 +1899,7 @@ const struct ExpandoRenderData IndexRenderData[] = {
   { ED_EMAIL,    ED_EMA_MESSAGE_FLAGS,       index_zt          },
   { ED_EMAIL,    ED_EMA_STRF_LOCAL,          index_date_local  },
   { ED_EMAIL,    ED_EMA_STRF,                index_date        },
-  { ED_EMAIL,    ED_ARROW,                   index_arrow       },
+  { ED_GLOBAL,   ED_GLO_ARROW,               index_arrow       },
   { -1, -1, NULL },
   // clang-format on
 };

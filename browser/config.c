@@ -71,6 +71,10 @@ struct ExpandoNode *parse_folder_date(const char *s, const char **parsed_until,
  */
 static const struct ExpandoDefinition FolderFormatData[] = {
   // clang-format off
+  { "^", "arrow",         ED_GLOBAL, ED_GLO_ARROW,         E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "*", "padding-soft",  ED_GLOBAL, ED_GLO_PADDING_SOFT,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { ">", "padding-hard",  ED_GLOBAL, ED_GLO_PADDING_HARD,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "|", "padding-eol",   ED_GLOBAL, ED_GLO_PADDING_EOL,   E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "a", "notify",        ED_FOLDER, ED_FOL_NOTIFY,        E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
   { "C", "number",        ED_FOLDER, ED_FOL_NUMBER,        E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },
   { "d", "date",          ED_FOLDER, ED_FOL_DATE,          E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
@@ -100,6 +104,10 @@ static const struct ExpandoDefinition FolderFormatData[] = {
  */
 static const struct ExpandoDefinition GroupIndexFormatData[] = {
   // clang-format off
+  { "^", "arrow",        ED_GLOBAL, ED_GLO_ARROW,        E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "*", "padding-soft", ED_GLOBAL, ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { ">", "padding-hard", ED_GLOBAL, ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "|", "padding-eol",  ED_GLOBAL, ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "a", "notify",       ED_FOLDER, ED_FOL_NOTIFY,       E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
   { "C", "number",       ED_FOLDER, ED_FOL_NUMBER,       E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },
   { "d", "description",  ED_FOLDER, ED_FOL_DESCRIPTION,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },

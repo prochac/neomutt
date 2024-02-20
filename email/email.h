@@ -158,7 +158,6 @@ enum ExpandoDataEmail
   ED_EMA_THREAD_NUMBER,        ///< XXX
   ED_EMA_THREAD_TAGS,          ///< XXX
   ED_EMA_TO_CHARS,             ///< XXX
-  ED_ARROW,                    ///< XXX
 };
 
 /**

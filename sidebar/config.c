@@ -63,6 +63,9 @@ static const struct Mapping SortSidebarMethods[] = {
  */
 static const struct ExpandoDefinition SidebarFormatData[] = {
   // clang-format off
+  { "*", "padding-soft",  ED_GLOBAL,  ED_GLO_PADDING_SOFT,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { ">", "padding-hard",  ED_GLOBAL,  ED_GLO_PADDING_HARD,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "|", "padding-eol",   ED_GLOBAL,  ED_GLO_PADDING_EOL,   E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "!", "flagged",       ED_SIDEBAR, ED_SID_FLAGGED,       E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "a", "notify",        ED_SIDEBAR, ED_SID_NOTIFY,        E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
   { "B", "name",          ED_SIDEBAR, ED_SID_NAME,          E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },

@@ -70,6 +70,10 @@ struct ExpandoNode *parse_pgp_date(const char *s, const char **parsed_until,
  */
 static const struct ExpandoDefinition PgpEntryFormatData[] = {
   // clang-format off
+  { "^", "arrow",             ED_GLOBAL,  ED_GLO_ARROW,             E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "*", "padding-soft",      ED_GLOBAL,  ED_GLO_PADDING_SOFT,      E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { ">", "padding-hard",      ED_GLOBAL,  ED_GLO_PADDING_HARD,      E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "|", "padding-eol",       ED_GLOBAL,  ED_GLO_PADDING_EOL,       E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "a", "key-algorithm",     ED_PGP_KEY, ED_PGK_KEY_ALGORITHM,     E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
   { "A", "pkey-algorithm",    ED_PGP_KEY, ED_PGK_PKEY_ALGORITHM,    E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
   { "c", "key-capabilities",  ED_PGP_KEY, ED_PGK_KEY_CAPABILITIES,  E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
