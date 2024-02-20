@@ -62,6 +62,6 @@ int node_padding_render_eol (const struct ExpandoNode *node, const struct Expand
 int node_padding_render_hard(const struct ExpandoNode *node, const struct ExpandoRenderData *rdata, char *buf, int buf_len, int cols_len, void *data, MuttFormatFlags flags);
 int node_padding_render_soft(const struct ExpandoNode *node, const struct ExpandoRenderData *rdata, char *buf, int buf_len, int cols_len, void *data, MuttFormatFlags flags);
 
-struct ExpandoNode *node_padding_parse(const char *s, const char **parsed_until, struct ExpandoParseError *error);
+struct ExpandoNode *node_padding_parse(const char *s, const char **parsed_until, int did, int uid, struct ExpandoParseError *error);
 
 #endif /* MUTT_EXPANDO_NODE_PADDING_H */

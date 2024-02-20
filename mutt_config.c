@@ -131,9 +131,9 @@ static int multipart_validator(const struct ConfigSet *cs, const struct ConfigDe
 static const struct ExpandoDefinition AttachFormatData[] = {
   // clang-format off
   { "^", "arrow",            ED_GLOBAL, ED_GLO_ARROW,            E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { "*", "padding-soft",     ED_GLOBAL, ED_GLO_PADDING_SOFT,     E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { ">", "padding-hard",     ED_GLOBAL, ED_GLO_PADDING_HARD,     E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { "|", "padding-eol",      ED_GLOBAL, ED_GLO_PADDING_EOL,      E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "*", "padding-soft",     ED_GLOBAL, ED_GLO_PADDING_SOFT,     E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+  { ">", "padding-hard",     ED_GLOBAL, ED_GLO_PADDING_HARD,     E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+  { "|", "padding-eol",      ED_GLOBAL, ED_GLO_PADDING_EOL,      E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
   { "C", "charset",          ED_ATTACH, ED_ATT_CHARSET,          E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
   { "c", "charset-convert",  ED_BODY,   ED_BOD_CHARSET_CONVERT,  E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
   { "D", "deleted",          ED_BODY,   ED_BOD_DELETED,          E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
@@ -226,9 +226,9 @@ struct ExpandoNode *parse_index_hook(const char *s, const char **parsed_until,
 const struct ExpandoDefinition IndexFormatData[] = {
   // clang-format off
   { "^",  "arrow",               ED_GLOBAL,   ED_GLO_ARROW,               E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { "*",  "padding-soft",        ED_GLOBAL,   ED_GLO_PADDING_SOFT,        E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { ">",  "padding-hard",        ED_GLOBAL,   ED_GLO_PADDING_HARD,        E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { "|",  "padding-eol",         ED_GLOBAL,   ED_GLO_PADDING_EOL,         E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "*",  "padding-soft",        ED_GLOBAL,   ED_GLO_PADDING_SOFT,        E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+  { ">",  "padding-hard",        ED_GLOBAL,   ED_GLO_PADDING_HARD,        E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+  { "|",  "padding-eol",         ED_GLOBAL,   ED_GLO_PADDING_EOL,         E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
   { "(",  NULL,                  ED_EMAIL,    ED_EMA_STRF_RECV_LOCAL,     E_TYPE_STRING, E_FLAGS_NO_FLAGS, parse_index_date_recv_local },
   { "@",  NULL,                  ED_EMAIL,    ED_EMA_INDEX_HOOK,          E_TYPE_STRING, E_FLAGS_NO_FLAGS, parse_index_hook },
   { "a",  "from",                ED_ENVELOPE, ED_ENV_FROM,                E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
@@ -296,9 +296,9 @@ static const struct ExpandoDefinition *const IndexFormatDataNoArrow = &(IndexFor
  */
 static const struct ExpandoDefinition StatusFormatData[] = {
   // clang-format off
-  { "*", "padding-soft",    ED_GLOBAL, ED_GLO_PADDING_SOFT,    E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { ">", "padding-hard",    ED_GLOBAL, ED_GLO_PADDING_HARD,    E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { "|", "padding-eol",     ED_GLOBAL, ED_GLO_PADDING_EOL,     E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "*", "padding-soft",    ED_GLOBAL, ED_GLO_PADDING_SOFT,    E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+  { ">", "padding-hard",    ED_GLOBAL, ED_GLO_PADDING_HARD,    E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+  { "|", "padding-eol",     ED_GLOBAL, ED_GLO_PADDING_EOL,     E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
   { "b", "unread-count",    ED_INDEX,  ED_IND_UNREAD_COUNT,    E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
   { "d", "deleted-count",   ED_INDEX,  ED_IND_DELETED_COUNT,   E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },
   { "D", "description",     ED_INDEX,  ED_IND_DESCRIPTION,     E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
@@ -832,9 +832,9 @@ static struct ConfigDef MainVars[] = {
 static const struct ExpandoDefinition MixFormatData[] = {
   // clang-format off
   { "^", "arrow",        ED_GLOBAL,    ED_GLO_ARROW,        E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { "*", "padding-soft", ED_GLOBAL,    ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { ">", "padding-hard", ED_GLOBAL,    ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { "|", "padding-eol",  ED_GLOBAL,    ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "*", "padding-soft", ED_GLOBAL,    ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+  { ">", "padding-hard", ED_GLOBAL,    ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+  { "|", "padding-eol",  ED_GLOBAL,    ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
   { "a", "address",      ED_MIXMASTER, ED_MIX_ADDRESS,      E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
   { "c", "capabilities", ED_MIXMASTER, ED_MIX_CAPABILITIES, E_TYPE_STRING, E_FLAGS_OPTIONAL, NULL },
   { "n", "number",       ED_MIXMASTER, ED_MIX_NUMBER,       E_TYPE_NUMBER, E_FLAGS_OPTIONAL, NULL },

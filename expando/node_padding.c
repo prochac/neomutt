@@ -128,14 +128,10 @@ static bool is_utf8_4_byte_head(uint8_t c)
 }
 
 /**
- * node_padding_parse - XXX
- * @param s            XXX
- * @param parsed_until XXX
- * @param error        XXX
- * @retval ptr XXX
+ * node_padding_parse - XXX - Implements ::expando_parser_t - @ingroup expando_parser_api
  */
 struct ExpandoNode *node_padding_parse(const char *s, const char **parsed_until,
-                                       struct ExpandoParseError *error)
+                                       int did, int uid, struct ExpandoParseError *error)
 {
   enum ExpandoPadType pt = 0;
   if (*s == '|')

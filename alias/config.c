@@ -57,9 +57,9 @@ static const struct Mapping SortAliasMethods[] = {
 static const struct ExpandoDefinition AliasFormatData[] = {
   // clang-format off
   { "^", "arrow",        ED_GLOBAL, ED_GLO_ARROW,        E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { "*", "padding-soft", ED_GLOBAL, ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { ">", "padding-hard", ED_GLOBAL, ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { "|", "padding-eol",  ED_GLOBAL, ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "*", "padding-soft", ED_GLOBAL, ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+  { ">", "padding-hard", ED_GLOBAL, ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+  { "|", "padding-eol",  ED_GLOBAL, ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
   { "a", "name",         ED_ALIAS,  ED_ALI_NAME,         E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "c", "comment",      ED_ALIAS,  ED_ALI_COMMENT,      E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "f", "flags",        ED_ALIAS,  ED_ALI_FLAGS,        E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
@@ -80,9 +80,9 @@ static const struct ExpandoDefinition AliasFormatData[] = {
 static const struct ExpandoDefinition QueryFormatData[] = {
   // clang-format off
   { "^", "arrow",        ED_GLOBAL, ED_GLO_ARROW,        E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { "*", "padding-soft", ED_GLOBAL, ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { ">", "padding-hard", ED_GLOBAL, ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
-  { "|", "padding-eol",  ED_GLOBAL, ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
+  { "*", "padding-soft", ED_GLOBAL, ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+  { ">", "padding-hard", ED_GLOBAL, ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
+  { "|", "padding-eol",  ED_GLOBAL, ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
   { "a", "address",      ED_ALIAS,  ED_ALI_ADDRESS,      E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },
   { "c", "number",       ED_ALIAS,  ED_ALI_NUMBER,       E_TYPE_NUMBER, E_FLAGS_NO_FLAGS, NULL },
   { "e", "comment",      ED_ALIAS,  ED_ALI_COMMENT,      E_TYPE_STRING, E_FLAGS_NO_FLAGS, NULL },

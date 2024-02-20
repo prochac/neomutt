@@ -93,7 +93,7 @@ static bool is_valid_classic_expando(char c)
   // NOTE(g0mb4): Maybe rework this?
   // if special expandos are added this list must be updated!
   return isalpha(c) || (c == '!') || (c == '{') || (c == '(') || (c == '[') ||
-         (c == '@') || (c == '^');
+         (c == '@') || (c == '^') || (c == '*') || (c == '|') || (c == '>');
 }
 
 /**
@@ -446,11 +446,7 @@ static struct ExpandoNode *parse_node(const char *s, const char *end,
         *parsed_until = s + 1;
         return node_text_new(s, s + 1);
       }
-      // padding
-      else if ((*s == '|') || (*s == '>') || (*s == '*'))
-      {
-        return node_padding_parse(s, parsed_until, error);
-      } // conditional
+      // conditional
       else if ((*s == '?') || (*s == '<'))
       {
         bool old_style = (*s == '?');
