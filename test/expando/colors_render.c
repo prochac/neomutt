@@ -31,6 +31,7 @@
 #include "expando/lib.h"
 #include "common.h" // IWYU pragma: keep
 #include "mutt_thread.h"
+#include "test_common.h"
 
 struct SimpleExpandoData
 {
@@ -75,12 +76,14 @@ void test_expando_colors_render(void)
     struct ExpandoParseError error = { 0 };
 
     const struct ExpandoDefinition defs[] = {
+      // clang-format off
       { "*", "padding-soft", ED_GLOBAL, ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
       { ">", "padding-hard", ED_GLOBAL, ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
       { "|", "padding-eol",  ED_GLOBAL, ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
       { "s", NULL, 1, 0, 0, 0, NULL },
       { "C", NULL, 1, 1, 0, 0, NULL },
       { NULL, NULL, 0, 0, 0, 0, NULL },
+      // clang-format on
     };
 
     expando_tree_parse(&root, input, defs, &error);
@@ -121,7 +124,7 @@ void test_expando_colors_render(void)
 
     const int expected_width = mutt_str_len(expected) - 8;
     TEST_CHECK(mutt_strwidth(expected) == expected_width);
-    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    TEST_CHECK_STR_EQ(buf_string(buf), expected);
 
     expando_tree_free(&root);
     buf_pool_release(&buf);
@@ -134,12 +137,14 @@ void test_expando_colors_render(void)
     struct ExpandoParseError error = { 0 };
 
     const struct ExpandoDefinition defs[] = {
+      // clang-format off
       { "*", "padding-soft", ED_GLOBAL, ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
       { ">", "padding-hard", ED_GLOBAL, ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
       { "|", "padding-eol",  ED_GLOBAL, ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
       { "s", NULL, 1, 0, 0, 0, NULL },
       { "C", NULL, 1, 1, 0, 0, NULL },
       { NULL, NULL, 0, 0, 0, 0, NULL },
+      // clang-format on
     };
 
     expando_tree_parse(&root, input, defs, &error);
@@ -188,7 +193,7 @@ void test_expando_colors_render(void)
 
     const int expected_width = mutt_str_len(expected) - 8;
     TEST_CHECK(mutt_strwidth(expected) == expected_width);
-    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    TEST_CHECK_STR_EQ(buf_string(buf), expected);
 
     char expected2[] = "XX1XX XXTestXX";
     expected2[0] = MUTT_SPECIAL_INDEX;
@@ -205,7 +210,7 @@ void test_expando_colors_render(void)
 
     const int expected_width2 = mutt_str_len(expected2) - 8;
     TEST_CHECK(mutt_strwidth(expected2) == expected_width2);
-    TEST_CHECK(mutt_str_equal(buf_string(buf), expected2));
+    TEST_CHECK_STR_EQ(buf_string(buf), expected2);
 
     expando_tree_free(&root);
     buf_pool_release(&buf);
@@ -218,12 +223,14 @@ void test_expando_colors_render(void)
     struct ExpandoParseError error = { 0 };
 
     const struct ExpandoDefinition defs[] = {
+      // clang-format off
       { "*", "padding-soft", ED_GLOBAL, ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
       { ">", "padding-hard", ED_GLOBAL, ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
       { "|", "padding-eol",  ED_GLOBAL, ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
       { "s", NULL, 1, 0, 0, 0, NULL },
       { "C", NULL, 1, 1, 0, 0, NULL },
       { NULL, NULL, 0, 0, 0, 0, NULL },
+      // clang-format on
     };
 
     expando_tree_parse(&root, input, defs, &error);
@@ -272,7 +279,7 @@ void test_expando_colors_render(void)
 
     const int expected_width = mutt_str_len(expected) - 8;
     TEST_CHECK(mutt_strwidth(expected) == expected_width);
-    // TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    // TEST_CHECK_STR_EQ(buf_string(buf), expected);
     // TEST_MSG("Expected: %s", expected);
     // TEST_MSG("Actual:   %s", buf_string(buf));
 
@@ -287,12 +294,14 @@ void test_expando_colors_render(void)
     struct ExpandoParseError error = { 0 };
 
     const struct ExpandoDefinition defs[] = {
+      // clang-format off
       { "*", "padding-soft", ED_GLOBAL, ED_GLO_PADDING_SOFT, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
       { ">", "padding-hard", ED_GLOBAL, ED_GLO_PADDING_HARD, E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
       { "|", "padding-eol",  ED_GLOBAL, ED_GLO_PADDING_EOL,  E_TYPE_STRING, E_FLAGS_NO_FLAGS, node_padding_parse },
       { "s", NULL, 1, 0, 0, 0, NULL },
       { "C", NULL, 1, 1, 0, 0, NULL },
       { NULL, NULL, 0, 0, 0, 0, NULL },
+      // clang-format on
     };
 
     expando_tree_parse(&root, input, defs, &error);
@@ -331,7 +340,7 @@ void test_expando_colors_render(void)
     expando_render(&expando, render, &data, MUTT_FORMAT_INDEX, 6, buf);
 
     TEST_CHECK(mutt_strwidth(expected) == 6);
-    // TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    // TEST_CHECK_STR_EQ(buf_string(buf), expected);
     // TEST_MSG("Expected: %s", expected);
     // TEST_MSG("Actual:   %s", buf_string(buf));
 

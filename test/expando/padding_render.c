@@ -27,6 +27,7 @@
 #include "mutt/lib.h"
 #include "expando/lib.h"
 #include "common.h" // IWYU pragma: keep
+#include "test_common.h"
 
 struct NullData
 {
@@ -79,7 +80,7 @@ void test_expando_padding_render(void)
     struct Buffer *buf = buf_pool_get();
     expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, 8, buf);
 
-    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    TEST_CHECK_STR_EQ(buf_string(buf), expected);
     TEST_MSG("Expected: %s", expected);
     TEST_MSG("Actual:   %s", buf_string(buf));
 
@@ -120,7 +121,7 @@ void test_expando_padding_render(void)
     struct Buffer *buf = buf_pool_get();
     expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, 13, buf);
 
-    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    TEST_CHECK_STR_EQ(buf_string(buf), expected);
 
     expando_tree_free(&root);
     buf_pool_release(&buf);
@@ -158,7 +159,7 @@ void test_expando_padding_render(void)
     const char *expected = "text1tex";
     struct Buffer *buf = buf_pool_get();
     expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, 8, buf);
-    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    TEST_CHECK_STR_EQ(buf_string(buf), expected);
     TEST_MSG("Expected: %s", expected);
     TEST_MSG("Actual:   %s", buf_string(buf));
 
@@ -199,7 +200,7 @@ void test_expando_padding_render(void)
     struct Buffer *buf = buf_pool_get();
     expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, 13, buf);
 
-    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    TEST_CHECK_STR_EQ(buf_string(buf), expected);
     TEST_MSG("Expected: %s", expected);
     TEST_MSG("Actual:   %s", buf_string(buf));
 
@@ -240,7 +241,7 @@ void test_expando_padding_render(void)
     struct Buffer *buf = buf_pool_get();
     expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, 8, buf);
 
-    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    TEST_CHECK_STR_EQ(buf_string(buf), expected);
     TEST_MSG("Expected: %s", expected);
     TEST_MSG("Actual:   %s", buf_string(buf));
 
@@ -281,7 +282,7 @@ void test_expando_padding_render(void)
     struct Buffer *buf = buf_pool_get();
     expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, 13, buf);
 
-    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    TEST_CHECK_STR_EQ(buf_string(buf), expected);
     TEST_MSG("Expected: %s", expected);
     TEST_MSG("Actual:   %s", buf_string(buf));
 
@@ -322,7 +323,7 @@ void test_expando_padding_render(void)
     struct Buffer *buf = buf_pool_get();
     expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, 5, buf);
 
-    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    TEST_CHECK_STR_EQ(buf_string(buf), expected);
     TEST_MSG("Expected: %s", expected);
     TEST_MSG("Actual:   %s", buf_string(buf));
 

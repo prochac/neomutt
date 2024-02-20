@@ -28,6 +28,7 @@
 #include "mutt/lib.h"
 #include "expando/lib.h"
 #include "common.h" // IWYU pragma: keep
+#include "test_common.h"
 
 struct SimpleEmptyIfElseData
 {
@@ -104,7 +105,7 @@ void test_expando_empty_if_else_render(void)
   expando_render(&expando, render, &data1, E_FLAGS_NO_FLAGS, buf->dsize, buf);
 
   const char *expected1 = "3";
-  TEST_CHECK(mutt_str_equal(buf_string(buf), expected1));
+  TEST_CHECK_STR_EQ(buf_string(buf), expected1);
 
   struct SimpleEmptyIfElseData data2 = {
     .c = 1,
@@ -115,7 +116,7 @@ void test_expando_empty_if_else_render(void)
   expando_render(&expando, render, &data2, E_FLAGS_NO_FLAGS, buf->dsize, buf);
 
   const char *expected2 = "";
-  TEST_CHECK(mutt_str_equal(buf_string(buf), expected2));
+  TEST_CHECK_STR_EQ(buf_string(buf), expected2);
 
   expando_tree_free(&root);
   buf_pool_release(&buf);

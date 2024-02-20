@@ -43,7 +43,6 @@ void test_expando_empty_if_else(void)
     struct ExpandoNode *if_true_tree = expando_node_get_child(node, ENC_TRUE);
     struct ExpandoNode *if_false_tree = expando_node_get_child(node, ENC_FALSE);
 
-
     check_expando_node(condition, "c", NULL);
     check_empty_node(if_true_tree);
     TEST_CHECK(if_false_tree == NULL);
@@ -61,7 +60,6 @@ void test_expando_empty_if_else(void)
     struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);
     struct ExpandoNode *if_true_tree = expando_node_get_child(node, ENC_TRUE);
     struct ExpandoNode *if_false_tree = expando_node_get_child(node, ENC_FALSE);
-
 
     check_expando_node(condition, "c", NULL);
     check_empty_node(if_true_tree);

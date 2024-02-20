@@ -28,6 +28,7 @@
 #include "mutt/lib.h"
 #include "expando/lib.h"
 #include "common.h" // IWYU pragma: keep
+#include "test_common.h"
 
 struct SimpleIfElseData
 {
@@ -152,7 +153,7 @@ void test_expando_if_else_false_render(void)
 
     expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, buf->dsize, buf);
 
-    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    TEST_CHECK_STR_EQ(buf_string(buf), expected);
   }
 
   {
@@ -166,7 +167,7 @@ void test_expando_if_else_false_render(void)
 
     expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, buf->dsize, buf);
 
-    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    TEST_CHECK_STR_EQ(buf_string(buf), expected);
   }
 
   {
@@ -180,7 +181,7 @@ void test_expando_if_else_false_render(void)
 
     expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, buf->dsize, buf);
 
-    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    TEST_CHECK_STR_EQ(buf_string(buf), expected);
   }
 
   expando_tree_free(&root);

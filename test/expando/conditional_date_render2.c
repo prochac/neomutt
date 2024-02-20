@@ -30,6 +30,7 @@
 #include "mutt/lib.h"
 #include "expando/lib.h"
 #include "common.h" // IWYU pragma: keep
+#include "test_common.h"
 
 struct CondDateData
 {
@@ -122,7 +123,7 @@ void test_expando_conditional_date_render2(void)
     struct Buffer *buf = buf_pool_get();
     expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, buf->dsize, buf);
 
-    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    TEST_CHECK_STR_EQ(buf_string(buf), expected);
     buf_pool_release(&buf);
   }
 
@@ -138,7 +139,7 @@ void test_expando_conditional_date_render2(void)
     struct Buffer *buf = buf_pool_get();
     expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, buf->dsize, buf);
 
-    TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+    TEST_CHECK_STR_EQ(buf_string(buf), expected);
     buf_pool_release(&buf);
   }
 

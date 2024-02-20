@@ -28,6 +28,7 @@
 #include "mutt/lib.h"
 #include "expando/lib.h"
 #include "common.h" // IWYU pragma: keep
+#include "test_common.h"
 
 struct SimpleExpandoData
 {
@@ -98,7 +99,7 @@ void test_expando_simple_expando_render(void)
   struct Buffer *buf = buf_pool_get();
   expando_render(&expando, render, &data, E_FLAGS_NO_FLAGS, buf->dsize, buf);
 
-  TEST_CHECK(mutt_str_equal(buf_string(buf), expected));
+  TEST_CHECK_STR_EQ(buf_string(buf), expected);
 
   expando_tree_free(&root);
   buf_pool_release(&buf);

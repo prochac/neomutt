@@ -28,6 +28,7 @@
 #include "mutt/lib.h"
 #include "expando/lib.h"
 #include "common.h" // IWYU pragma: keep
+#include "test_common.h"
 
 struct NestedIfElseData
 {
@@ -124,7 +125,7 @@ void test_expando_nested_if_else_render(void)
   struct Buffer *buf = buf_pool_get();
   expando_render(&expando, render, &data_X, E_FLAGS_NO_FLAGS, buf->dsize, buf);
 
-  TEST_CHECK(mutt_str_equal(buf_string(buf), expected_X));
+  TEST_CHECK_STR_EQ(buf_string(buf), expected_X);
 
   const char *expected_Y = "Y";
   struct NestedIfElseData data_Y = {
@@ -135,7 +136,7 @@ void test_expando_nested_if_else_render(void)
   buf_reset(buf);
   expando_render(&expando, render, &data_Y, E_FLAGS_NO_FLAGS, buf->dsize, buf);
 
-  TEST_CHECK(mutt_str_equal(buf_string(buf), expected_Y));
+  TEST_CHECK_STR_EQ(buf_string(buf), expected_Y);
 
   const char *expected_XY = "XY";
   struct NestedIfElseData data_XY = {
@@ -146,7 +147,7 @@ void test_expando_nested_if_else_render(void)
   buf_reset(buf);
   expando_render(&expando, render, &data_XY, E_FLAGS_NO_FLAGS, buf->dsize, buf);
 
-  TEST_CHECK(mutt_str_equal(buf_string(buf), expected_XY));
+  TEST_CHECK_STR_EQ(buf_string(buf), expected_XY);
 
   const char *expected_NONE = "NONE";
   struct NestedIfElseData data_NONE = {
@@ -157,7 +158,7 @@ void test_expando_nested_if_else_render(void)
   buf_reset(buf);
   expando_render(&expando, render, &data_NONE, E_FLAGS_NO_FLAGS, buf->dsize, buf);
 
-  TEST_CHECK(mutt_str_equal(buf_string(buf), expected_NONE));
+  TEST_CHECK_STR_EQ(buf_string(buf), expected_NONE);
 
   expando_tree_free(&root);
   buf_pool_release(&buf);
