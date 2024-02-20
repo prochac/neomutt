@@ -46,6 +46,10 @@
 #endif
 
 extern const struct ExpandoDefinition IndexFormatData[];
+
+/// IndexFormatDataNoPadding - Index format definitions, without padding or arrow
+static const struct ExpandoDefinition *const IndexFormatDataNoPadding = &(IndexFormatData[4]);
+
 extern const struct ExpandoDefinition NntpFormatData[];
 
 /**
@@ -162,13 +166,13 @@ static struct ConfigDef SendVars[] = {
   { "attach_charset", DT_SLIST|D_SLIST_SEP_COLON|D_SLIST_ALLOW_EMPTY, 0, 0, charset_slist_validator,
     "When attaching files, use one of these character sets"
   },
-  { "attribution_intro", DT_EXPANDO, IP "On %d, %n wrote:", IP &IndexFormatData, NULL,
+  { "attribution_intro", DT_EXPANDO, IP "On %d, %n wrote:", IP IndexFormatDataNoPadding, NULL,
     "Message to start a reply, 'On DATE, PERSON wrote:'"
   },
   { "attribution_locale", DT_STRING, 0, 0, NULL,
     "Locale for dates in the attribution message"
   },
-  { "attribution_trailer", DT_EXPANDO, 0, IP &IndexFormatData, NULL,
+  { "attribution_trailer", DT_EXPANDO, 0, IP IndexFormatDataNoPadding, NULL,
     "Suffix message to add after reply text"
   },
   { "bounce_delivered", DT_BOOL, true, 0, NULL,
@@ -228,10 +232,10 @@ static struct ConfigDef SendVars[] = {
   { "forward_attachments", DT_QUAD, MUTT_ASKYES, 0, NULL,
     "Forward attachments when forwarding a message"
   },
-  { "forward_attribution_intro", DT_EXPANDO, IP "----- Forwarded message from %f -----", IP &IndexFormatData, NULL,
+  { "forward_attribution_intro", DT_EXPANDO, IP "----- Forwarded message from %f -----", IP IndexFormatDataNoPadding, NULL,
     "Prefix message for forwarded messages"
   },
-  { "forward_attribution_trailer", DT_EXPANDO, IP "----- End forwarded message -----", IP &IndexFormatData, NULL,
+  { "forward_attribution_trailer", DT_EXPANDO, IP "----- End forwarded message -----", IP IndexFormatDataNoPadding, NULL,
     "Suffix message for forwarded messages"
   },
   { "forward_decrypt", DT_BOOL, true, 0, NULL,
@@ -240,7 +244,7 @@ static struct ConfigDef SendVars[] = {
   { "forward_edit", DT_QUAD, MUTT_YES, 0, NULL,
     "Automatically start the editor when forwarding a message"
   },
-  { "forward_format", DT_EXPANDO|D_NOT_EMPTY, IP "[%a: %s]", IP &IndexFormatData, NULL,
+  { "forward_format", DT_EXPANDO|D_NOT_EMPTY, IP "[%a: %s]", IP IndexFormatDataNoPadding, NULL,
     "printf-like format string to control the subject when forwarding a message"
   },
   { "forward_references", DT_BOOL, false, 0, NULL,

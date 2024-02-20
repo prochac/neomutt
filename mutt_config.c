@@ -282,6 +282,9 @@ const struct ExpandoDefinition IndexFormatData[] = {
   // clang-format on
 };
 
+/// IndexFormatDataNoArrow - Index format definitions, without arrow
+static const struct ExpandoDefinition *const IndexFormatDataNoArrow = &(IndexFormatData[1]);
+
 /**
  * StatusFormatData - Expando definitions
  *
@@ -322,6 +325,9 @@ static const struct ExpandoDefinition StatusFormatData[] = {
   { NULL, NULL, 0, -1, -1, 0, NULL }
   // clang-format on
 };
+
+/// StatusFormatDataNoPadding - Status format definitions, without padding
+const struct ExpandoDefinition *const StatusFormatDataNoPadding = &(StatusFormatData[3]);
 
 /**
  * MainVars - General Config definitions for NeoMutt
@@ -550,7 +556,7 @@ static struct ConfigDef MainVars[] = {
   { "message_cache_dir", DT_PATH|D_PATH_DIR, 0, 0, NULL,
     "(imap/pop) Directory for the message cache"
   },
-  { "message_format", DT_EXPANDO|D_NOT_EMPTY, IP "%s", IP &IndexFormatData, NULL,
+  { "message_format", DT_EXPANDO|D_NOT_EMPTY, IP "%s", IP IndexFormatDataNoArrow, NULL,
     "printf-like format string for listing attached messages"
   },
   { "meta_key", DT_BOOL, false, 0, NULL,
@@ -571,7 +577,7 @@ static struct ConfigDef MainVars[] = {
   { "net_inc", DT_NUMBER|D_INTEGER_NOT_NEGATIVE, 10, 0, NULL,
     "(socket) Update the progress bar after this many KB sent/received (0 to disable)"
   },
-  { "new_mail_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP &StatusFormatData, NULL,
+  { "new_mail_command", DT_EXPANDO|D_STRING_COMMAND, 0, IP StatusFormatDataNoPadding, NULL,
     "External command to run when new mail arrives"
   },
   { "pipe_decode", DT_BOOL, false, 0, NULL,
@@ -751,10 +757,10 @@ static struct ConfigDef MainVars[] = {
   { "ts_enabled", DT_BOOL, false, 0, NULL,
     "Allow NeoMutt to set the terminal status line and icon"
   },
-  { "ts_icon_format", DT_EXPANDO, IP "M%<n?AIL&ail>", IP &StatusFormatData, NULL,
+  { "ts_icon_format", DT_EXPANDO, IP "M%<n?AIL&ail>", IP StatusFormatDataNoPadding, NULL,
     "printf-like format string for the terminal's icon title"
   },
-  { "ts_status_format", DT_EXPANDO, IP "NeoMutt with %<m?%m messages&no messages>%<n? [%n NEW]>", IP &StatusFormatData, NULL,
+  { "ts_status_format", DT_EXPANDO, IP "NeoMutt with %<m?%m messages&no messages>%<n? [%n NEW]>", IP StatusFormatDataNoPadding, NULL,
     "printf-like format string for the terminal's status (window title)"
   },
   { "use_domain", DT_BOOL, true, 0, NULL,
