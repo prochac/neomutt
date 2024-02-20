@@ -938,8 +938,10 @@ main
 
   if (batch_mode)
   {
+#ifdef USE_DEBUG_GRAPHVIZ
     const struct Expando *c_index_format = cs_subset_expando(NeoMutt->sub, "index_format");
     dump_graphviz_expando_node(c_index_format->tree);
+#endif
     goto main_ok; // TEST22: neomutt -B
   }
   StartupComplete = true;
