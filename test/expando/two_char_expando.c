@@ -42,10 +42,10 @@ void test_expando_two_char_expando(void)
   expando_tree_parse(&root, input, defs, &error);
 
   TEST_CHECK(error.position == NULL);
-  check_expando_node(get_nth_node(&root, 0), "cr", NULL);
-  check_text_node(get_nth_node(&root, 1), " ");
-  check_expando_node(get_nth_node(&root, 2), "a", NULL);
-  check_text_node(get_nth_node(&root, 3), "b");
+  check_expando_node(get_nth_node(root, 0), "cr", NULL);
+  check_text_node(get_nth_node(root, 1), " ");
+  check_expando_node(get_nth_node(root, 2), "a", NULL);
+  check_text_node(get_nth_node(root, 3), "b");
 
   expando_tree_free(&root);
 }

@@ -36,7 +36,7 @@ void test_expando_empty_if_else(void)
   expando_tree_parse(&root1, input1, NULL, &error);
   TEST_CHECK(error.position == NULL);
   {
-    struct ExpandoNode *node = get_nth_node(&root1, 0);
+    struct ExpandoNode *node = get_nth_node(root1, 0);
     check_condition_node_head(node);
 
     struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);
@@ -55,7 +55,7 @@ void test_expando_empty_if_else(void)
   expando_tree_parse(&root2, input2, NULL, &error);
   TEST_CHECK(error.position == NULL);
   {
-    struct ExpandoNode *node = get_nth_node(&root2, 0);
+    struct ExpandoNode *node = get_nth_node(root2, 0);
     check_condition_node_head(node);
 
     struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);
@@ -74,7 +74,7 @@ void test_expando_empty_if_else(void)
   expando_tree_parse(&root3, input3, NULL, &error);
   TEST_CHECK(error.position == NULL);
   {
-    struct ExpandoNode *node = get_nth_node(&root3, 0);
+    struct ExpandoNode *node = get_nth_node(root3, 0);
     check_condition_node_head(node);
 
     struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);
@@ -92,7 +92,7 @@ void test_expando_empty_if_else(void)
   expando_tree_parse(&root4, input4, NULL, &error);
   TEST_CHECK(error.position == NULL);
   {
-    struct ExpandoNode *node = get_nth_node(&root4, 0);
+    struct ExpandoNode *node = get_nth_node(root4, 0);
     check_condition_node_head(node);
 
     struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);

@@ -45,7 +45,7 @@ void test_expando_padding(void)
   expando_tree_parse(&root, input, FormatData, &error);
 
   TEST_CHECK(error.position == NULL);
-  check_pad_node(get_nth_node(&root, 0), "A", EPT_FILL_EOL);
+  check_pad_node(get_nth_node(root, 0), "A", EPT_FILL_EOL);
 
   struct ExpandoNode *left = expando_node_get_child(root, ENP_LEFT);
   struct ExpandoNode *right = expando_node_get_child(root, ENP_RIGHT);
@@ -53,10 +53,10 @@ void test_expando_padding(void)
   TEST_CHECK(left == NULL);
   TEST_CHECK(right != NULL);
 
-  check_text_node(get_nth_node(&right, 0), " ");
-  check_pad_node(get_nth_node(&right, 1), "B", EPT_HARD_FILL);
-  check_text_node(get_nth_node(&right, 2), " ");
-  check_pad_node(get_nth_node(&right, 3), "C", EPT_SOFT_FILL);
+  check_text_node(get_nth_node(right, 0), " ");
+  check_pad_node(get_nth_node(right, 1), "B", EPT_HARD_FILL);
+  check_text_node(get_nth_node(right, 2), " ");
+  check_pad_node(get_nth_node(right, 3), "C", EPT_SOFT_FILL);
 
   expando_tree_free(&root);
 }

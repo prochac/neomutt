@@ -38,8 +38,8 @@ void test_expando_formatted_expando(void)
   expando_tree_parse(&root, input, NULL, &error);
 
   TEST_CHECK(error.position == NULL);
-  check_expando_node(get_nth_node(&root, 0), "X", NULL);
-  check_text_node(get_nth_node(&root, 1), " ");
+  check_expando_node(get_nth_node(root, 0), "X", NULL);
+  check_text_node(get_nth_node(root, 1), " ");
 
   {
     struct ExpandoFormat fmt = { 0 };
@@ -47,8 +47,8 @@ void test_expando_formatted_expando(void)
     fmt.max = INT_MAX;
     fmt.justification = JUSTIFY_RIGHT;
     fmt.leader = ' ';
-    check_expando_node(get_nth_node(&root, 2), "X", &fmt);
-    check_text_node(get_nth_node(&root, 3), " ");
+    check_expando_node(get_nth_node(root, 2), "X", &fmt);
+    check_text_node(get_nth_node(root, 3), " ");
   }
 
   {
@@ -57,8 +57,8 @@ void test_expando_formatted_expando(void)
     fmt.max = INT_MAX;
     fmt.justification = JUSTIFY_LEFT;
     fmt.leader = ' ';
-    check_expando_node(get_nth_node(&root, 4), "X", &fmt);
-    check_text_node(get_nth_node(&root, 5), " ");
+    check_expando_node(get_nth_node(root, 4), "X", &fmt);
+    check_text_node(get_nth_node(root, 5), " ");
   }
 
   {
@@ -67,8 +67,8 @@ void test_expando_formatted_expando(void)
     fmt.max = INT_MAX;
     fmt.justification = JUSTIFY_RIGHT;
     fmt.leader = '0';
-    check_expando_node(get_nth_node(&root, 6), "X", &fmt);
-    check_text_node(get_nth_node(&root, 7), " ");
+    check_expando_node(get_nth_node(root, 6), "X", &fmt);
+    check_text_node(get_nth_node(root, 7), " ");
   }
 
   {
@@ -77,8 +77,8 @@ void test_expando_formatted_expando(void)
     fmt.max = 8;
     fmt.justification = JUSTIFY_RIGHT;
     fmt.leader = ' ';
-    check_expando_node(get_nth_node(&root, 8), "X", &fmt);
-    check_text_node(get_nth_node(&root, 9), " ");
+    check_expando_node(get_nth_node(root, 8), "X", &fmt);
+    check_text_node(get_nth_node(root, 9), " ");
   }
 
   {
@@ -87,8 +87,8 @@ void test_expando_formatted_expando(void)
     fmt.max = 8;
     fmt.justification = JUSTIFY_RIGHT;
     fmt.leader = ' ';
-    check_expando_node(get_nth_node(&root, 10), "X", &fmt);
-    check_text_node(get_nth_node(&root, 11), " ");
+    check_expando_node(get_nth_node(root, 10), "X", &fmt);
+    check_text_node(get_nth_node(root, 11), " ");
   }
 
   {
@@ -97,8 +97,8 @@ void test_expando_formatted_expando(void)
     fmt.max = 8;
     fmt.justification = JUSTIFY_LEFT;
     fmt.leader = ' ';
-    check_expando_node(get_nth_node(&root, 12), "X", &fmt);
-    check_text_node(get_nth_node(&root, 13), " ");
+    check_expando_node(get_nth_node(root, 12), "X", &fmt);
+    check_text_node(get_nth_node(root, 13), " ");
   }
 
   {
@@ -107,7 +107,7 @@ void test_expando_formatted_expando(void)
     fmt.max = INT_MAX;
     fmt.justification = JUSTIFY_CENTER;
     fmt.leader = ' ';
-    check_expando_node(get_nth_node(&root, 14), "X", &fmt);
+    check_expando_node(get_nth_node(root, 14), "X", &fmt);
   }
 
   expando_tree_free(&root);

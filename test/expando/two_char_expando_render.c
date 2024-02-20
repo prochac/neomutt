@@ -73,9 +73,9 @@ void test_expando_two_char_expando_render(void)
   expando_tree_parse(&root, input, defs, &error);
 
   TEST_CHECK(error.position == NULL);
-  check_expando_node(get_nth_node(&root, 0), "ss", NULL);
-  check_text_node(get_nth_node(&root, 1), " - ");
-  check_expando_node(get_nth_node(&root, 2), "dd", NULL);
+  check_expando_node(get_nth_node(root, 0), "ss", NULL);
+  check_text_node(get_nth_node(root, 1), " - ");
+  check_expando_node(get_nth_node(root, 2), "dd", NULL);
 
   const char *expected = "Test2 - 12";
 

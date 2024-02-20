@@ -36,7 +36,7 @@ void test_expando_simple_text(void)
   expando_tree_parse(&root, input, NULL, &error);
 
   TEST_CHECK(error.position == NULL);
-  check_text_node(get_nth_node(&root, 0), input);
+  check_text_node(get_nth_node(root, 0), input);
 
   expando_tree_free(&root);
 }

@@ -78,8 +78,8 @@ void test_expando_date_render(void)
 
     TEST_CHECK(error.position == NULL);
 
-    check_expando_node(get_nth_node(&root, 0), "%Y-%m-%d", NULL);
-    check_text_node(get_nth_node(&root, 1), " date");
+    check_expando_node(get_nth_node(root, 0), "%Y-%m-%d", NULL);
+    check_text_node(get_nth_node(root, 1), " date");
 
     const char *expected = "2016-03-07 date";
 
@@ -122,7 +122,7 @@ void test_expando_date_render(void)
     fmt.justification = JUSTIFY_LEFT;
     fmt.leader = ' ';
 
-    check_expando_node(get_nth_node(&root, 0), "%Y-%m-%d", &fmt);
+    check_expando_node(get_nth_node(root, 0), "%Y-%m-%d", &fmt);
 
     const char *expected = "2016-03-07  ";
 

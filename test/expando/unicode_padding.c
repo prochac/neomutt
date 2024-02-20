@@ -45,6 +45,6 @@ void test_expando_unicode_padding(void)
   expando_tree_parse(&root, input, FormatData, &error);
 
   TEST_CHECK(error.position == NULL);
-  check_pad_node(get_nth_node(&root, 0), "😀", EPT_FILL_EOL);
+  check_pad_node(get_nth_node(root, 0), "😀", EPT_FILL_EOL);
   expando_tree_free(&root);
 }

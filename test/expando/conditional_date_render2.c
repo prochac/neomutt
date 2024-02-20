@@ -89,7 +89,7 @@ void test_expando_conditional_date_render2(void)
   expando_tree_parse(&root, input, defs, &error);
   TEST_CHECK(error.position == NULL);
 
-  struct ExpandoNode *node = get_nth_node(&root, 0);
+  struct ExpandoNode *node = get_nth_node(root, 0);
   check_condition_node_head(node);
 
   struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);

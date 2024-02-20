@@ -73,7 +73,7 @@ void test_expando_nested_if_else_render(void)
 
   TEST_CHECK(error.position == NULL);
 
-  struct ExpandoNode *node = get_nth_node(&root, 0);
+  struct ExpandoNode *node = get_nth_node(root, 0);
   check_condition_node_head(node);
 
   struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);

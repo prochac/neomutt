@@ -38,10 +38,10 @@ void test_expando_old_if_else(void)
   expando_tree_parse(&root, input, NULL, &error);
 
   TEST_CHECK(error.position == NULL);
-  check_text_node(get_nth_node(&root, 0), "if: ");
+  check_text_node(get_nth_node(root, 0), "if: ");
 
   {
-    struct ExpandoNode *node = get_nth_node(&root, 1);
+    struct ExpandoNode *node = get_nth_node(root, 1);
     check_condition_node_head(node);
 
     struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);
@@ -59,10 +59,10 @@ void test_expando_old_if_else(void)
     TEST_CHECK(if_false_tree == NULL);
   }
 
-  check_text_node(get_nth_node(&root, 2), "  if-else: ");
+  check_text_node(get_nth_node(root, 2), "  if-else: ");
 
   {
-    struct ExpandoNode *node = get_nth_node(&root, 3);
+    struct ExpandoNode *node = get_nth_node(root, 3);
     check_condition_node_head(node);
 
     struct ExpandoNode *condition = expando_node_get_child(node, ENC_CONDITION);

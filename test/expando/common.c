@@ -27,11 +27,10 @@
 #include "mutt/lib.h"
 #include "common.h"
 
-struct ExpandoNode *get_nth_node(struct ExpandoNode **root, int n)
+struct ExpandoNode *get_nth_node(struct ExpandoNode *node, int n)
 {
-  TEST_CHECK(*root != NULL);
+  TEST_CHECK(node != NULL);
 
-  struct ExpandoNode *node = *root;
   int i = 0;
 
   while (node)
