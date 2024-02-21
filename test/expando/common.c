@@ -69,7 +69,7 @@ void check_text_node(struct ExpandoNode *node, const char *text)
 }
 
 void check_expando_node(struct ExpandoNode *node, const char *expando,
-                        const struct ExpandoFormat *format)
+                        const struct ExpandoFormat *fmt_expected)
 {
   TEST_CHECK(node != NULL);
   TEST_CHECK(node->type == ENT_EXPANDO);
@@ -81,19 +81,19 @@ void check_expando_node(struct ExpandoNode *node, const char *expando,
   TEST_CHECK(n == m);
   TEST_CHECK(mutt_strn_equal(node->start, expando, n));
 
-  struct ExpandoFormat *f = node->format;
+  struct ExpandoFormat *fmt = node->format;
 
-  if (format == NULL)
+  if (fmt_expected == NULL)
   {
-    TEST_CHECK(f == NULL);
+    TEST_CHECK(fmt == NULL);
   }
   else
   {
-    TEST_CHECK(f != NULL);
-    TEST_CHECK(f->justification == format->justification);
-    TEST_CHECK(f->leader == format->leader);
-    TEST_CHECK(f->min == format->min);
-    TEST_CHECK(f->max == format->max);
+    TEST_CHECK(fmt != NULL);
+    TEST_CHECK(fmt->justification == fmt_expected->justification);
+    TEST_CHECK(fmt->leader == fmt_expected->leader);
+    TEST_CHECK(fmt->min == fmt_expected->min);
+    TEST_CHECK(fmt->max == fmt_expected->max);
   }
 }
 
@@ -109,8 +109,8 @@ void check_pad_node(struct ExpandoNode *node, const char *pad_char, enum Expando
   TEST_CHECK(mutt_strn_equal(node->start, pad_char, n));
 
   TEST_CHECK(node->ndata != NULL);
-  struct NodePaddingPrivate *p = node->ndata;
-  TEST_CHECK(p->pad_type == pad_type);
+  struct NodePaddingPrivate *priv = node->ndata;
+  TEST_CHECK(priv->pad_type == pad_type);
 }
 
 void check_condition_node_head(struct ExpandoNode *node)
@@ -125,10 +125,10 @@ void check_conditional_date_node(struct ExpandoNode *node, int count, char perio
   TEST_CHECK(node->type == ENT_CONDDATE);
 
   TEST_CHECK(node->ndata != NULL);
-  struct NodeCondDatePrivate *p = node->ndata;
+  struct NodeCondDatePrivate *priv = node->ndata;
 
-  TEST_CHECK(p->count == count);
-  TEST_CHECK(p->period == period);
+  TEST_CHECK(priv->count == count);
+  TEST_CHECK(priv->period == period);
 }
 
 struct ExpandoNode *parse_date(const char *s, const char **parsed_until,

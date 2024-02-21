@@ -51,6 +51,9 @@ static struct NodeExpandoPrivate *node_expando_private_new(void)
  */
 static void node_expando_private_free(void **ptr)
 {
+  if (!ptr || !*ptr)
+    return;
+
   FREE(ptr);
 }
 
@@ -58,13 +61,13 @@ static void node_expando_private_free(void **ptr)
  * node_expando_new - XXX
  * @param start  XXX
  * @param end    XXX
- * @param format XXX
+ * @param fmt    XXX
  * @param did    XXX
  * @param uid    XXX
  * @retval ptr XXX
  */
 struct ExpandoNode *node_expando_new(const char *start, const char *end,
-                                     struct ExpandoFormat *format, int did, int uid)
+                                     struct ExpandoFormat *fmt, int did, int uid)
 {
   struct ExpandoNode *node = expando_node_new();
 
@@ -75,7 +78,7 @@ struct ExpandoNode *node_expando_new(const char *start, const char *end,
   node->did = did;
   node->uid = uid;
 
-  node->format = format;
+  node->format = fmt;
 
   node->ndata = node_expando_private_new();
   node->ndata_free = node_expando_private_free;

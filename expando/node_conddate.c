@@ -57,6 +57,9 @@ static struct NodeCondDatePrivate *node_conddate_private_new(int count, char per
  */
 static void node_conddate_private_free(void **ptr)
 {
+  if (!ptr || !*ptr)
+    return;
+
   FREE(ptr);
 }
 

@@ -100,10 +100,10 @@ int format_string(char *buffer, int buffer_len, const struct ExpandoNode *node,
   assert(buffer_len > 0);
   assert((size_t) buffer_len > expando_buffer_len);
 
-  const struct NodeExpandoPrivate *p = node && node->type == ENT_EXPANDO ? node->ndata : NULL;
-  const struct ExpandoFormat *format = node->format;
-  const int color = p ? p->color : -1;
-  const bool has_tree = p ? p->has_tree : false;
+  const struct NodeExpandoPrivate *priv = node && node->type == ENT_EXPANDO ? node->ndata : NULL;
+  const struct ExpandoFormat *fmt = node->format;
+  const int color = priv ? priv->color : -1;
+  const bool has_tree = priv ? priv->has_tree : false;
 
   int printed = 0;
 
@@ -118,11 +118,11 @@ int format_string(char *buffer, int buffer_len, const struct ExpandoNode *node,
 
   if (!buf_is_empty(expando_buffer))
   {
-    if (format)
+    if (fmt)
     {
       char tmp[1024];
-      mutt_simple_format(tmp, sizeof(tmp), format->min, format->max,
-                         format->justification, format->leader,
+      mutt_simple_format(tmp, sizeof(tmp), fmt->min, fmt->max,
+                         fmt->justification, fmt->leader,
                          buf_string(expando_buffer), expando_buffer_len, has_tree);
 
       const int tmp_len = mutt_str_len(tmp);

@@ -1924,14 +1924,14 @@ void dot_expando_node_expando(FILE *fp, struct ExpandoNode *node, struct ListHea
     dot_type_string(fp, "string", str, true);
   }
 
-  struct ExpandoFormat *format = node->format;
-  if (format)
+  struct ExpandoFormat *fmt = node->format;
+  if (fmt)
   {
-    dot_type_number(fp, "min", format->min);
-    dot_type_number(fp, "max", format->max);
+    dot_type_number(fp, "min", fmt->min);
+    dot_type_number(fp, "max", fmt->max);
 
     char *just = "UNKNOWN";
-    switch (format->justification)
+    switch (fmt->justification)
     {
       case JUSTIFY_LEFT:
         just = "JUSTIFY_LEFT";
@@ -1944,7 +1944,7 @@ void dot_expando_node_expando(FILE *fp, struct ExpandoNode *node, struct ListHea
         break;
     }
     dot_type_string(fp, "justification", just, true);
-    dot_type_char(fp, "leader", format->leader);
+    dot_type_char(fp, "leader", fmt->leader);
   }
 
   dot_object_footer(fp);

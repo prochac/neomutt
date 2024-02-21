@@ -28,7 +28,7 @@
 void                check_conditional_date_node(struct ExpandoNode *node, int count, char period);
 void                check_condition_node_head  (struct ExpandoNode *node);
 void                check_empty_node           (struct ExpandoNode *node);
-void                check_expando_node         (struct ExpandoNode *node, const char *expando, const struct ExpandoFormat *format);
+void                check_expando_node         (struct ExpandoNode *node, const char *expando, const struct ExpandoFormat *fmt_expected);
 void                check_pad_node             (struct ExpandoNode *node, const char *pad_char, enum ExpandoPadType pad_type);
 void                check_text_node            (struct ExpandoNode *node, const char *text);
 struct ExpandoNode *get_nth_node               (struct ExpandoNode *node, int n);

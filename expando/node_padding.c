@@ -63,6 +63,9 @@ static struct NodePaddingPrivate *node_padding_private_new(enum ExpandoPadType p
  */
 static void node_padding_private_free(void **ptr)
 {
+  if (!ptr || !*ptr)
+    return;
+
   FREE(ptr);
 }
 
@@ -377,9 +380,9 @@ int node_padding_render(const struct ExpandoNode *node,
   assert(node->type == ENT_PADDING);
   assert(node->ndata);
 
-  struct NodePaddingPrivate *pp = node->ndata;
+  struct NodePaddingPrivate *priv = node->ndata;
 
-  switch (pp->pad_type)
+  switch (priv->pad_type)
   {
     case EPT_FILL_EOL:
       return node_padding_render_eol(node, rdata, buf, buf_len, cols_len, data, flags);

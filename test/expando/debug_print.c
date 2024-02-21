@@ -64,15 +64,15 @@ static void print_text_node(FILE *fp, const struct ExpandoNode *node, int indent
  */
 static void print_expando_node(FILE *fp, const struct ExpandoNode *node, int indent)
 {
-  const struct ExpandoFormat *f = node->format;
-  if (f)
+  const struct ExpandoFormat *fmt = node->format;
+  if (fmt)
   {
     const int elen = node->end - node->start;
     fprintf(fp, "%*sEXPANDO: `%.*s`", indent, "", elen, node->start);
 
     const char *just = NULL;
 
-    switch (f->justification)
+    switch (fmt->justification)
     {
       case JUSTIFY_LEFT:
         just = "LEFT";
@@ -90,7 +90,7 @@ static void print_expando_node(FILE *fp, const struct ExpandoNode *node, int ind
         assert(0 && "Unknown justification.");
     }
     fprintf(fp, " (did=%d, uid=%d) (min=%d, max=%d, just=%s, leader=`%c`)\n",
-            node->did, node->uid, f->min, f->max, just, f->leader);
+            node->did, node->uid, fmt->min, fmt->max, just, fmt->leader);
   }
   else
   {
@@ -109,10 +109,10 @@ static void print_expando_node(FILE *fp, const struct ExpandoNode *node, int ind
 static void print_pad_node(FILE *fp, const struct ExpandoNode *node, int indent)
 {
   assert(node->ndata);
-  struct NodePaddingPrivate *p = node->ndata;
+  struct NodePaddingPrivate *priv = node->ndata;
 
   const char *pt = NULL;
-  switch (p->pad_type)
+  switch (priv->pad_type)
   {
     case EPT_FILL_EOL:
       pt = "FILL_EOL";
@@ -167,9 +167,9 @@ static void print_condition_node(FILE *fp, const struct ExpandoNode *node, int i
 static void print_conditional_date_node(FILE *fp, const struct ExpandoNode *node, int indent)
 {
   assert(node->ndata);
-  struct NodeCondDatePrivate *d = node->ndata;
+  struct NodeCondDatePrivate *priv = node->ndata;
   fprintf(fp, "%*sCOND DATE: (did=%d, uid=%d)(period=`%c`, count=%d)\n", indent,
-          "", node->did, node->uid, d->period, d->count);
+          "", node->did, node->uid, priv->period, priv->count);
 }
 
 /**

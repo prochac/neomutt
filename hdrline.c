@@ -349,10 +349,10 @@ void index_date_recv_local(const struct ExpandoNode *node, void *data,
   {
     assert(node->ndata);
 
-    const struct NodeCondDatePrivate *cd = node->ndata;
+    const struct NodeCondDatePrivate *priv = node->ndata;
 
     time_t t = mutt_date_now();
-    t -= cd->count * cd->multiplier;
+    t -= priv->count * priv->multiplier;
     struct tm condition = mutt_date_localtime(t);
 
     const time_t condt = mktime(&condition);
@@ -409,10 +409,10 @@ void index_date_local(const struct ExpandoNode *node, void *data,
   {
     assert(node->ndata);
 
-    const struct NodeCondDatePrivate *cd = node->ndata;
+    const struct NodeCondDatePrivate *priv = node->ndata;
 
     time_t t = mutt_date_now();
-    t -= cd->count * cd->multiplier;
+    t -= priv->count * priv->multiplier;
     struct tm condition = mutt_date_localtime(t);
 
     const time_t condt = mktime(&condition);
@@ -476,10 +476,10 @@ void index_date(const struct ExpandoNode *node, void *data,
   {
     assert(node->ndata);
 
-    const struct NodeCondDatePrivate *cd = node->ndata;
+    const struct NodeCondDatePrivate *priv = node->ndata;
 
     time_t t = mutt_date_now();
-    t -= cd->count * cd->multiplier;
+    t -= priv->count * priv->multiplier;
 
     if (e->zoccident)
       t -= (e->zhours * 3600 + e->zminutes * 60);

@@ -72,7 +72,7 @@ static void dump_node_condition(const struct ExpandoNode *node, struct Buffer *b
   buf_addstr(buf, ">");
 }
 
-static void dump_node_conditional_date(const struct ExpandoNode *node, struct Buffer *buf)
+static void dump_node_conddate(const struct ExpandoNode *node, struct Buffer *buf)
 {
   buf_addstr(buf, "<DATE:");
 
@@ -153,7 +153,7 @@ static void dump_node_expando(const struct ExpandoNode *node, struct Buffer *buf
   buf_addstr(buf, ">");
 }
 
-static void dump_node_pad(const struct ExpandoNode *node, struct Buffer *buf)
+static void dump_node_padding(const struct ExpandoNode *node, struct Buffer *buf)
 {
   buf_addstr(buf, "<PAD:");
 
@@ -236,7 +236,7 @@ static void dump_node(const struct ExpandoNode *node, struct Buffer *buf)
         dump_node_condition(node, buf);
         break;
       case ENT_CONDDATE:
-        dump_node_conditional_date(node, buf);
+        dump_node_conddate(node, buf);
         break;
       case ENT_EMPTY:
         dump_node_empty(node, buf);
@@ -245,7 +245,7 @@ static void dump_node(const struct ExpandoNode *node, struct Buffer *buf)
         dump_node_expando(node, buf);
         break;
       case ENT_PADDING:
-        dump_node_pad(node, buf);
+        dump_node_padding(node, buf);
         break;
       case ENT_TEXT:
         dump_node_text(node, buf);

@@ -45,9 +45,9 @@ static void simple_s(const struct ExpandoNode *node, void *data,
   assert(node->type == ENT_EXPANDO);
 
   const struct SimpleExpandoData *sd = data;
-  struct NodeExpandoPrivate *p = node->ndata;
+  struct NodeExpandoPrivate *priv = node->ndata;
 
-  p->color = MT_COLOR_INDEX_SUBJECT;
+  priv->color = MT_COLOR_INDEX_SUBJECT;
 
   const char *s = NONULL(sd->s);
   buf_strcpy(buf, s);
@@ -59,9 +59,9 @@ static void simple_C(const struct ExpandoNode *node, void *data,
   assert(node->type == ENT_EXPANDO);
 
   const struct SimpleExpandoData *sd = data;
-  struct NodeExpandoPrivate *p = node->ndata;
+  struct NodeExpandoPrivate *priv = node->ndata;
 
-  p->color = MT_COLOR_INDEX_NUMBER;
+  priv->color = MT_COLOR_INDEX_NUMBER;
 
   const int num = sd->C;
   buf_printf(buf, "%d", num);

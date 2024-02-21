@@ -240,29 +240,29 @@ static struct ExpandoFormat *parse_format(const char *start, const char *end,
   if (start == end)
     return NULL;
 
-  struct ExpandoFormat *format = mutt_mem_calloc(1, sizeof(struct ExpandoFormat));
+  struct ExpandoFormat *fmt = mutt_mem_calloc(1, sizeof(struct ExpandoFormat));
 
-  format->leader = ' ';
-  format->start = start;
-  format->end = end;
-  format->justification = JUSTIFY_RIGHT;
-  format->min = 0;
-  format->max = INT_MAX;
+  fmt->leader = ' ';
+  fmt->start = start;
+  fmt->end = end;
+  fmt->justification = JUSTIFY_RIGHT;
+  fmt->min = 0;
+  fmt->max = INT_MAX;
 
   if (*start == '-')
   {
-    format->justification = JUSTIFY_LEFT;
+    fmt->justification = JUSTIFY_LEFT;
     start++;
   }
   else if (*start == '=')
   {
-    format->justification = JUSTIFY_CENTER;
+    fmt->justification = JUSTIFY_CENTER;
     start++;
   }
 
   if (*start == '0')
   {
-    format->leader = '0';
+    fmt->leader = '0';
     start++;
   }
 
@@ -276,11 +276,11 @@ static struct ExpandoFormat *parse_format(const char *start, const char *end,
     {
       error->position = start;
       snprintf(error->message, sizeof(error->message), "Wrong number");
-      FREE(&format);
+      FREE(&fmt);
       return NULL;
     }
 
-    format->min = number;
+    fmt->min = number;
     start = end_ptr;
   };
 
@@ -292,7 +292,7 @@ static struct ExpandoFormat *parse_format(const char *start, const char *end,
     {
       error->position = start;
       snprintf(error->message, sizeof(error->message), "Number is expected");
-      FREE(&format);
+      FREE(&fmt);
       return NULL;
     }
 
@@ -304,15 +304,15 @@ static struct ExpandoFormat *parse_format(const char *start, const char *end,
     {
       error->position = start;
       snprintf(error->message, sizeof(error->message), "Wrong number");
-      FREE(&format);
+      FREE(&fmt);
       return NULL;
     }
 
-    format->max = number;
+    fmt->max = number;
     start = end_ptr;
   }
 
-  return format;
+  return fmt;
 }
 
 /**
@@ -335,10 +335,10 @@ static struct ExpandoNode *parse_expando_node(const char *s, const char **parsed
   const int expando_len = expando_end - format_end;
   mutt_strn_copy(expando, format_end, expando_len, sizeof(expando));
 
-  struct ExpandoFormat *format = parse_format(s, format_end, error);
+  struct ExpandoFormat *fmt = parse_format(s, format_end, error);
   if (error->position)
   {
-    FREE(&format);
+    FREE(&fmt);
     return NULL;
   }
 
@@ -346,7 +346,7 @@ static struct ExpandoNode *parse_expando_node(const char *s, const char **parsed
   if (!definition)
   {
     *parsed_until = expando_end;
-    return node_expando_new(format_end, expando_end, format, ED_ALL, ED_ALL_EMPTY);
+    return node_expando_new(format_end, expando_end, fmt, ED_ALL, ED_ALL_EMPTY);
   }
 
   while (definition && definition->short_name)
@@ -355,14 +355,14 @@ static struct ExpandoNode *parse_expando_node(const char *s, const char **parsed
     {
       if (definition->custom_parser)
       {
-        FREE(&format);
+        FREE(&fmt);
         return definition->custom_parser(s, parsed_until, definition->did,
                                          definition->uid, error);
       }
       else
       {
         *parsed_until = expando_end;
-        return node_expando_new(format_end, expando_end, format,
+        return node_expando_new(format_end, expando_end, fmt,
                                 definition->did, definition->uid);
       }
     }
@@ -373,7 +373,7 @@ static struct ExpandoNode *parse_expando_node(const char *s, const char **parsed
   error->position = format_end;
   snprintf(error->message, sizeof(error->message), "Unknown expando: `%.*s`",
            expando_len, format_end);
-  FREE(&format);
+  FREE(&fmt);
   return NULL;
 }
 
@@ -404,16 +404,16 @@ struct ExpandoNode *expando_parse_enclosed_expando(const char *s, const char **p
     return NULL;
   }
 
-  // revert skipping for format
-  struct ExpandoFormat *format = parse_format(s, format_end - 1, error);
+  // revert skipping for fmt
+  struct ExpandoFormat *fmt = parse_format(s, format_end - 1, error);
   if (error->position)
   {
-    FREE(&format);
+    FREE(&fmt);
     return NULL;
   }
 
   *parsed_until = expando_end + 1;
-  return node_expando_new(format_end, expando_end, format, did, uid);
+  return node_expando_new(format_end, expando_end, fmt, did, uid);
 }
 
 /**
