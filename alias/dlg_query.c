@@ -139,7 +139,7 @@ bool alias_to_addrlist(struct AddressList *al, struct Alias *alias)
 }
 
 /**
- * query_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * query_a - Query: Address - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void query_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -167,7 +167,7 @@ void query_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * query_c - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * query_c - Query: Index number - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void query_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -181,7 +181,7 @@ void query_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * query_e - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * query_e - Query: Extra information - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void query_e(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -196,7 +196,7 @@ void query_e(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * query_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * query_n - Query: Name - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void query_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -211,7 +211,7 @@ void query_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * query_t - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * query_t - Query: Tagged char - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void query_t(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -226,7 +226,7 @@ void query_t(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * query_Y - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * query_Y - Query: Tags - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void query_Y(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)

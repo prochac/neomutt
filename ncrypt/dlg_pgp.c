@@ -249,7 +249,7 @@ static char pgp_flags(KeyFlags flags)
 }
 
 /**
- * pgp_entry_pgp_date - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_entry_pgp_date - PGP: Date of the key - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_entry_pgp_date(const struct ExpandoNode *node, void *data,
                         MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -294,7 +294,7 @@ void pgp_entry_pgp_date(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_entry_pgp_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_entry_pgp_n - PGP: Index number - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_entry_pgp_n(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -313,7 +313,7 @@ void pgp_entry_pgp_n(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_entry_pgp_t - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_entry_pgp_t - PGP: Trust/validity - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_entry_pgp_t(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -332,7 +332,7 @@ void pgp_entry_pgp_t(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_entry_pgp_u - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_entry_pgp_u - PGP: User id - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_entry_pgp_u(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -352,7 +352,7 @@ void pgp_entry_pgp_u(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_entry_pgp_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_entry_pgp_a - PGP: Key Algorithm - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_entry_pgp_a(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -373,7 +373,7 @@ void pgp_entry_pgp_a(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_entry_pgp_A - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_entry_pgp_A - PGP: Principal Key Algorithm - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_entry_pgp_A(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -395,7 +395,7 @@ void pgp_entry_pgp_A(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_entry_pgp_c - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_entry_pgp_c - PGP: Key Capabilities - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_entry_pgp_c(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -418,7 +418,7 @@ void pgp_entry_pgp_c(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_entry_pgp_C - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_entry_pgp_C - PGP: Principal Key Capabilities - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_entry_pgp_C(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -442,7 +442,7 @@ void pgp_entry_pgp_C(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_entry_pgp_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_entry_pgp_f - PGP: Key Flags - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_entry_pgp_f(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -464,7 +464,7 @@ void pgp_entry_pgp_f(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_entry_pgp_F - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_entry_pgp_F - PGP: Principal Key Flags - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_entry_pgp_F(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -487,7 +487,7 @@ void pgp_entry_pgp_F(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_entry_pgp_k - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_entry_pgp_k - PGP: Key id - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_entry_pgp_k(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -508,7 +508,7 @@ void pgp_entry_pgp_k(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_entry_pgp_K - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_entry_pgp_K - PGP: Principal Key id - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_entry_pgp_K(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -530,7 +530,7 @@ void pgp_entry_pgp_K(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_entry_pgp_l - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_entry_pgp_l - PGP: Key length - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_entry_pgp_l(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -551,7 +551,7 @@ void pgp_entry_pgp_l(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_entry_pgp_L - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_entry_pgp_L - PGP: Principal Key length - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_entry_pgp_L(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)

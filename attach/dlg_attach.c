@@ -130,7 +130,7 @@ static int attach_config_observer(struct NotifyCallback *nc)
 }
 
 /**
- * attach_c - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_c - Attachment: Requires conversion flag - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -145,7 +145,7 @@ void attach_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * attach_C - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_C - Attachment: Charset - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_C(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -168,7 +168,7 @@ void attach_C(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * attach_d - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_d - Attachment: Descripion - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_d(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -205,7 +205,7 @@ void attach_d(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * attach_D - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_D - Attachment: Deleted - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_D(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -220,7 +220,7 @@ void attach_D(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * attach_e - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_e - Attachment: MIME type - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_e(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -234,7 +234,7 @@ void attach_e(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * attach_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_f - Attachment: Filename - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_f(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -260,7 +260,7 @@ void attach_f(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * attach_F - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_F - Attachment: Filename in header - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_F(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -280,7 +280,7 @@ void attach_F(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * attach_I - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_I - Attachment: Disposition flag - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_I(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -307,7 +307,7 @@ void attach_I(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * attach_m - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_m - Attachment: Major MIME type - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_m(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -321,7 +321,7 @@ void attach_m(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * attach_M - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_M - Attachment: MIME subtype - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_M(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -335,7 +335,7 @@ void attach_M(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * attach_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_n - Attachment: Index number - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -349,7 +349,7 @@ void attach_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * attach_Q - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_Q - Attachment: Attachment counting - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_Q(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -364,7 +364,7 @@ void attach_Q(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * attach_s - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_s - Attachment: Size - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -390,7 +390,7 @@ void attach_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * attach_t - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_t - Attachment: Is Tagged - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_t(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -405,7 +405,7 @@ void attach_t(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * attach_T - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_T - Attachment: Tree characters - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_T(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -419,7 +419,7 @@ void attach_T(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * attach_u - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_u - Attachment: Unlink flag - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_u(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -434,7 +434,7 @@ void attach_u(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * attach_X - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * attach_X - Attachment: Number of MIME parts - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_X(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)

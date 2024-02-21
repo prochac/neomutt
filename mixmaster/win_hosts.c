@@ -105,7 +105,7 @@ static const char *mix_format_caps(const struct Remailer *r)
 }
 
 /**
- * mix_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * mix_a - Mixmaster: Email address - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void mix_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
            int max_width, struct Buffer *buf)
@@ -119,7 +119,7 @@ void mix_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * mix_c - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * mix_c - Mixmaster: Capabilities - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void mix_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
            int max_width, struct Buffer *buf)
@@ -133,7 +133,7 @@ void mix_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * mix_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * mix_n - Mixmaster: Index number - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void mix_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
            int max_width, struct Buffer *buf)
@@ -147,7 +147,7 @@ void mix_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * mix_s - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * mix_s - Mixmaster: Short name - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void mix_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
            int max_width, struct Buffer *buf)

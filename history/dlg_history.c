@@ -82,7 +82,7 @@ static const struct Mapping HistoryHelp[] = {
 };
 
 /**
- * history_C - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * history_C - History: Index number - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void history_C(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -96,7 +96,7 @@ void history_C(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * history_s - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * history_s - History: History match - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void history_s(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)

@@ -78,7 +78,7 @@ struct MenuStatusLineData
 };
 
 /**
- * status_r - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_r - Status: Modified/read-only flag - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_r(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -117,7 +117,7 @@ void status_r(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_D - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_D - Status: Description of the mailbox - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_D(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -140,7 +140,7 @@ void status_D(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_f - Status: pathname of the mailbox - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_f(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -176,7 +176,7 @@ void status_f(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_M - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_M - Status: Number of messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_M(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -192,7 +192,7 @@ void status_M(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_m - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_m - Status: Number of messages in the mailbox - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_m(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -208,7 +208,7 @@ void status_m(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_n - Status: Number of new messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -224,7 +224,7 @@ void status_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_o - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_o - Status: Number of old messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_o(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -240,7 +240,7 @@ void status_o(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_d - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_d - Status: Number of deleted messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_d(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -256,7 +256,7 @@ void status_d(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_F - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_F - Status: Number of flagged messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_F(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -272,7 +272,7 @@ void status_F(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_t - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_t - Status: Number of tagged messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_t(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -288,7 +288,7 @@ void status_t(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_p - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_p - Status: Number of postponed messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_p(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -304,7 +304,7 @@ void status_p(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_b - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_b - Status: Number of mailboxes with new mail - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_b(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -320,7 +320,7 @@ void status_b(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_l - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_l - Status: Size of the current mailbox - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_l(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -339,7 +339,7 @@ void status_l(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_T - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_T - Status: Current threading mode - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_T(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -352,7 +352,7 @@ void status_T(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_s - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_s - Status: Sorting mode - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -367,7 +367,7 @@ void status_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_S - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_S - Status: Aux sorting method - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_S(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -382,7 +382,7 @@ void status_S(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_P - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_P - Status: Percentage through index - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_P(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -423,7 +423,7 @@ void status_P(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_h - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_h - Status: Local hostname - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_h(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -435,7 +435,7 @@ void status_h(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_L - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_L - Status: Size of the messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_L(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -454,7 +454,7 @@ void status_L(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_R - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_R - Status: Number of read messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_R(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -470,7 +470,7 @@ void status_R(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_u - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_u - Status: Number of unread messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_u(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -486,7 +486,7 @@ void status_u(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_v - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_v - Status: Version string - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_v(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -498,7 +498,7 @@ void status_v(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * status_V - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * status_V - Status: Active limit pattern - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void status_V(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)

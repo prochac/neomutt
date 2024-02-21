@@ -53,7 +53,7 @@
 #endif
 
 /**
- * pgp_command_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_command_a - PGP Command: $pgp_sign_as or $pgp_default_key - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_command_a(const struct ExpandoNode *node, void *data,
                    MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -67,7 +67,7 @@ void pgp_command_a(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_command_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_command_f - PGP Command: Filename of message - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_command_f(const struct ExpandoNode *node, void *data,
                    MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -81,7 +81,7 @@ void pgp_command_f(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_command_p - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_command_p - PGP Command: PGPPASSFD=0 if passphrase is needed - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_command_p(const struct ExpandoNode *node, void *data,
                    MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -95,7 +95,7 @@ void pgp_command_p(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_command_r - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_command_r - PGP Command: key IDs - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_command_r(const struct ExpandoNode *node, void *data,
                    MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -109,7 +109,7 @@ void pgp_command_r(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pgp_command_s - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pgp_command_s - PGP Command: Filename of signature - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_command_s(const struct ExpandoNode *node, void *data,
                    MuttFormatFlags flags, int max_width, struct Buffer *buf)

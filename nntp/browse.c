@@ -41,7 +41,7 @@
 #include "mdata.h"
 
 /**
- * group_index_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * group_index_a - NNTP: Alert for new mail - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void group_index_a(const struct ExpandoNode *node, void *data,
                    MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -55,7 +55,7 @@ void group_index_a(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * group_index_C - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * group_index_C - NNTP: Index number - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void group_index_C(const struct ExpandoNode *node, void *data,
                    MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -69,7 +69,7 @@ void group_index_C(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * group_index_d - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * group_index_d - NNTP: Description - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void group_index_d(const struct ExpandoNode *node, void *data,
                    MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -101,7 +101,7 @@ void group_index_d(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * group_index_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * group_index_f - NNTP: Newsgroup name - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void group_index_f(const struct ExpandoNode *node, void *data,
                    MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -115,7 +115,7 @@ void group_index_f(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * group_index_M - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * group_index_M - NNTP: Moderated flag - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void group_index_M(const struct ExpandoNode *node, void *data,
                    MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -139,7 +139,7 @@ void group_index_M(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * group_index_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * group_index_n - NNTP: Number of new articles - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void group_index_n(const struct ExpandoNode *node, void *data,
                    MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -165,7 +165,7 @@ void group_index_n(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * group_index_N - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * group_index_N - NNTP: New flag - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void group_index_N(const struct ExpandoNode *node, void *data,
                    MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -189,7 +189,7 @@ void group_index_N(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * group_index_p - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * group_index_p - NNTP: Poll for new mail - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void group_index_p(const struct ExpandoNode *node, void *data,
                    MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -203,7 +203,7 @@ void group_index_p(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * group_index_s - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * group_index_s - NNTP: Number of unread articles - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void group_index_s(const struct ExpandoNode *node, void *data,
                    MuttFormatFlags flags, int max_width, struct Buffer *buf)

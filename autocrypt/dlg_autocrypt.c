@@ -111,7 +111,7 @@ static const struct Mapping AutocryptHelp[] = {
 };
 
 /**
- * autocrypt_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * autocrypt_a - Autocrypt: Address - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void autocrypt_a(const struct ExpandoNode *node, void *data,
                  MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -124,7 +124,7 @@ void autocrypt_a(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * autocrypt_k - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * autocrypt_k - Autocrypt: GPG Key - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void autocrypt_k(const struct ExpandoNode *node, void *data,
                  MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -138,7 +138,7 @@ void autocrypt_k(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * autocrypt_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * autocrypt_n - Autocrypt: Index number - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void autocrypt_n(const struct ExpandoNode *node, void *data,
                  MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -152,7 +152,7 @@ void autocrypt_n(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * autocrypt_p - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * autocrypt_p - Autocrypt: Prefer-encrypt flag - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void autocrypt_p(const struct ExpandoNode *node, void *data,
                  MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -181,7 +181,7 @@ void autocrypt_p(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * autocrypt_s - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * autocrypt_s - Autocrypt: Status flag - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void autocrypt_s(const struct ExpandoNode *node, void *data,
                  MuttFormatFlags flags, int max_width, struct Buffer *buf)

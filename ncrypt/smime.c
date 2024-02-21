@@ -196,7 +196,7 @@ bool smime_class_valid_passphrase(void)
  */
 
 /**
- * smime_command_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * smime_command_a - Smime Command: algorithm - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void smime_command_a(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -215,7 +215,7 @@ void smime_command_a(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * smime_command_c - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * smime_command_c - Smime Command: certificate IDs - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void smime_command_c(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -234,7 +234,7 @@ void smime_command_c(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * smime_command_C - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * smime_command_C - Smime Command: CA location - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void smime_command_C(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -274,7 +274,7 @@ void smime_command_C(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * smime_command_d - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * smime_command_d - Smime Command: Message digest algorithm - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void smime_command_d(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -293,7 +293,7 @@ void smime_command_d(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * smime_command_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * smime_command_f - Smime Command: Filename of message - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void smime_command_f(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -312,7 +312,7 @@ void smime_command_f(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * smime_command_i - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * smime_command_i - Smime Command: Intermediate certificates - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void smime_command_i(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -331,7 +331,7 @@ void smime_command_i(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * smime_command_k - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * smime_command_k - Smime Command: Key-pair - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void smime_command_k(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -350,7 +350,7 @@ void smime_command_k(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * smime_command_s - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * smime_command_s - Smime Command: Filename of signature - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void smime_command_s(const struct ExpandoNode *node, void *data,
                      MuttFormatFlags flags, int max_width, struct Buffer *buf)

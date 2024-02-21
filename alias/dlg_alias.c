@@ -110,7 +110,7 @@ static const struct Mapping AliasHelp[] = {
 };
 
 /**
- * alias_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * alias_a - Alias: Alias name - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void alias_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -125,7 +125,7 @@ void alias_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * alias_c - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * alias_c - Alias: Comment - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void alias_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -140,7 +140,7 @@ void alias_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * alias_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * alias_f - Alias: Flags - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void alias_f(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -155,7 +155,7 @@ void alias_f(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * alias_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * alias_n - Alias: Index number - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void alias_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -169,7 +169,7 @@ void alias_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * alias_r - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * alias_r - Alias: Address - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void alias_r(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -183,7 +183,7 @@ void alias_r(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * alias_t - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * alias_t - Alias: Tagged char - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void alias_t(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -198,7 +198,7 @@ void alias_t(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * alias_Y - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * alias_Y - Alias: Tags - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void alias_Y(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)

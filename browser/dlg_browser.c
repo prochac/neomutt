@@ -187,7 +187,7 @@ bool link_is_dir(const char *folder, const char *path)
 }
 
 /**
- * folder_date - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_date - Browser: Last modified (strftime) - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_date(const struct ExpandoNode *node, void *data,
                  MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -231,7 +231,7 @@ void folder_date(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * folder_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_a - Browser: Alert for new mail - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -245,7 +245,7 @@ void folder_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * folder_C - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_C - Browser: Index number - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_C(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -259,7 +259,7 @@ void folder_C(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * folder_d - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_d - Browser: Last modified - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_d(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -286,7 +286,7 @@ void folder_d(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * folder_D - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_D - Browser: Last modified ($date_format) - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_D(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -324,7 +324,7 @@ void folder_D(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * folder_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_f - Browser: Filename - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_f(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -350,7 +350,7 @@ void folder_f(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * folder_F - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_F - Browser: File permissions - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_F(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -396,7 +396,7 @@ void folder_F(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * folder_g - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_g - Browser: Group name - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_g(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -428,7 +428,7 @@ void folder_g(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * folder_i - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_i - Browser: Description - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_i(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -458,7 +458,7 @@ void folder_i(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * folder_l - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_l - Browser: Hard links - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_l(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -482,7 +482,7 @@ void folder_l(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * folder_m - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_m - Browser: Number of messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_m(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -506,7 +506,7 @@ void folder_m(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * folder_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_n - Browser: Number of unread messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -530,7 +530,7 @@ void folder_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * folder_N - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_N - Browser: New mail flag - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_N(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -545,7 +545,7 @@ void folder_N(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * folder_p - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_p - Browser: Poll for new mail - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_p(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -560,7 +560,7 @@ void folder_p(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * folder_s - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_s - Browser: Size in bytes - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -576,7 +576,7 @@ void folder_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * folder_t - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_t - Browser: Is Tagged - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_t(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -591,7 +591,7 @@ void folder_t(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * folder_u - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * folder_u - Browser: Owner name - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_u(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)

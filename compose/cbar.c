@@ -92,7 +92,7 @@ static int num_attachments(const struct ComposeAttachData *adata)
 }
 
 /**
- * compose_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * compose_a - Compose: Number of attachments - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void compose_a(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -106,7 +106,7 @@ void compose_a(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * compose_h - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * compose_h - Compose: Hostname - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void compose_h(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -118,7 +118,7 @@ void compose_h(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * compose_l - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * compose_l - Compose: Size in bytes - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void compose_l(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -134,7 +134,7 @@ void compose_l(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * compose_v - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * compose_v - Compose: Version - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void compose_v(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)

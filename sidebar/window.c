@@ -327,7 +327,7 @@ static int calc_path_depth(const char *mbox, const char *delims, const char **la
 }
 
 /**
- * sidebar_bang - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * sidebar_bang - Sidebar: Flagged flags - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void sidebar_bang(const struct ExpandoNode *node, void *data,
                   MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -357,7 +357,7 @@ void sidebar_bang(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * sidebar_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * sidebar_a - Sidebar: Alert for new mail - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void sidebar_a(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -373,7 +373,7 @@ void sidebar_a(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * sidebar_B - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * sidebar_B - Sidebar: Name of the mailbox - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void sidebar_B(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -393,7 +393,7 @@ void sidebar_B(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * sidebar_d - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * sidebar_d - Sidebar: Number of deleted messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void sidebar_d(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -413,7 +413,7 @@ void sidebar_d(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * sidebar_D - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * sidebar_D - Sidebar: Descriptive name - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void sidebar_D(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -441,7 +441,7 @@ void sidebar_D(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * sidebar_F - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * sidebar_F - Sidebar: Number of flagged messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void sidebar_F(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -457,7 +457,7 @@ void sidebar_F(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * sidebar_L - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * sidebar_L - Sidebar: Number of limited messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void sidebar_L(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -477,7 +477,7 @@ void sidebar_L(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * sidebar_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * sidebar_n - Sidebar: New mail flag - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void sidebar_n(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -494,7 +494,7 @@ void sidebar_n(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * sidebar_N - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * sidebar_N - Sidebar: Number of unread messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void sidebar_N(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -510,7 +510,7 @@ void sidebar_N(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * sidebar_o - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * sidebar_o - Sidebar: Number of old messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void sidebar_o(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -526,7 +526,7 @@ void sidebar_o(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * sidebar_p - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * sidebar_p - Sidebar: Poll for new mail - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void sidebar_p(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -542,7 +542,7 @@ void sidebar_p(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * sidebar_r - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * sidebar_r - Sidebar: Number of read messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void sidebar_r(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -558,7 +558,7 @@ void sidebar_r(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * sidebar_S - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * sidebar_S - Sidebar: number of messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void sidebar_S(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -574,7 +574,7 @@ void sidebar_S(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * sidebar_t - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * sidebar_t - Sidebar: Number of tagged messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void sidebar_t(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -594,7 +594,7 @@ void sidebar_t(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * sidebar_Z - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * sidebar_Z - Sidebar: Number of new messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void sidebar_Z(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)

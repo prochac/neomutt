@@ -304,7 +304,7 @@ static bool thread_is_old(struct Email *e)
 }
 
 /**
- * index_date_recv_local - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_date_recv_local - Index: Local received date and time - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_date_recv_local(const struct ExpandoNode *node, void *data,
                            MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -364,7 +364,7 @@ void index_date_recv_local(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * index_date_local - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_date_local - Index: Local date and time - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_date_local(const struct ExpandoNode *node, void *data,
                       MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -424,7 +424,7 @@ void index_date_local(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * index_date - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_date - Index: Sender's date and time - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_date(const struct ExpandoNode *node, void *data,
                 MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -497,7 +497,7 @@ void index_date(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * index_format_hook - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_format_hook - Index: index-format-hook - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_format_hook(const struct ExpandoNode *node, void *data,
                        MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -524,7 +524,7 @@ void index_format_hook(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * index_a - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_a - Index: Author Address - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -547,7 +547,7 @@ void index_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_A - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_A - Index: Reply-to address - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_A(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -571,7 +571,7 @@ void index_A(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_b - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_b - Index: Filename - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_b(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -618,7 +618,7 @@ void index_b(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_B - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_B - Index: Email list - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_B(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -641,7 +641,7 @@ void index_B(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_c - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_c - Index: Number of bytes - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -660,7 +660,7 @@ void index_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_cr - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_cr - Index: Number of raw bytes - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_cr(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -679,7 +679,7 @@ void index_cr(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_C - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_C - Index: Index number - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_C(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -696,7 +696,7 @@ void index_C(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_d - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_d - Index: Senders Date and time - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_d(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -740,7 +740,7 @@ void index_d(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_D - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_D - Index: Local Date and time - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_D(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -777,7 +777,7 @@ void index_D(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_e - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_e - Index: Thread index number - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_e(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -793,7 +793,7 @@ void index_e(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_E - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_E - Index: Number of messages thread - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_E(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -809,7 +809,7 @@ void index_E(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_f - Index: Sender - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_f(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -823,7 +823,7 @@ void index_f(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_F - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_F - Index: Author name - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_F(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -843,7 +843,7 @@ void index_F(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_Fp - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_Fp - Index: Plain author name - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_Fp(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -863,7 +863,7 @@ void index_Fp(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_g - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_g - Index: Newsgroup name - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_g(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -878,7 +878,7 @@ void index_g(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_G - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_G - Index: Individual tag - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_G(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -909,7 +909,7 @@ void index_G(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_H - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_H - Index: Spam attributes - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_H(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -923,7 +923,7 @@ void index_H(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_i - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_i - Index: Message-id - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_i(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -938,7 +938,7 @@ void index_i(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_I - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_I - Index: Initials of author - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_I(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -964,7 +964,7 @@ void index_I(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_J - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_J - Index: Tags - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_J(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1009,7 +1009,7 @@ void index_J(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_K - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_K - Index: Mailing list - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_K(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1032,7 +1032,7 @@ void index_K(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_l - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_l - Index: Number of lines - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_l(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1049,7 +1049,7 @@ void index_l(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_L - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_L - Index: List address - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_L(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1068,7 +1068,7 @@ void index_L(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_m - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_m - Index: Total number of message - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_m(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1091,7 +1091,7 @@ void index_m(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_M - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_M - Index: Number of hidden messages - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_M(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1122,7 +1122,7 @@ void index_M(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_n - Index: Author's real name - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1140,7 +1140,7 @@ void index_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_N - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_N - Index: Message score - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_N(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1155,7 +1155,7 @@ void index_N(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_O - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_O - Index: Original save folder - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_O(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1179,7 +1179,7 @@ void index_O(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_P - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_P - Index: Progress indicator - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_P(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1193,7 +1193,7 @@ void index_P(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_q - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_q - Index: Newsgroup name - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_q(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1208,7 +1208,7 @@ void index_q(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_r - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_r - Index: To recipients - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_r(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1222,7 +1222,7 @@ void index_r(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_R - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_R - Index: Cc recipients - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_R(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1236,7 +1236,7 @@ void index_R(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_s - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_s - Index: Subject - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1281,7 +1281,7 @@ void index_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_S - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_S - Index: Status flag - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_S(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1318,7 +1318,7 @@ void index_S(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_t - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_t - Index: To field - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_t(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1350,7 +1350,7 @@ void index_t(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_T - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_T - Index: $to_chars flag - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_T(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1371,7 +1371,7 @@ void index_T(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_u - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_u - Index: User name - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_u(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1404,7 +1404,7 @@ void index_u(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_v - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_v - Index: First name - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_v(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1453,7 +1453,7 @@ void index_v(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_W - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_W - Index: Organization - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_W(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1468,7 +1468,7 @@ void index_W(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_x - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_x - Index: X-Comment-To - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_x(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1483,7 +1483,7 @@ void index_x(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_X - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_X - Index: Number of MIME attachments - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_X(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1509,7 +1509,7 @@ void index_X(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_y - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_y - Index: X-Label - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_y(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1526,7 +1526,7 @@ void index_y(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_Y - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_Y - Index: X-Label (if different) - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_Y(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1576,7 +1576,7 @@ void index_Y(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_zc - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_zc - Index: Message crypto flags - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_zc(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -1615,7 +1615,7 @@ void index_zc(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_zs - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_zs - Index: Message status flags - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_zs(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -1674,7 +1674,7 @@ void index_zs(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_zt - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_zt - Index: Message tag flags - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_zt(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
               int max_width, struct Buffer *buf)
@@ -1706,7 +1706,7 @@ void index_zt(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_Z - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_Z - Index: Status flags - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_Z(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
              int max_width, struct Buffer *buf)
@@ -1786,7 +1786,7 @@ void index_Z(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 }
 
 /**
- * index_arrow - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * index_arrow - Index -  - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void index_arrow(const struct ExpandoNode *node, void *data,
                  MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -1822,14 +1822,15 @@ void index_arrow(const struct ExpandoNode *node, void *data,
 
 /**
  * mutt_make_string - Create formatted strings using mailbox expandos
- * @param buf      Buffer for the result
- * @param cols     Number of screen columns (OPTIONAL)
- * @param exp      Expando containing expando tree
- * @param m        Mailbox
- * @param inpgr    Message shown in the pager
- * @param e        Email
- * @param flags    Flags, see #MuttFormatFlags
- * @param progress Pager progress string
+ * @param buf        Buffer for the result
+ * @param cols       Number of screen columns (OPTIONAL)
+ * @param exp        Expando containing expando tree
+ * @param m          Mailbox
+ * @param inpgr      Message shown in the pager
+ * @param e          Email
+ * @param flags      Flags, see #MuttFormatFlags
+ * @param progress   Pager progress string
+ * @param show_arrow true if this is the current Menu item
  */
 void mutt_make_string(struct Buffer *buf, size_t cols, const struct Expando *exp,
                       struct Mailbox *m, int inpgr, struct Email *e,

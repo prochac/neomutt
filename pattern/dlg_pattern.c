@@ -94,7 +94,7 @@ static const struct Mapping PatternHelp[] = {
 };
 
 /**
- * pattern_d - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pattern_d - Pattern: pattern description - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pattern_d(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -108,7 +108,7 @@ void pattern_d(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pattern_e - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pattern_e - Pattern: pattern expression - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pattern_e(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -122,7 +122,7 @@ void pattern_e(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * pattern_n - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * pattern_n - Pattern: Index number - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pattern_n(const struct ExpandoNode *node, void *data,
                MuttFormatFlags flags, int max_width, struct Buffer *buf)

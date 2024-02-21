@@ -281,7 +281,7 @@ static void compress_info_free(struct Mailbox *m)
 }
 
 /**
- * compress_f - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * compress_f - Compress: From filename - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void compress_f(const struct ExpandoNode *node, void *data,
                 MuttFormatFlags flags, int max_width, struct Buffer *buf)
@@ -297,7 +297,7 @@ void compress_f(const struct ExpandoNode *node, void *data,
 }
 
 /**
- * compress_t - XXX - Implements ::expando_callback_t - @ingroup expando_callback_api
+ * compress_t - Compress: To filename - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void compress_t(const struct ExpandoNode *node, void *data,
                 MuttFormatFlags flags, int max_width, struct Buffer *buf)
