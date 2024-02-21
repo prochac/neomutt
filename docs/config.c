@@ -115,6 +115,7 @@
 ** Specifies the format of the data displayed for the "$alias" menu.  The
 ** following \fCprintf(3)\fP-style sequences are available:
 ** .dl
+** .dt %^  .dd Arrow cursor, see $$arrow_cursor, $$arrow_string
 ** .dt %a  .dd Alias name
 ** .dt %c  .dd Comment
 ** .dt %f  .dd Flags - currently, a "d" for an alias marked for deletion
@@ -246,6 +247,7 @@
 ** This variable describes the format of the "attachment" menu.  The
 ** following \fCprintf(3)\fP-style sequences are understood:
 ** .dl
+** .dt %^  .dd Arrow cursor, see $$arrow_cursor, $$arrow_string
 ** .dt %C  .dd Charset
 ** .dt %c  .dd Requires charset conversion ("n" or "c")
 ** .dt %D  .dd Deleted flag
@@ -392,6 +394,7 @@
 ** This variable describes the format of the "autocrypt account" menu.
 ** The following \fCprintf(3)\fP-style sequences are understood
 ** .dl
+** .dt %^  .dd Arrow cursor, see $$arrow_cursor, $$arrow_string
 ** .dt %a  .dd email address
 ** .dt %k  .dd gpg keyid
 ** .dt %n  .dd current entry number
@@ -1312,6 +1315,7 @@
 ** personal taste.  This string is similar to $$index_format, but has
 ** its own set of \fCprintf(3)\fP-like sequences:
 ** .dl
+** .dt %^  .dd   .dd Arrow cursor, see $$arrow_cursor, $$arrow_string
 ** .dt %C  .dd   .dd Current file number
 ** .dt %d  .dd   .dd Date/time folder was last modified
 ** .dt %D  .dd   .dd Date/time folder was last modified using $$date_format.
@@ -1538,6 +1542,7 @@
 ** your personal taste.  This string is similar to "$index_format", but
 ** has its own set of printf()-like sequences:
 ** .dl
+** .dt %^  .dd Arrow cursor, see $$arrow_cursor, $$arrow_string
 ** .dt %C  .dd Current newsgroup number
 ** .dt %d  .dd Description of newsgroup (becomes from server)
 ** .dt %f  .dd Newsgroup name
@@ -1717,6 +1722,7 @@
 ** This string is similar to $$index_format, but has its own
 ** set of \fCprintf(3)\fP-like sequences:
 ** .dl
+** .dt %^ .dd Arrow cursor, see $$arrow_cursor, $$arrow_string
 ** .dt %C .dd Line number
 ** .dt %s .dd History match
 ** .de
@@ -2093,6 +2099,7 @@
 ** For an explanation of the %<...> construct, see the $status_format description.
 ** The following sequences are defined in NeoMutt:
 ** .dl
+** .dt %^ .dd Arrow cursor, see $$arrow_cursor, $$arrow_string
 ** .dt %a .dd Address of the author
 ** .dt %A .dd Reply-to address (if present; otherwise: address of author)
 ** .dt %b .dd Filename of the original message folder (think mailbox)
@@ -2581,6 +2588,7 @@
 ** chain selection screen.  The following \fCprintf(3)\fP-like sequences are
 ** supported:
 ** .dl
+** .dt %^  .dd Arrow cursor, see $$arrow_cursor, $$arrow_string
 ** .dt %a  .dd The remailer's e-mail address
 ** .dt %c  .dd Remailer capabilities
 ** .dt %n  .dd The running number on the menu
@@ -2970,6 +2978,7 @@
 ** This variable describes the format of the "pattern completion" menu. The
 ** following \fCprintf(3)\fP-style sequences are understood:
 ** .dl
+** .dt %^  .dd Arrow cursor, see $$arrow_cursor, $$arrow_string
 ** .dt %d  .dd pattern description
 ** .dt %e  .dd pattern expression
 ** .dt %n  .dd index number
@@ -3149,6 +3158,7 @@
 ** to S/MIME key selection menu also. This string is similar to $$index_format,
 ** but has its own set of \fCprintf(3)\fP-like sequences:
 ** .dl
+** .dt %^     .dd Arrow cursor, see $$arrow_cursor, $$arrow_string
 ** .dt %a     .dd Algorithm
 ** .dt %c     .dd Capabilities
 ** .dt %f     .dd Flags
@@ -3726,6 +3736,7 @@
 ** This variable describes the format of the "query" menu. The
 ** following \fCprintf(3)\fP-style sequences are understood:
 ** .dl
+** .dt %^  .dd   .dd Arrow cursor, see $$arrow_cursor, $$arrow_string
 ** .dt %a  .dd   .dd Destination address
 ** .dt %c  .dd   .dd Current entry number
 ** .dt %e  .dd * .dd Extra information

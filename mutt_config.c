@@ -352,7 +352,7 @@ static struct ConfigDef MainVars[] = {
   { "assumed_charset", DT_SLIST|D_SLIST_SEP_COLON|D_SLIST_ALLOW_EMPTY, 0, 0, charset_slist_validator,
     "If a message is missing a character set, assume this character set"
   },
-  { "attach_format", DT_EXPANDO|D_NOT_EMPTY, IP "%u%D%I %t%4n %T%d %> [%.7m/%.10M, %.6e%<C?, %C>, %s] ", IP &AttachFormatData, NULL,
+  { "attach_format", DT_EXPANDO|D_NOT_EMPTY, IP "%^%u%D%I %t%4n %T%d %> [%.7m/%.10M, %.6e%<C?, %C>, %s] ", IP &AttachFormatData, NULL,
     "printf-like format string for the attachment menu"
   },
   { "attach_save_dir", DT_PATH|D_PATH_DIR, IP "./", 0, NULL,
@@ -511,7 +511,7 @@ static struct ConfigDef MainVars[] = {
   { "indent_string", DT_STRING, IP "> ", 0, NULL,
     "String used to indent 'reply' text"
   },
-  { "index_format", DT_EXPANDO|D_NOT_EMPTY, IP "%4C %Z %{%b %d} %-15.15L (%<l?%4l&%4c>) %s", IP &IndexFormatData, NULL,
+  { "index_format", DT_EXPANDO|D_NOT_EMPTY, IP "%^%4C %Z %{%b %d} %-15.15L (%<l?%4l&%4c>) %s", IP &IndexFormatData, NULL,
     "printf-like format string for the index menu (emails)"
   },
   { "keep_flagged", DT_BOOL, false, 0, NULL,
@@ -848,7 +848,7 @@ static const struct ExpandoDefinition MixFormatData[] = {
  */
 static struct ConfigDef MainVarsMixmaster[] = {
   // clang-format off
-  { "mix_entry_format", DT_EXPANDO|D_NOT_EMPTY, IP "%4n %c %-16s %a", IP &MixFormatData, NULL,
+  { "mix_entry_format", DT_EXPANDO|D_NOT_EMPTY, IP "%^%4n %c %-16s %a", IP &MixFormatData, NULL,
     "(mixmaster) printf-like format string for the mixmaster chain"
   },
   { "mixmaster", DT_STRING|D_STRING_COMMAND, IP MIXMASTER_DEFAULT, 0, NULL,

@@ -62,7 +62,7 @@ static struct ConfigDef HistoryVars[] = {
   { "history_file", DT_PATH|D_PATH_FILE, IP "~/.mutthistory", 0, NULL,
     "File to save history in"
   },
-  { "history_format", DT_EXPANDO, IP "%s", IP &HistoryFormatData, NULL,
+  { "history_format", DT_EXPANDO, IP "%^%s", IP &HistoryFormatData, NULL,
     "printf-like format string for the history menu"
   },
   { "history_remove_dups", DT_BOOL, false, 0, NULL,

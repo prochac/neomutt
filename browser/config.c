@@ -129,13 +129,13 @@ static struct ConfigDef BrowserVars[] = {
   { "browser_abbreviate_mailboxes", DT_BOOL, true, 0, NULL,
     "Abbreviate mailboxes using '~' and '=' in the browser"
   },
-  { "folder_format", DT_EXPANDO|D_NOT_EMPTY, IP "%2C %t %N %F %2l %-8.8u %-8.8g %8s %d %i", IP &FolderFormatData, NULL,
+  { "folder_format", DT_EXPANDO|D_NOT_EMPTY, IP "%^%2C %t %N %F %2l %-8.8u %-8.8g %8s %d %i", IP &FolderFormatData, NULL,
     "printf-like format string for the browser's display of folders"
   },
-  { "group_index_format", DT_EXPANDO|D_NOT_EMPTY, IP "%4C %M%N %5s  %-45.45f %d", IP &GroupIndexFormatData, NULL,
+  { "group_index_format", DT_EXPANDO|D_NOT_EMPTY, IP "%^%4C %M%N %5s  %-45.45f %d", IP &GroupIndexFormatData, NULL,
     "(nntp) printf-like format string for the browser's display of newsgroups"
   },
-  { "mailbox_folder_format", DT_EXPANDO|D_NOT_EMPTY, IP "%2C %<n?%6n&      > %6m %i", IP &FolderFormatData, NULL,
+  { "mailbox_folder_format", DT_EXPANDO|D_NOT_EMPTY, IP "%^%2C %<n?%6n&      > %6m %i", IP &FolderFormatData, NULL,
     "printf-like format string for the browser's display of mailbox folders"
   },
   { "mask", DT_REGEX|D_REGEX_MATCH_CASE|D_REGEX_ALLOW_NOT|D_REGEX_NOSUB, IP "!^\\.[^.]", 0, NULL,

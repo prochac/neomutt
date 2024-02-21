@@ -127,7 +127,7 @@ static struct ConfigDef NcryptVars[] = {
   { "pgp_default_key", DT_STRING, 0, 0, NULL,
     "Default key to use for PGP operations"
   },
-  { "pgp_entry_format", DT_EXPANDO|D_NOT_EMPTY, IP "%4n %t%f %4l/0x%k %-4a %2c %u", IP &PgpEntryFormatData, NULL,
+  { "pgp_entry_format", DT_EXPANDO|D_NOT_EMPTY, IP "%^%4n %t%f %4l/0x%k %-4a %2c %u", IP &PgpEntryFormatData, NULL,
     "printf-like format string for the PGP key selection menu"
   },
   { "pgp_ignore_subkeys", DT_BOOL, true, 0, NULL,

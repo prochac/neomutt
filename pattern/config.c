@@ -60,7 +60,7 @@ static struct ConfigDef PatternVars[] = {
   { "external_search_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
     "External search command"
   },
-  { "pattern_format", DT_EXPANDO, IP "%2n %-15e  %d", IP &PatternFormatData, NULL,
+  { "pattern_format", DT_EXPANDO, IP "%^%2n %-15e  %d", IP &PatternFormatData, NULL,
     "printf-like format string for the pattern completion menu"
   },
   { "thorough_search", DT_BOOL, true, 0, NULL,

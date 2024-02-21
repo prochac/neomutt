@@ -67,7 +67,7 @@ static struct ConfigDef AutocryptVars[] = {
   { "autocrypt", DT_BOOL, false, 0, NULL,
     "Enables the Autocrypt feature"
   },
-  { "autocrypt_acct_format", DT_EXPANDO, IP "%4n %-30a %20p %10s", IP &AutocryptFormatData, NULL,
+  { "autocrypt_acct_format", DT_EXPANDO, IP "%^%4n %-30a %20p %10s", IP &AutocryptFormatData, NULL,
     "Format of the autocrypt account menu"
   },
   { "autocrypt_dir", DT_PATH|D_PATH_DIR, IP "~/.mutt/autocrypt", 0, NULL,

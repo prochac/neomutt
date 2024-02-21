@@ -101,7 +101,7 @@ static struct ConfigDef AliasVars[] = {
   { "alias_file", DT_PATH|D_PATH_FILE, IP "~/.neomuttrc", 0, NULL,
     "Save new aliases to this file"
   },
-  { "alias_format", DT_EXPANDO|D_NOT_EMPTY, IP "%3n %f%t %-15a %-56r | %c", IP &AliasFormatData, NULL,
+  { "alias_format", DT_EXPANDO|D_NOT_EMPTY, IP "%^%3n %f%t %-15a %-56r | %c", IP &AliasFormatData, NULL,
     "printf-like format string for the alias menu"
   },
   { "sort_alias", DT_SORT|D_SORT_REVERSE, SORT_ALIAS, IP SortAliasMethods, NULL,
@@ -110,7 +110,7 @@ static struct ConfigDef AliasVars[] = {
   { "query_command", DT_STRING|D_STRING_COMMAND, 0, 0, NULL,
     "External command to query and external address book"
   },
-  { "query_format", DT_EXPANDO|D_NOT_EMPTY, IP "%3c %t %-25.25n %-25.25a | %e", IP &QueryFormatData, NULL,
+  { "query_format", DT_EXPANDO|D_NOT_EMPTY, IP "%^%3c %t %-25.25n %-25.25a | %e", IP &QueryFormatData, NULL,
     "printf-like format string for the query menu (address book)"
   },
   { NULL },
