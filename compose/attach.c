@@ -218,6 +218,7 @@ static void compose_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
   static const struct ExpandoRenderData AttachRenderData[] = {
     // clang-format off
+    { ED_GLOBAL, ED_GLO_ARROW,            attach_arrow },
     { ED_ATTACH, ED_ATT_CHARSET,          attach_C },
     { ED_BODY,   ED_BOD_CHARSET_CONVERT,  attach_c },
     { ED_BODY,   ED_BOD_DELETED,          attach_D },

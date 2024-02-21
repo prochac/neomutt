@@ -249,6 +249,21 @@ static char pgp_flags(KeyFlags flags)
 }
 
 /**
+ * pgp_entry_pgp_arrow - PGP: Arrow Cursor - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_pgp_arrow(const struct ExpandoNode *node, void *data,
+                        MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PGP
+  // const struct PgpEntry *entry = data;
+  // const struct PgpUid *uid = entry->uid;
+  // const struct PgpKeyInfo *key = uid->parent;
+#endif
+}
+
+/**
  * pgp_entry_pgp_date - PGP: Date of the key - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_entry_pgp_date(const struct ExpandoNode *node, void *data,
@@ -581,6 +596,7 @@ static void pgp_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
   static const struct ExpandoRenderData PgpEntryRenderData[] = {
     // clang-format off
+    { ED_GLOBAL,             ED_GLO_ARROW,               pgp_entry_pgp_arrow },
     { ED_PGP_KEY,            ED_PGK_KEY_ALGORITHM,       pgp_entry_pgp_date },
     { ED_PGP_KEY,            ED_PGK_PKEY_ALGORITHM,      pgp_entry_pgp_A    },
     { ED_PGP_KEY,            ED_PGK_KEY_CAPABILITIES,    pgp_entry_pgp_a    },

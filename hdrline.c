@@ -1882,6 +1882,7 @@ void mutt_make_string(struct Buffer *buf, size_t cols, const struct Expando *exp
 
 const struct ExpandoRenderData IndexRenderData[] = {
   // clang-format off
+  { ED_GLOBAL,   ED_GLO_ARROW,               index_arrow       },
   { ED_EMAIL,    ED_EMA_STRF_RECV_LOCAL,     index_date_recv_local },
   { ED_EMAIL,    ED_EMA_INDEX_HOOK,          index_format_hook },
   { ED_ENVELOPE, ED_ENV_FROM,                index_a           },
@@ -1931,7 +1932,6 @@ const struct ExpandoRenderData IndexRenderData[] = {
   { ED_EMAIL,    ED_EMA_MESSAGE_FLAGS,       index_zt          },
   { ED_EMAIL,    ED_EMA_STRF_LOCAL,          index_date_local  },
   { ED_EMAIL,    ED_EMA_STRF,                index_date        },
-  { ED_GLOBAL,   ED_GLO_ARROW,               index_arrow       },
   { -1, -1, NULL },
   // clang-format on
 };

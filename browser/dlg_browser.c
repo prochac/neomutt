@@ -231,6 +231,17 @@ void folder_date(const struct ExpandoNode *node, void *data,
 }
 
 /**
+ * folder_arrow - Browser: Arrow Cursor - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void folder_arrow(const struct ExpandoNode *node, void *data,
+                 MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  // const struct Folder *folder = data;
+}
+
+/**
  * folder_a - Browser: Alert for new mail - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void folder_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
@@ -958,22 +969,23 @@ static void folder_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
   static const struct ExpandoRenderData FolderRenderData[] = {
     // clang-format off
-    { ED_FOLDER, ED_FOL_NOTIFY,        folder_a    },
-    { ED_FOLDER, ED_FOL_NUMBER,        folder_C    },
-    { ED_FOLDER, ED_FOL_DATE,          folder_d    },
-    { ED_FOLDER, ED_FOL_DATE_FORMAT,   folder_D    },
-    { ED_FOLDER, ED_FOL_FILE_MODE,     folder_F    },
-    { ED_FOLDER, ED_FOL_FILENAME,      folder_f    },
-    { ED_FOLDER, ED_FOL_FILE_GROUP,    folder_g    },
-    { ED_FOLDER, ED_FOL_DESCRIPTION,   folder_i    },
-    { ED_FOLDER, ED_FOL_HARD_LINKS,    folder_l    },
-    { ED_FOLDER, ED_FOL_MESSAGE_COUNT, folder_m    },
-    { ED_FOLDER, ED_FOL_NEW_MAIL,      folder_N    },
-    { ED_FOLDER, ED_FOL_UNREAD_COUNT,  folder_n    },
-    { ED_FOLDER, ED_FOL_POLL,          folder_p    },
-    { ED_FOLDER, ED_FOL_FILE_SIZE,     folder_s    },
-    { ED_FOLDER, ED_FOL_TAGGED,        folder_t    },
-    { ED_FOLDER, ED_FOL_FILE_OWNER,    folder_u    },
+    { ED_GLOBAL, ED_GLO_ARROW,         folder_arrow },
+    { ED_FOLDER, ED_FOL_NOTIFY,        folder_a },
+    { ED_FOLDER, ED_FOL_NUMBER,        folder_C },
+    { ED_FOLDER, ED_FOL_DATE,          folder_d },
+    { ED_FOLDER, ED_FOL_DATE_FORMAT,   folder_D },
+    { ED_FOLDER, ED_FOL_FILE_MODE,     folder_F },
+    { ED_FOLDER, ED_FOL_FILENAME,      folder_f },
+    { ED_FOLDER, ED_FOL_FILE_GROUP,    folder_g },
+    { ED_FOLDER, ED_FOL_DESCRIPTION,   folder_i },
+    { ED_FOLDER, ED_FOL_HARD_LINKS,    folder_l },
+    { ED_FOLDER, ED_FOL_MESSAGE_COUNT, folder_m },
+    { ED_FOLDER, ED_FOL_NEW_MAIL,      folder_N },
+    { ED_FOLDER, ED_FOL_UNREAD_COUNT,  folder_n },
+    { ED_FOLDER, ED_FOL_POLL,          folder_p },
+    { ED_FOLDER, ED_FOL_FILE_SIZE,     folder_s },
+    { ED_FOLDER, ED_FOL_TAGGED,        folder_t },
+    { ED_FOLDER, ED_FOL_FILE_OWNER,    folder_u },
     { ED_FOLDER, ED_FOL_STRF,          folder_date },
     { -1, -1, NULL },
     // clang-format on

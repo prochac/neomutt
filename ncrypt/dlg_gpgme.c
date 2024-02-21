@@ -282,6 +282,20 @@ static char *crypt_flags(KeyFlags flags)
 }
 
 /**
+ * pgp_entry_gpgme_arrow - GPGME: Arrow Cursor - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pgp_entry_gpgme_arrow(const struct ExpandoNode *node, void *data,
+                          MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+#ifdef HAVE_PKG_GPGME
+  // const struct CryptEntry *entry = data;
+  // const struct CryptKeyInfo *key = entry->key;
+#endif
+}
+
+/**
  * pgp_entry_gpgme_date - GPGME: Date of the key - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pgp_entry_gpgme_date(const struct ExpandoNode *node, void *data,
@@ -641,6 +655,7 @@ static void crypt_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
   static const struct ExpandoRenderData PgpEntryGpgmeRenderData[] = {
     // clang-format off
+    { ED_GLOBAL,             ED_GLO_ARROW,               pgp_entry_gpgme_arrow },
     { ED_GPGME_KEY,          ED_GPG_DATE,                pgp_entry_gpgme_date },
     { ED_GPGME_KEY,          ED_GPG_KEY_ALGORITHM,       pgp_entry_gpgme_a    },
     { ED_GPGME_KEY,          ED_GPG_KEY_CAPABILITIES,    pgp_entry_gpgme_c    },

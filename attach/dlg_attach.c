@@ -130,6 +130,17 @@ static int attach_config_observer(struct NotifyCallback *nc)
 }
 
 /**
+ * attach_arrow - Attachment: Arrow Cursor - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void attach_arrow(const struct ExpandoNode *node, void *data,
+                 MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  // const struct AttachPtr *aptr = data;
+}
+
+/**
  * attach_c - Attachment: Requires conversion flag - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void attach_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
@@ -461,6 +472,7 @@ static void attach_make_entry(struct Menu *menu, int line, struct Buffer *buf)
    */
   static const struct ExpandoRenderData AttachRenderData[] = {
     // clang-format off
+    { ED_GLOBAL, ED_GLO_ARROW,            attach_arrow },
     { ED_ATTACH, ED_ATT_CHARSET,          attach_C },
     { ED_BODY,   ED_BOD_CHARSET_CONVERT,  attach_c },
     { ED_BODY,   ED_BOD_DELETED,          attach_D },

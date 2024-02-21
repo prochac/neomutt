@@ -94,6 +94,17 @@ static const struct Mapping PatternHelp[] = {
 };
 
 /**
+ * pattern_arrow - Pattern: Arrow Cursor - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void pattern_arrow(const struct ExpandoNode *node, void *data,
+                 MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  // const struct PatternEntry *entry = data;
+}
+
+/**
  * pattern_d - Pattern: pattern description - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void pattern_d(const struct ExpandoNode *node, void *data,
@@ -144,6 +155,7 @@ static void make_pattern_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
   static const struct ExpandoRenderData PatternRenderData[] = {
     // clang-format off
+    { ED_GLOBAL,  ED_GLO_ARROW,       pattern_arrow },
     { ED_PATTERN, ED_PAT_DESCRIPTION, pattern_d },
     { ED_PATTERN, ED_PAT_EXPRESION,   pattern_e },
     { ED_PATTERN, ED_PAT_NUMBER,      pattern_n },

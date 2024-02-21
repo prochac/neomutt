@@ -105,6 +105,17 @@ static const char *mix_format_caps(const struct Remailer *r)
 }
 
 /**
+ * mix_arrow - Mixmaster: Arrow Cursor - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void mix_arrow(const struct ExpandoNode *node, void *data,
+                 MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  // const struct Remailer *remailer = data;
+}
+
+/**
  * mix_a - Mixmaster: Email address - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void mix_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
@@ -169,6 +180,7 @@ static void mix_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
   static const struct ExpandoRenderData MixRenderData[] = {
     // clang-format off
+    { ED_GLOBAL,    ED_GLO_ARROW,        mix_arrow },
     { ED_MIXMASTER, ED_MIX_ADDRESS,      mix_a },
     { ED_MIXMASTER, ED_MIX_CAPABILITIES, mix_c },
     { ED_MIXMASTER, ED_MIX_NUMBER,       mix_n },

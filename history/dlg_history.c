@@ -82,6 +82,17 @@ static const struct Mapping HistoryHelp[] = {
 };
 
 /**
+ * history_arrow - History: Arrow Cursor - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void history_arrow(const struct ExpandoNode *node, void *data,
+                 MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  // const struct HistoryEntry *entry = data;
+}
+
+/**
  * history_C - History: Index number - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void history_C(const struct ExpandoNode *node, void *data,
@@ -116,6 +127,7 @@ static void history_make_entry(struct Menu *menu, int line, struct Buffer *buf)
 {
   static const struct ExpandoRenderData HistoryRenderData[] = {
     // clang-format off
+    { ED_GLOBAL,  ED_GLO_ARROW,  history_arrow },
     { ED_HISTORY, ED_HIS_NUMBER, history_C },
     { ED_HISTORY, ED_HIS_MATCH,  history_s },
     { -1, -1, NULL },

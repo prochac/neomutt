@@ -111,6 +111,17 @@ static const struct Mapping AutocryptHelp[] = {
 };
 
 /**
+ * autocrypt_arrow - Autocrypt: Arrow Cursor - Implements ::expando_callback_t - @ingroup expando_callback_api
+ */
+void autocrypt_arrow(const struct ExpandoNode *node, void *data,
+                 MuttFormatFlags flags, int max_width, struct Buffer *buf)
+{
+  assert(node->type == ENT_EXPANDO);
+
+  // const struct AccountEntry *entry = data;
+}
+
+/**
  * autocrypt_a - Autocrypt: Address - Implements ::expando_callback_t - @ingroup expando_callback_api
  */
 void autocrypt_a(const struct ExpandoNode *node, void *data,
@@ -217,6 +228,7 @@ static void autocrypt_make_entry(struct Menu *menu, int line, struct Buffer *buf
 {
   static const struct ExpandoRenderData AutocryptRenderData[] = {
     // clang-format off
+    { ED_GLOBAL,    ED_GLO_ARROW,          autocrypt_arrow },
     { ED_AUTOCRYPT, ED_AUT_MAILBOX,        autocrypt_a },
     { ED_AUTOCRYPT, ED_AUT_KEYID,          autocrypt_k },
     { ED_AUTOCRYPT, ED_AUT_NUMBER,         autocrypt_n },
