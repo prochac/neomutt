@@ -116,6 +116,25 @@ void node_expando_set_has_tree(const struct ExpandoNode *node, bool has_tree)
 }
 
 /**
+ * find_callback - XXX
+ */
+static expando_callback_t find_callback(const struct ExpandoRenderData *rdata, int did, int uid)
+{
+  if (!rdata)
+    return NULL;
+
+  for (; rdata->callback; rdata++)
+  {
+    if ((rdata->did == did) && (rdata->uid == uid))
+    {
+      return rdata->callback;
+    }
+  }
+
+  return NULL;
+}
+
+/**
  * node_expando_render - Callback for every expando node
  * @param node     XXX
  * @param rdata    XXX
@@ -132,28 +151,13 @@ int node_expando_render(const struct ExpandoNode *node,
 {
   assert(node->type == ENT_EXPANDO);
 
+  const expando_callback_t callback = find_callback(rdata, node->did, node->uid);
+  assert(callback && "Unknown UID");
+
   struct Buffer *expando_buf = buf_pool_get();
-  int printed = 0;
 
-  const struct ExpandoRenderData *rd = &rdata[0];
-  bool found = false;
-  while (rd->did != -1)
-  {
-    if ((rd->did == node->did) && (rd->uid == node->uid))
-    {
-      found = true;
-      rd->callback(node, data, flags, cols_len, expando_buf);
-      break;
-    }
-    rd++;
-  }
-
-  if (!found)
-  {
-    assert(0 && "Unknown UID");
-  }
-
-  printed = format_string(buf, buf_len, node, expando_buf);
+  callback(node, data, flags, cols_len, expando_buf);
+  int printed = format_string(buf, buf_len, node, expando_buf);
 
   buf_pool_release(&expando_buf);
   return printed;
