@@ -49,7 +49,6 @@ enum ENCondition
   ENC_FALSE,          ///< Index of False Node
 };
 
-int node_condition_render(const struct ExpandoNode *node, const struct ExpandoRenderData *rdata, char *buf, int buf_len, int cols_len, void *data, MuttFormatFlags flags);
 struct ExpandoNode *node_condition_new(struct ExpandoNode *condition, struct ExpandoNode *if_true_tree, struct ExpandoNode *if_false_tree);
 
 #endif /* MUTT_EXPANDO_NODE_CONDITION_H */

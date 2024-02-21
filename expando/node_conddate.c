@@ -34,6 +34,7 @@
 #include <time.h>
 #include "mutt/lib.h"
 #include "node_conddate.h"
+#include "node_expando.h"
 #include "node.h"
 #include "parser.h"
 
@@ -79,6 +80,7 @@ static struct ExpandoNode *node_conddate_new(int count, char period,
   node->type = ENT_CONDDATE;
   node->did = did;
   node->uid = uid;
+  node->render = node_expando_render;
 
   node->ndata = node_conddate_private_new(count, period, multiplier);
   node->ndata_free = node_conddate_private_free;

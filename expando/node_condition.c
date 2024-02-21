@@ -41,34 +41,6 @@
 #include "uid.h"
 
 /**
- * node_condition_new - XXX
- * @param condition     XXX
- * @param if_true_tree  XXX
- * @param if_false_tree XXX
- * @retval ptr XXX
- */
-struct ExpandoNode *node_condition_new(struct ExpandoNode *condition,
-                                       struct ExpandoNode *if_true_tree,
-                                       struct ExpandoNode *if_false_tree)
-{
-  assert(condition);
-  assert(if_true_tree);
-
-  struct ExpandoNode *node = expando_node_new();
-
-  node->type = ENT_CONDITION;
-  node->did = ED_ALL;
-  node->uid = ED_ALL_CONDITION;
-  node->render = node_condition_render;
-
-  ARRAY_SET(&node->children, ENC_CONDITION, condition);
-  ARRAY_SET(&node->children, ENC_TRUE, if_true_tree);
-  ARRAY_SET(&node->children, ENC_FALSE, if_false_tree);
-
-  return node;
-}
-
-/**
  * is_equal - XXX
  * @param s XXX
  * @param c XXX
@@ -113,9 +85,9 @@ static bool is_equal(const char *s, char c)
  * @param flags    XXX
  * @retval num XXX
  */
-int node_condition_render(const struct ExpandoNode *node,
-                          const struct ExpandoRenderData *rdata, char *buf,
-                          int buf_len, int cols_len, void *data, MuttFormatFlags flags)
+static int node_condition_render(const struct ExpandoNode *node,
+                                 const struct ExpandoRenderData *rdata, char *buf,
+                                 int buf_len, int cols_len, void *data, MuttFormatFlags flags)
 {
   assert(node->type == ENT_CONDITION);
 
@@ -155,4 +127,32 @@ int node_condition_render(const struct ExpandoNode *node,
     }
   }
   return 0;
+}
+
+/**
+ * node_condition_new - XXX
+ * @param condition     XXX
+ * @param if_true_tree  XXX
+ * @param if_false_tree XXX
+ * @retval ptr XXX
+ */
+struct ExpandoNode *node_condition_new(struct ExpandoNode *condition,
+                                       struct ExpandoNode *if_true_tree,
+                                       struct ExpandoNode *if_false_tree)
+{
+  assert(condition);
+  assert(if_true_tree);
+
+  struct ExpandoNode *node = expando_node_new();
+
+  node->type = ENT_CONDITION;
+  node->did = ED_ALL;
+  node->uid = ED_ALL_CONDITION;
+  node->render = node_condition_render;
+
+  ARRAY_SET(&node->children, ENC_CONDITION, condition);
+  ARRAY_SET(&node->children, ENC_TRUE, if_true_tree);
+  ARRAY_SET(&node->children, ENC_FALSE, if_false_tree);
+
+  return node;
 }

@@ -149,7 +149,7 @@ int node_expando_render(const struct ExpandoNode *node,
                         const struct ExpandoRenderData *rdata, char *buf,
                         int buf_len, int cols_len, void *data, MuttFormatFlags flags)
 {
-  assert(node->type == ENT_EXPANDO);
+  assert((node->type == ENT_EXPANDO) || (node->type == ENT_CONDDATE));
 
   const expando_callback_t callback = find_callback(rdata, node->did, node->uid);
   assert(callback && "Unknown UID");
