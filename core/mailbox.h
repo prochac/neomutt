@@ -149,6 +149,9 @@ struct Mailbox
 
 /**
  * ExpandoDataMailbox - Expando UIDs for struct Mailbox
+ *
+ * UIDs used by the Mailbox Domain
+ * @sa #ED_MAILBOX
  */
 enum ExpandoDataMailbox
 {

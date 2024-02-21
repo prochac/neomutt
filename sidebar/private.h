@@ -50,6 +50,9 @@ ARRAY_HEAD(SbEntryArray, struct SbEntry *);
 
 /**
  * ExpandoDataSidebar - Expando UIDs for struct SbEntry
+ *
+ * UIDs used by the Sidebar Domain
+ * @sa #ED_SIDEBAR
  */
 enum ExpandoDataSidebar
 {

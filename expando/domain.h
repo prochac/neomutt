@@ -32,30 +32,30 @@
  */
 enum ExpandoDomain
 {
-  ED_ALL = 0,      ///< All           ED_ALL_
-  ED_ALIAS,        ///< Alias         ED_ALI_
-  ED_ATTACH,       ///< Attach        ED_ATT_
-  ED_AUTOCRYPT,    ///< Autocrypt     ED_AUT_
-  ED_BODY,         ///< Body          ED_BOD_
-  ED_COMPOSE,      ///< Compose       ED_COM_
-  ED_COMPRESS,     ///< Compress      ED_CMP_
-  ED_EMAIL,        ///< Email         ED_EMA_
-  ED_ENVELOPE,     ///< Envelope      ED_ENV_
-  ED_FOLDER,       ///< Folder        ED_FOL_
-  ED_GLOBAL,       ///< Global        ED_GLO_
-  ED_GPGME_KEY,    ///< Gpgme Key     ED_GPG_
-  ED_HISTORY,      ///< History       ED_HIS_
-  ED_INDEX,        ///< Index         ED_IND_
-  ED_MAILBOX,      ///< Mailbox       ED_MBX_
-  ED_MENU,         ///< Menu          ED_MEN_
-  ED_MIXMASTER,    ///< Mixmaster     ED_MIX_
-  ED_NNTP,         ///< Nntp          ED_NTP_
-  ED_PATTERN,      ///< Pattern       ED_PAT_
-  ED_PGP,          ///< Pgp           ED_PGP_
-  ED_PGP_CMD,      ///< Pgp Command   ED_PGC_
-  ED_PGP_KEY,      ///< Pgp_Key       ED_PGK_
-  ED_SIDEBAR,      ///< Sidebar       ED_SID_
-  ED_SMIME_CMD,    ///< Smime Command ED_SMI_
+  ED_ALL = 0,      ///< All           ED_ALL_ #ExpandoDataAll
+  ED_ALIAS,        ///< Alias         ED_ALI_ #ExpandoDataAlias
+  ED_ATTACH,       ///< Attach        ED_ATT_ #ExpandoDataAttach
+  ED_AUTOCRYPT,    ///< Autocrypt     ED_AUT_ #ExpandoDataAutocrypt
+  ED_BODY,         ///< Body          ED_BOD_ #ExpandoDataBody
+  ED_COMPOSE,      ///< Compose       ED_COM_ #ExpandoDataCompose
+  ED_COMPRESS,     ///< Compress      ED_CMP_ #ExpandoDataCompress
+  ED_EMAIL,        ///< Email         ED_EMA_ #ExpandoDataEmail
+  ED_ENVELOPE,     ///< Envelope      ED_ENV_ #ExpandoDataEnvelope
+  ED_FOLDER,       ///< Folder        ED_FOL_ #ExpandoDataFolder
+  ED_GLOBAL,       ///< Global        ED_GLO_ #ExpandoDataGlobal
+  ED_GPGME_KEY,    ///< Gpgme Key     ED_GPG_ #ExpandoDataPgpKeyGpgme
+  ED_HISTORY,      ///< History       ED_HIS_ #ExpandoDataHistory
+  ED_INDEX,        ///< Index         ED_IND_ #ExpandoDataIndex
+  ED_MAILBOX,      ///< Mailbox       ED_MBX_ #ExpandoDataMailbox
+  ED_MENU,         ///< Menu          ED_MEN_ #ExpandoDataMenu
+  ED_MIXMASTER,    ///< Mixmaster     ED_MIX_ #ExpandoDataMixmaster
+  ED_NNTP,         ///< Nntp          ED_NTP_ #ExpandoDataNntp
+  ED_PATTERN,      ///< Pattern       ED_PAT_ #ExpandoDataPattern
+  ED_PGP,          ///< Pgp           ED_PGP_ #ExpandoDataPgp
+  ED_PGP_CMD,      ///< Pgp Command   ED_PGC_ #ExpandoDataPgpCmd
+  ED_PGP_KEY,      ///< Pgp_Key       ED_PGK_ #ExpandoDataPgpKey
+  ED_SIDEBAR,      ///< Sidebar       ED_SID_ #ExpandoDataSidebar
+  ED_SMIME_CMD,    ///< Smime Command ED_SMI_ #ExpandoDataSmimeCmd
 };
 
 #endif /* MUTT_EXPANDO_DOMAIN_H */

@@ -26,6 +26,9 @@
 
 /**
  * ExpandoDataGlobal - Expando UIDs for Global
+ *
+ * UIDs used by the Global Domain
+ * @sa #ED_GLOBAL
  */
 enum ExpandoDataGlobal
 {
@@ -43,6 +46,9 @@ enum ExpandoDataGlobal
 
 /**
  * ExpandoDataAll - UIDs used for all domains
+ *
+ * UIDs used by the All Domain
+ * @sa #ED_ALL
  */
 enum ExpandoDataAll
 {

@@ -59,6 +59,9 @@ struct PgpKeyInfo
 
 /**
  * ExpandoDataPgpKey - Expando UIDs for struct PgpKeyInfo
+ *
+ * UIDs used by the Pgp_Key Domain
+ * @sa #ED_PGP_KEY
  */
 enum ExpandoDataPgpKey
 {

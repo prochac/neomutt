@@ -95,6 +95,9 @@ ARRAY_HEAD(BodyArray, struct Body *);
  * ExpandoDataBody - Expando UIDs for struct Body
  *
  * @sa AttachFormatData, AttachRenderData
+ *
+ * UIDs used by the Body Domain
+ * @sa #ED_BODY
  */
 enum ExpandoDataBody
 {

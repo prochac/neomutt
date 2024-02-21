@@ -50,6 +50,9 @@ struct AccountEntry
 
 /**
  * ExpandoDataAutocrypt - Expando UIDs for struct AccountEntry
+ *
+ * UIDs used by the Autocrypt Domain
+ * @sa #ED_AUTOCRYPT
  */
 enum ExpandoDataAutocrypt
 {

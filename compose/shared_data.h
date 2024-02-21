@@ -48,6 +48,9 @@ struct ComposeSharedData
 
 /**
  * ExpandoDataCompose - Expando UIDs for struct ComposeSharedData
+ *
+ * UIDs used by the Compose Domain
+ * @sa #ED_COMPOSE
  */
 enum ExpandoDataCompose
 {

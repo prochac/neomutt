@@ -131,6 +131,9 @@ ARRAY_HEAD(EmailArray, struct Email *);
 
 /**
  * ExpandoDataEmail - Expando UIDs for struct Email
+ *
+ * UIDs used by the Email Domain
+ * @sa #ED_EMAIL
  */
 enum ExpandoDataEmail
 {

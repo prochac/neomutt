@@ -48,6 +48,9 @@ struct AttachPtr
 
 /**
  * ExpandoDataAttach - Expando UIDs for struct AttachPtr
+ *
+ * UIDs used by the Attach Domain
+ * @sa #ED_ATTACH
  */
 enum ExpandoDataAttach
 {

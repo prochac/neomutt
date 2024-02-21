@@ -89,6 +89,9 @@ struct CryptEntry
 
 /**
  * ExpandoDataPgpKeyGpgme - Expando UIDs for struct CryptEntry
+ *
+ * UIDs used by the Gpgme Key Domain
+ * @sa #ED_GPGME_KEY
  */
 enum ExpandoDataPgpKeyGpgme
 {

@@ -74,6 +74,9 @@ struct ConnAccount
 
 /**
  * ExpandoDataNntp - Expando UIDs for struct ConnAccount
+ *
+ * UIDs used by the Nntp Domain
+ * @sa #ED_NNTP
  */
 enum ExpandoDataNntp
 {

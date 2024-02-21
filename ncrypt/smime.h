@@ -66,6 +66,9 @@ struct SmimeCommandContext
 
 /**
  * ExpandoDataSmimeCmd - Expando UIDs for struct SmimeCommandContext
+ *
+ * UIDs used by the Smime Command Domain
+ * @sa #ED_SMIME_CMD
  */
 enum ExpandoDataSmimeCmd
 {

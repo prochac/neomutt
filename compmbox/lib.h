@@ -41,6 +41,9 @@
 
 /**
  * ExpandoDataCompress - Expando UIDs for Compression
+ *
+ * UIDs used by the Compress Domain
+ * @sa #ED_COMPRESS
  */
 enum ExpandoDataCompress
 {

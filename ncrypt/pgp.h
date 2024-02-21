@@ -50,6 +50,9 @@ struct PgpCommandContext
 
 /**
  * ExpandoDataPgpCmd - Expando UIDs for struct PgpCommandContext
+ *
+ * UIDs used by the Pgp Command Domain
+ * @sa #ED_PGP_CMD
  */
 enum ExpandoDataPgpCmd
 {

@@ -109,6 +109,9 @@ ARRAY_HEAD(BrowserEntryArray, struct FolderFile);
 
 /**
  * ExpandoDataFolder - Expando UIDs for struct Folder
+ *
+ * UIDs used by the Folder Domain
+ * @sa #ED_FOLDER
  */
 enum ExpandoDataFolder
 {

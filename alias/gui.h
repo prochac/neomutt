@@ -65,6 +65,9 @@ struct AliasMenuData
 
 /**
  * ExpandoDataAlias - Expando UIDs for struct AliasView
+ *
+ * UIDs used by the Alias Domain
+ * @sa #ED_ALIAS
  */
 enum ExpandoDataAlias
 {

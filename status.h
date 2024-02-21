@@ -30,6 +30,9 @@ struct Menu;
 
 /**
  * ExpandoDataMenu - Expando UIDs for struct MenuStatusLineData
+ *
+ * UIDs used by the Menu Domain
+ * @sa #ED_MENU
  */
 enum ExpandoDataMenu
 {

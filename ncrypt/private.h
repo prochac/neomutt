@@ -43,6 +43,9 @@ struct PgpEntry
 
 /**
  * ExpandoDataPgp - Expando UIDs for struct PgpEntry
+ *
+ * UIDs used by the Pgp Domain
+ * @sa #ED_PGP
  */
 enum ExpandoDataPgp
 {

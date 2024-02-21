@@ -69,6 +69,9 @@ struct HistoryEntry
 
 /**
  * ExpandoDataHistory - Expando UIDs for struct HistoryEntry
+ *
+ * UIDs used by the History Domain
+ * @sa #ED_HISTORY
  */
 enum ExpandoDataHistory
 {

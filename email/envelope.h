@@ -92,6 +92,9 @@ struct Envelope
 
 /**
  * ExpandoDataEnvelope - Expando UIDs for struct Envelope
+ *
+ * UIDs used by the Envelope Domain
+ * @sa #ED_ENVELOPE
  */
 enum ExpandoDataEnvelope
 {

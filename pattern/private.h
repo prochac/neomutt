@@ -43,6 +43,9 @@ struct PatternEntry
 
 /**
  * ExpandoDataPattern - Expando UIDs for struct PatternEntry
+ *
+ * UIDs used by the Pattern Domain
+ * @sa #ED_PATTERN
  */
 enum ExpandoDataPattern
 {

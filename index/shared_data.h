@@ -48,6 +48,9 @@ struct IndexSharedData
 
 /**
  * ExpandoDataIndex - Expando UIDs for struct IndexSharedData
+ *
+ * UIDs used by the Index Domain
+ * @sa #ED_INDEX
  */
 enum ExpandoDataIndex
 {

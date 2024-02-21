@@ -48,6 +48,9 @@ ARRAY_HEAD(RemailerArray, struct Remailer *);
 
 /**
  * ExpandoDataMixmaster - Expando UIDs for struct Remailer
+ *
+ * UIDs used by the Mixmaster Domain
+ * @sa #ED_MIXMASTER
  */
 enum ExpandoDataMixmaster
 {
