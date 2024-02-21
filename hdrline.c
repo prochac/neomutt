@@ -342,7 +342,8 @@ void index_date_recv_local(const struct ExpandoNode *node, void *data,
       strftime(tmp, sizeof(tmp), tmp2, &tm);
     }
 
-    node_expando_set_color(node, MT_COLOR_INDEX_DATE);
+    if (flags & MUTT_FORMAT_INDEX)
+      node_expando_set_color(node, MT_COLOR_INDEX_DATE);
     buf_strcpy(buf, tmp);
   }
   else
@@ -402,7 +403,8 @@ void index_date_local(const struct ExpandoNode *node, void *data,
       strftime(tmp, sizeof(tmp), tmp2, &tm);
     }
 
-    node_expando_set_color(node, MT_COLOR_INDEX_DATE);
+    if (flags & MUTT_FORMAT_INDEX)
+      node_expando_set_color(node, MT_COLOR_INDEX_DATE);
     buf_strcpy(buf, tmp);
   }
   else
@@ -469,7 +471,8 @@ void index_date(const struct ExpandoNode *node, void *data,
       strftime(tmp, sizeof(tmp), tmp2, &tm);
     }
 
-    node_expando_set_color(node, MT_COLOR_INDEX_DATE);
+    if (flags & MUTT_FORMAT_INDEX)
+      node_expando_set_color(node, MT_COLOR_INDEX_DATE);
     buf_strcpy(buf, tmp);
   }
   else
@@ -542,7 +545,8 @@ void index_a(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
     s = mutt_addr_for_display(from);
   }
 
-  node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
   buf_strcpy(buf, NONULL(s));
 }
 
@@ -561,7 +565,8 @@ void index_A(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   if (reply_to && reply_to->mailbox)
   {
-    node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
+    if (flags & MUTT_FORMAT_INDEX)
+      node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
     const char *s = mutt_addr_for_display(reply_to);
     buf_strcpy(buf, NONULL(s));
     return;
@@ -653,7 +658,8 @@ void index_c(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   char tmp[128] = { 0 };
 
-  node_expando_set_color(node, MT_COLOR_INDEX_SIZE);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_SIZE);
 
   mutt_str_pretty_size(tmp, sizeof(tmp), e->body->length);
   buf_strcpy(buf, tmp);
@@ -672,7 +678,8 @@ void index_cr(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   char tmp[128] = { 0 };
 
-  node_expando_set_color(node, MT_COLOR_INDEX_SIZE);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_SIZE);
 
   mutt_str_pretty_size(tmp, sizeof(tmp), email_size(e));
   buf_strcpy(buf, tmp);
@@ -689,7 +696,8 @@ void index_C(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
 
-  node_expando_set_color(node, MT_COLOR_INDEX_NUMBER);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_NUMBER);
 
   const int num = e->msgno + 1;
   buf_printf(buf, "%d", num);
@@ -734,7 +742,8 @@ void index_d(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
     strftime(tmp, sizeof(tmp), cp, &tm);
   }
 
-  node_expando_set_color(node, MT_COLOR_INDEX_DATE);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_DATE);
 
   buf_strcpy(buf, tmp);
 }
@@ -771,7 +780,8 @@ void index_D(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
     strftime(tmp, sizeof(tmp), cp, &tm);
   }
 
-  node_expando_set_color(node, MT_COLOR_INDEX_DATE);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_DATE);
 
   buf_strcpy(buf, tmp);
 }
@@ -837,7 +847,8 @@ void index_F(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   make_from(e->env, tmp, sizeof(tmp), false, MUTT_FORMAT_NO_FLAGS);
 
-  node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
 
   buf_strcpy(buf, tmp);
 }
@@ -855,7 +866,8 @@ void index_Fp(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   char tmp[128] = { 0 };
 
-  node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
 
   make_from(e->env, tmp, sizeof(tmp), false, MUTT_FORMAT_PLAIN);
 
@@ -873,7 +885,8 @@ void index_g(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   const struct HdrFormatInfo *hfi = data;
   struct Email *e = hfi->email;
 
-  node_expando_set_color(node, MT_COLOR_INDEX_TAGS);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_TAGS);
   driver_tags_get_transformed(&e->tags, buf);
 }
 
@@ -899,7 +912,8 @@ void index_G(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   char *tag = mutt_hash_find(TagFormats, tag_format);
   if (tag)
   {
-    node_expando_set_color(node, MT_COLOR_INDEX_TAG);
+    if (flags & MUTT_FORMAT_INDEX)
+      node_expando_set_color(node, MT_COLOR_INDEX_TAG);
     driver_tags_get_transformed_for(&e->tags, tag, buf);
   }
   else
@@ -954,7 +968,8 @@ void index_I(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   if (mutt_mb_get_initials(mutt_get_name(from), tmp, sizeof(tmp)))
   {
-    node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
+    if (flags & MUTT_FORMAT_INDEX)
+      node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
 
     buf_strcpy(buf, tmp);
     return;
@@ -1000,7 +1015,8 @@ void index_J(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
     have_tags = false;
   }
 
-  node_expando_set_color(node, MT_COLOR_INDEX_TAGS);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_TAGS);
 
   const char *s = have_tags ? buf_string(tags) : "";
   buf_strcpy(buf, NONULL(s));
@@ -1042,7 +1058,8 @@ void index_l(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
 
-  node_expando_set_color(node, MT_COLOR_INDEX_SIZE);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_SIZE);
 
   const int num = e->lines;
   buf_printf(buf, "%d", num);
@@ -1063,7 +1080,8 @@ void index_L(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   make_from(e->env, tmp, sizeof(tmp), true, flags);
 
-  node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
   buf_strcpy(buf, tmp);
 }
 
@@ -1105,13 +1123,15 @@ void index_M(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
 
   if (threads && is_index && e->collapsed && (e->num_hidden > 1))
   {
-    node_expando_set_color(node, MT_COLOR_INDEX_COLLAPSED);
+    if (flags & MUTT_FORMAT_INDEX)
+      node_expando_set_color(node, MT_COLOR_INDEX_COLLAPSED);
     const int num = e->num_hidden;
     buf_printf(buf, "%d", num);
   }
   else if (is_index && threads)
   {
-    node_expando_set_color(node, MT_COLOR_INDEX_COLLAPSED);
+    if (flags & MUTT_FORMAT_INDEX)
+      node_expando_set_color(node, MT_COLOR_INDEX_COLLAPSED);
     const char *s = " ";
     buf_strcpy(buf, NONULL(s));
   }
@@ -1133,7 +1153,8 @@ void index_n(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   const struct Email *e = hfi->email;
   const struct Address *from = TAILQ_FIRST(&e->env->from);
 
-  node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_AUTHOR);
 
   const char *s = mutt_get_name(from);
   buf_strcpy(buf, NONULL(s));
@@ -1258,14 +1279,16 @@ void index_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   {
     if (flags & MUTT_FORMAT_FORCESUBJ)
     {
-      node_expando_set_color(node, MT_COLOR_INDEX_SUBJECT);
+      if (flags & MUTT_FORMAT_INDEX)
+        node_expando_set_color(node, MT_COLOR_INDEX_SUBJECT);
       node_expando_set_has_tree(node, true);
 
       buf_printf(buf, "%s%s", e->tree, NONULL(subj));
     }
     else
     {
-      node_expando_set_color(node, MT_COLOR_INDEX_SUBJECT);
+      if (flags & MUTT_FORMAT_INDEX)
+        node_expando_set_color(node, MT_COLOR_INDEX_SUBJECT);
       node_expando_set_has_tree(node, true);
 
       const char *s = e->tree;
@@ -1274,7 +1297,8 @@ void index_s(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   }
   else
   {
-    node_expando_set_color(node, MT_COLOR_INDEX_SUBJECT);
+    if (flags & MUTT_FORMAT_INDEX)
+      node_expando_set_color(node, MT_COLOR_INDEX_SUBJECT);
     const char *s = subj;
     buf_strcpy(buf, NONULL(s));
   }
@@ -1312,7 +1336,8 @@ void index_S(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   else
     wch = mbtable_get_nth_wchar(c_flag_chars, FLAG_CHAR_NEW);
 
-  node_expando_set_color(node, MT_COLOR_INDEX_FLAGS);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_FLAGS);
 
   buf_strcpy(buf, NONULL(wch));
 }
@@ -1519,7 +1544,8 @@ void index_y(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   const struct HdrFormatInfo *hfi = data;
   const struct Email *e = hfi->email;
 
-  node_expando_set_color(node, MT_COLOR_INDEX_LABEL);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_LABEL);
 
   const char *s = e->env->x_label;
   buf_strcpy(buf, NONULL(s));
@@ -1561,7 +1587,8 @@ void index_Y(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
     label = false;
   }
 
-  node_expando_set_color(node, MT_COLOR_INDEX_LABEL);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_LABEL);
 
   if (label)
   {
@@ -1610,7 +1637,8 @@ void index_zc(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
     ch = mbtable_get_nth_wchar(c_crypt_chars, FLAG_CHAR_CRYPT_NO_CRYPTO);
   }
 
-  node_expando_set_color(node, MT_COLOR_INDEX_FLAGS);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_FLAGS);
   buf_strcpy(buf, NONULL(ch));
 }
 
@@ -1669,7 +1697,8 @@ void index_zs(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
     }
   }
 
-  node_expando_set_color(node, MT_COLOR_INDEX_FLAGS);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_FLAGS);
   buf_strcpy(buf, NONULL(ch));
 }
 
@@ -1701,7 +1730,8 @@ void index_zt(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
     ch = mbtable_get_nth_wchar(c_to_chars, user_is_recipient(e));
   }
 
-  node_expando_set_color(node, MT_COLOR_INDEX_FLAGS);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_FLAGS);
   buf_strcpy(buf, NONULL(ch));
 }
 
@@ -1780,7 +1810,8 @@ void index_Z(const struct ExpandoNode *node, void *data, MuttFormatFlags flags,
   else
     third = mbtable_get_nth_wchar(c_to_chars, user_is_recipient(e));
 
-  node_expando_set_color(node, MT_COLOR_INDEX_FLAGS);
+  if (flags & MUTT_FORMAT_INDEX)
+    node_expando_set_color(node, MT_COLOR_INDEX_FLAGS);
 
   buf_printf(buf, "%s%s%s", first, second, third);
 }
