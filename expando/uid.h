@@ -56,7 +56,6 @@ enum ExpandoDataAll
   ED_ALL_TEXT,                     ///< XXX
   ED_ALL_PAD,                      ///< XXX
   ED_ALL_CONDITION,                ///< XXX
-  ED_ALL_CONDITIONAL_DATE_HEAD,    ///< XXX
 };
 
 #endif /* MUTT_EXPANDO_UID_H */

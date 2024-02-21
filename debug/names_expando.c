@@ -120,7 +120,6 @@ const char *name_expando_uid_all(int uid)
     DEBUG_NAME(ED_ALL_TEXT);
     DEBUG_NAME(ED_ALL_PAD);
     DEBUG_NAME(ED_ALL_CONDITION);
-    DEBUG_NAME(ED_ALL_CONDITIONAL_DATE_HEAD);
     DEBUG_DEFAULT;
   }
 }
